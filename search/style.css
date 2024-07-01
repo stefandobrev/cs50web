@@ -1,0 +1,222 @@
+/*header*/
+.header {
+    display: flex;
+    padding-right: 15px;
+    box-sizing: border-box; 
+    height: 48px;
+    justify-content: flex-end; 
+    align-items: center; 
+    font: 13px/27px Arial,sans-serif;
+}
+
+.header-links a{
+    color:black;
+    text-decoration: none;
+    margin-right: 20px;
+}
+
+.header-links a:hover {
+    text-decoration-line: underline; /* create underline when hover over them */
+}
+
+/*body-container*/
+.image-container {
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    margin-top:10.5%;
+}
+
+.body-container {
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    min-width:500px;
+ }
+
+.search-field {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 620px;
+    min-width: 400px;
+    position: relative;
+}
+
+@media (max-width: 900px) {
+    .search-field {
+        width: 90%;
+    }
+}
+
+.search-field .glass {
+    position: absolute; 
+    left: 75px; 
+    top: 55%;
+    display: inline-block;
+    width: 20px; 
+    height: 20px; 
+    pointer-events: none;
+}
+
+.search-field input[type="text"] {
+    width:80%;
+    max-width: 584px;
+    min-width: auto;
+    border-radius: 30px;
+    border: 2px solid #ebebeb;
+    font-size: 16px; 
+    padding: 10px 20px; 
+    padding-left: 40px;
+    padding-right: 40px;
+    margin-top: 27px;
+    outline: none; 
+    background: transparent; 
+    font-family: Arial,sans-serif;
+    line-height: 26px;
+    box-sizing: border-box;
+}
+
+.search-field :hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.google-search-buttons {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.google-search-buttons button[type="submit"] {
+    background-color: #f8f9fa;
+    border: 1px solid #f8f9fa;
+    border-radius: 4px;
+    color: #3c4043;
+    font-family: Arial,sans-serif;
+    font-size: 14px;
+    margin: 11px 4px;
+    padding: 0 16px;
+    line-height: 27px;
+    height: 36px;
+    min-width: 54px;
+    text-align: center;
+    cursor: pointer;
+    user-select: none;
+}
+
+/*advanced-search-container*/
+.advanced-container {
+    display: flex;
+    flex-direction: column; 
+    font-family: Arial, sans-serif;
+    margin: 25px 35px;
+    margin: 0;
+    padding-left: 20px;
+    padding-right: 20px;
+    max-width: auto;
+    min-width: 300px;
+}
+
+.advanced-search-conatainer form {
+    display: grid;
+    grid-template-columns: 200px 1fr 1fr;
+    gap: 10px 10px;
+    width: 70%;
+    align-items: center
+}
+
+.advanced-header {
+    color: #d93025;
+    font-size: 20px;
+    border-bottom: 2px solid #ebebeb;
+    padding-top:30px;
+}
+
+.h-paragraph {
+    padding-top:30px;
+    min-width: 167px;
+    width: 16%;
+    font-size: 16px;
+    min-height: 42px;
+    font-weight: 500;
+    color: #333;
+}
+
+.rows {
+    display: contents;
+    align-items: center;
+    font-size: 13px;
+    margin-bottom: 10px;
+}
+
+.rows label {
+    grid-column: 1;
+}
+
+.rows input {
+    grid-column: 2;
+    width: 100%;
+    max-width: 600px;
+    min-width:300px;
+    height: 25px;
+    font-size: 13px; 
+    border: 1px solid #d9d9d9; 
+    border-radius: 1px;
+    box-sizing: border-box;
+}
+
+.rows input:focus {
+    outline: 1px solid #007bff; 
+}
+
+@media (max-width: 1000px) {
+    .rows input {
+        width: calc(55vw - 100px)
+    }
+
+    .expl {
+        display: none; 
+    }
+
+    .advanced-search-button {
+        width: 70%; 
+    }
+}
+
+.expl {
+    grid-column: 3;
+    color: #666;
+    font-family: monospace;
+    min-width:200px;
+    font-size: 11px;
+    overflow-wrap: break-word; 
+}
+
+.advanced-search-button {
+    grid-column: 2;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    margin-top:10px;
+}
+
+.advanced-search-button button[type=submit] {
+    border-radius: 2px;
+    cursor: default;
+    font-size: 11px;
+    font-weight: bold;
+    text-align: center;
+    white-space: nowrap;
+    outline: 0;
+    border: 1px solid #3079ed;
+    color: #fff;
+    box-shadow: none;
+    background-color: #4d90fe;
+    height: 30px;
+    min-width: 120px;
+    line-height: 100%;
+}
+
+.advanced-search-button button[type=submit]:hover {
+    background-color: #3583eb;
+}

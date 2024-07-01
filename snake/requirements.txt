@@ -1,0 +1,2 @@
+pygame==2.5.2
+auto-py-to-exe==2.44.0 - to create the exe
