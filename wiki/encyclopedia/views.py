@@ -1,8 +1,6 @@
-import os   # import os create the path to the md files 
+import re
 
-from django.shortcuts import render
-
-from django.conf import settings  # import settings to use the root of the filestructure 
+from django.shortcuts import render, redirect
 
 from . import util
 
@@ -14,22 +12,24 @@ def index(request):
         "entries": util.list_entries()
     })
 
-# getting the md file to read the content
-def get_md_content(filename):
-    filepath = os.path.join(settings.BASE_DIR, "entries", filename)
-    with open(filepath, "r", encoding="utf-8") as file:
-        content = file.read()
-    return content
-
-
-# create a dic with the md page content - need to get title, header and the rest of the body content
 def page_view(request, page_name):
-    content = get_md_content(f"{page_name}.md")
-    html_content = markdown2.markdown(content)
-    title = page_name
-    context = {
-        "title": title,
-        "html_content": html_content,
-    }
-    return render(request, 'encyclopedia/content.html', context)
+    """
+    Get the title from get_entry, which gets title from page_name
+    from urls.py. Create a dictionary with the title and 
+    the converted content. Return 404 if title doesn't match entries.
+    """
+    content = util.get_entry(page_name)
+    if content:
+        html_content = markdown2.markdown(content)
 
+        match = re.search(r'^# (.+)', content, re.MULTILINE)
+        header = match.group(1) if match else 'Default Title'
+        
+        context = {
+            "title": header,
+            "html_content": html_content,
+        }
+        return render(request, 'encyclopedia/content.html', context)
+    else:
+        return render(request, 'encyclopedia/nonexist.html')
+    
