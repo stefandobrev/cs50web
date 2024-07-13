@@ -37,3 +37,13 @@ def get_entry(title):
     except FileNotFoundError:
         return None
     
+def entry_exists(title):
+    """
+    Check if the title of the page we are creating already exists.
+    We're using partial code from save entry.
+    """
+    filename = f"entries/{title}.md"
+    if default_storage.exists(filename):
+        return True
+    else:
+        return False
