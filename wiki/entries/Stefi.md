@@ -1,3 +1,0 @@
-# Stefi
-
-Around the world.
