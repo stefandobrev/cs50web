@@ -9,4 +9,7 @@
     <div>
         {{ html_content|safe }}
     </div>
+    <div>
+        <a href="{% url 'edit_page' page_name=title %}" class="btn btn-primary mt-4">Edit</a>
+    </div>
 {% endblock %}
