@@ -1,6 +1,7 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.core.validators import URLValidator, MinValueValidator
+from django.core.exceptions import ValidationError
 
 
 class User(AbstractUser):
@@ -38,7 +39,11 @@ class Bids(models.Model):
     def __str__(self):
         return f"Bid of ${{self.amount}} by {{self.user.username}} was made for {{self.listing.title}}"
     
-
+    def clean(self):
+        """Checks if the bid is higher than the current one"""
+        highest_bid = self.listing.get_highest_bid()
+        if highest_bid and self.amount <= highest_bid.amount:
+            raise ValidationError("Bid must be higher than the current highest bid")
 
 ## TO DO
 ## auction listings
