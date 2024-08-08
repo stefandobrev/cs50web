@@ -1,0 +1,22 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-4 column1">
+                <div class="view-listing-title">{{ listing.title }}</div>
+                <img src="{{ listing.photo_url }}" alt="{{ listing.title}}" class="view-img-listing">
+                <p>{{ listing.description }}</p>
+            </div>
+            <div class="col-md-4 column2">
+                <h3 class="details-title">Details</h3>
+                <ul class="details-list">
+                    <li>Listed by: {{ listing.created_by }} </li>
+                    <li>Category: </li>
+            </div>
+            <div class="col-md-4 column3 ">
+                <p class="view-listing-price">Price: ${{ listing.price }}</p>
+            </div>
+        </div>
+    </div>
+{% endblock %}

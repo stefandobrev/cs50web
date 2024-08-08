@@ -1,14 +1,18 @@
 from django.contrib.auth import authenticate, login, logout
+from django.contrib import messages
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse
 
-from .models import User
+from django import forms
+
+from .models import User, AuctListing
 
 
 def index(request):
-    return render(request, "auctions/index.html")
+    listings = AuctListing.objects.all().order_by('-create_time')
+    return render(request, "auctions/index.html", {'listings': listings})
 
 
 def login_view(request):
@@ -61,3 +65,26 @@ def register(request):
         return HttpResponseRedirect(reverse("index"))
     else:
         return render(request, "auctions/register.html")
+
+class ListingForm(forms.ModelForm):
+    """
+    Default Django model form
+    """
+    class Meta:
+        model = AuctListing
+        fields = ['title', 'price', 'description', 'photo_url']
+
+def create_listing(request):
+    if request.method == "POST":
+        form = ListingForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Listing created succesfully!")
+            return redirect('create_listing')
+    else:
+        form = ListingForm()
+    return render(request, "auctions/create_listing.html", {'form': form})
+
+def show_listing(request, pk):
+    listing = AuctListing.objects.get(pk=pk)
+    return render(request, "auctions/listing.html", {'listing': listing})
