@@ -9,14 +9,109 @@
                 <p>{{ listing.description }}</p>
             </div>
             <div class="col-md-4 column2">
-                <h3 class="details-title">Details</h3>
+                <h3 class="details-title">Details:</h3>
                 <ul class="details-list">
-                    <li>Listed by: {{ listing.created_by }} </li>
-                    <li>Category: </li>
+                    <li>Listed by: {{ listing.created_by.username }} </li>
+                    <li>Category: {{ listing.category }}</li>
+                    {% if listing.created_by == user %}
+                        <li>
+                            <form method="post" action="{% url 'update_active_status' listing.id %}">
+                                {% csrf_token %}
+                                <label for="active-dropdown">Active:</label>
+                                    <select name="active" id="active-dropdown">
+                                        <option value="True" {% if listing.active %}selected{% endif %}>Yes</option>
+                                        <option value="False" {% if not listing.active %}selected{% endif %}>No</option>
+                                    </select>
+                                <button type="submit" class="button-active">Update</button>
+                            </form> 
+                        </li>
+                        {% for message in messages %}
+                        <div class="messages">
+                            <p>{{ message }}</p>
+                        </div>
+                        {% endfor %}
+                    {% elif listing.active == False %}
+                        {% if is_highest_bidder %}
+                            <p class="auction_closed">Congratulations, you are the winner!</p>
+                        {% else %}
+                            <p class="auction_closed">Auction closed!</p>
+                        {% endif %}
+                    {% endif %}
             </div>
             <div class="col-md-4 column3 ">
                 <p class="view-listing-price">Price: ${{ listing.price }}</p>
+                {% if user.is_authenticated and listing.created_by != user %}
+                    <form method="post" action="{% url 'add_to_watchlist' listing.id %}">
+                        {% csrf_token %}
+                        {% if listing.active %}
+                            {% if not is_in_watchlist %}
+                                <button type="submit" class="watchlist_button">
+                                    Add to Watchlist
+                                </button>
+                            {% else %}
+                                <button type="submit" class="watchlist_button">
+                                    Remove from Watchlist
+                                </button>
+                            {% endif %}
+                        {% else %}
+                            {% if is_in_watchlist %}
+                                <button type="submit" class="watchlist_button">
+                                    Remove from Watchlist
+                                </button>
+                            {% endif %}
+                        {% endif %}
+                    </form>
+                    {% if listing.active %}
+                    <form method="post" action="{% url 'submit_bid' listing.id %}">
+                        {% csrf_token %}
+                        {% if listing.number_bids == 0 %}
+                        <p>No bids placed yet.</p>
+                        {% else %}
+                        <p>{{ listing.number_bids}} bid(s) placed so far. 
+                            {% if is_highest_bidder %}
+                                Your bid is the current bid.
+                            {% else %}
+                                The highest bid is {{ highest_bid.bid }}
+                            {% endif %}</p>
+                        {% endif %}
+                        <input type="number" name="bid" step="0.01" id="active-dropdown" placeholder="Bid">
+                        <button type="submit" class="button-active">Place Bid</button>
+                    </form>
+                    {% endif %}
+                    {% for message in messages %}
+                        <div class="messages">
+                            <p>{{ message }}</p>
+                        </div>
+                    {% endfor %}
+                {% endif %}
             </div>
+        </div>
+
+        <h3>Comments</h3>
+        {% for comment in comments %}
+            <div class="comment">
+                <p><strong>{{ comment.commented_by }}:</strong> {{ comment.content }}</p>
+            </div>
+        {% empty %}
+            <p>No comments yet.</p>
+        {% endfor %}
+
+        <div class="comments-container">
+            {% if user.is_authenticated and listing.created_by != user and listing.active %}
+                <form method="post" action="{% url 'manage_comments' listing.id %}">
+                    {% csrf_token %}
+                    <p class="p-comment">{% if user_comment_exists %}Edit comment{% else %}Add a comment{% endif %}</p>
+                    <textarea class="comments" name="comment" rows="2" placeholder="Your comment..."></textarea>
+                    <button class="comments-bttn" type="submit">Submit</button> 
+                </form>
+                
+                {% if user_comment_exists %}
+                    <form method="post" action="{% url 'delete_comment' listing.id %}">
+                        {% csrf_token %}
+                        <button class="btn btn-danger mt-2" type="submit">Delete Comment</button>
+                    </form>
+                {% endif %}
+            {% endif %}
         </div>
     </div>
 {% endblock %}

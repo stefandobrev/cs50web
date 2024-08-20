@@ -2,6 +2,13 @@ body {
     padding: 10px;
 }
 
+/* messages */
+.messages {
+    margin-top: 4%;
+    color: red;
+    font-weight: bold;
+}
+
 /* index.html */
 .listing-container {
     border: solid black 1px;
@@ -50,6 +57,11 @@ body {
     color: gray;
 }
 
+.active_my_listings {
+    color:orange;
+    font-weight: bold;
+}
+
 /* listing.html */
 .column1 {
     display: flex;
@@ -77,6 +89,36 @@ body {
     font-size: 15px;;
 }
 
+#active-dropdown {
+    padding: 5px 10px;
+    font-size: 16px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    cursor: pointer;
+}
+
+.button-active {
+    padding: 7px 15px;
+    font-size: 16px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.button-active:hover {
+    background-color: #0056b3; 
+}
+
+.auction_closed {
+    margin-top: 10px;
+    font-weight: bold;
+    color: red;
+}
+
 .column3 {
     margin-top: 10px;
 }
@@ -85,4 +127,49 @@ body {
     font-size: 20px;
     font-weight: bold;
     color: red;
+}
+
+.watchlist_button {
+    padding: 7px 15px;
+    font-size: 16px;
+    background-color: white;
+    color: #0056b3;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-bottom: 4px;
+    border: solid black 1px;
+}
+
+/* comments */
+
+.comments-container {
+    margin-top: 20px;
+}
+
+.p-comment{
+    font-size: 20px;
+}
+
+.comments {
+    display:block;
+    width: 50%; 
+    resize: vertical;
+    margin-bottom: 10px;
+}
+
+.comments-bttn {
+    padding: 7px 15px;
+    font-size: 16px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.comments-bttn:hover {
+    background-color: #0056b3; 
 }
