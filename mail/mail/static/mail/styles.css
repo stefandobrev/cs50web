@@ -1,0 +1,31 @@
+textarea {
+    min-height: 400px;
+}
+
+.inbox-mails {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 5px;
+    background-color: white;
+}
+
+.left-content {
+    display: flex; 
+    flex-direction: row;
+    flex: 1;
+    gap: 30px;
+}
+
+.timestamp {
+    margin-left: auto;
+    color: gray;
+}
+
+.inbox-mails p {
+    margin: 0; 
+    padding: 0; 
+}
