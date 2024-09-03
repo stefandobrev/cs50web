@@ -10,7 +10,18 @@ textarea {
     border-radius: 5px;
     padding: 10px;
     margin-bottom: 5px;
+}
+
+.inbox-mails:hover {
+    background-color: #f0f0f0;
+}
+
+.white-bg {
     background-color: white;
+}
+
+.gray-bg {
+    background-color: lightgray;
 }
 
 .left-content {
@@ -29,3 +40,17 @@ textarea {
     margin: 0; 
     padding: 0; 
 }
+
+.email-link {
+    display: flex;
+    color:inherit;
+    width: 100%;
+    text-decoration: none;
+}
+
+.email-link:hover {
+    background-color: transparent;
+    color:inherit;
+    text-decoration: inherit;
+}
+

@@ -69,7 +69,6 @@ async function postEmails() {
   }
 }
 
-
 async function getEmails(mailbox) {
   try {
     const response = await fetch(`/emails/${mailbox}`);
@@ -82,57 +81,33 @@ async function getEmails(mailbox) {
     const data = await response.json();
     console.log('Mailbox data:', data);
 
-    // Separate function for invox div elements
-    const emailList = processMailData(data);
-    // Adding AdjacentHTML to keep h3 intact when adding new divs
-    document.querySelector('#emails-view').insertAdjacentHTML('beforeend', emailList);
+    const emailsView = document.querySelector('#emails-view');
+    emailsView.innerHTML = emailsView.querySelector('h3').outerHTML;
+
+    data.forEach(email => {
+      const emailDiv = document.createElement('div');
+      emailDiv.classList.add('inbox-mails');
+
+      if (email.read) {
+        emailDiv.classList.add('gray-bg')
+      } else {
+        emailDiv.classList.add('white-bg')
+      }
+
+      emailDiv.innerHTML = `
+      <a href="{% url {email} %}" class="email-link">
+        <div class="left-content">
+          <p><b>${email.sender}</b></p>
+          <p>${email.subject}</p>
+        </div>
+        <p class="timestamp">${email.timestamp}</p>
+      </a>
+      `;
+
+      emailsView.append(emailDiv);
+    });
+
   } catch (error) {
     console.error('Error fetching data:', error);
   }
 }
-
-function processMailData(data) {
-  return data.map(email => `
-    <div class="inbox-mails">
-      <div class="left-content">
-        <p><b>${email.sender}</b></p>
-        <p>${email.subject}</p>
-      </div>
-      <p class="timestamp">${email.timestamp}</p>
-    </div>
-    `).join('');
-}
-
-palmer@examp.com / coldpalm12 - Admin 
-dango@examp.com / outara12 
-stefonix@examp.com / stefonix1
-
-
-Send email:
-	- POST request to /emails - include the values of the form (recipient, subject, body);
-	- load sent inbox after an email is sent;
-	- check if the mail is saved;
-
-Mailbox:
-	- GET request to /emails/<mailbox>;
-	- visualize the email by latest on top;
-	- Subject should appear as identification for the mail;
-	- div for each mail, title/subject/timestamp;
-	- unread - white background, read - gray background;
-
-View email: 
-	- GET request to /emails/<email_id>;
-	- should visualize sender, subject, body, timestamp;
-	- add div to inbox.html - (hide/show in other inbox.js functions);
-	- add event listener - read: true - PUT request to /emails/<email_id>;
-
-Archive:
-	- Button in emails-view to archive - unarchive button, applied to received mails(archived, inbox);
-	- once email was archived/unarchived - load inbox page;
-
-Reply:
-	- emails-view option reply button;
-	- load compose form with:
-		1. pre-filled recipient - sender email
-		2. pre-filled subject line - Re: original subject if "Re:" exists do not apply the change;
-		3. pre-filled body - "On {date hour} {sender email} wrote:", {body of received email};
