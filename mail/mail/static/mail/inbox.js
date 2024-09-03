@@ -102,3 +102,37 @@ function processMailData(data) {
     </div>
     `).join('');
 }
+
+palmer@examp.com / coldpalm12 - Admin 
+dango@examp.com / outara12 
+stefonix@examp.com / stefonix1
+
+
+Send email:
+	- POST request to /emails - include the values of the form (recipient, subject, body);
+	- load sent inbox after an email is sent;
+	- check if the mail is saved;
+
+Mailbox:
+	- GET request to /emails/<mailbox>;
+	- visualize the email by latest on top;
+	- Subject should appear as identification for the mail;
+	- div for each mail, title/subject/timestamp;
+	- unread - white background, read - gray background;
+
+View email: 
+	- GET request to /emails/<email_id>;
+	- should visualize sender, subject, body, timestamp;
+	- add div to inbox.html - (hide/show in other inbox.js functions);
+	- add event listener - read: true - PUT request to /emails/<email_id>;
+
+Archive:
+	- Button in emails-view to archive - unarchive button, applied to received mails(archived, inbox);
+	- once email was archived/unarchived - load inbox page;
+
+Reply:
+	- emails-view option reply button;
+	- load compose form with:
+		1. pre-filled recipient - sender email
+		2. pre-filled subject line - Re: original subject if "Re:" exists do not apply the change;
+		3. pre-filled body - "On {date hour} {sender email} wrote:", {body of received email};
