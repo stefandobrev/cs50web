@@ -46,6 +46,7 @@ textarea {
     color:inherit;
     width: 100%;
     text-decoration: none;
+    cursor: pointer;
 }
 
 .email-link:hover {
