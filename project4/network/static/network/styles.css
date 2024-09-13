@@ -1,0 +1,17 @@
+/* index*/
+.form-post {
+    border: solid gray 1px; 
+    padding: 10px;          
+    width: 30%;             
+    box-sizing: border-box; 
+}
+
+.form-post textarea {
+    width: 100%;            
+}
+
+.form-post button {
+    display: block;
+    width: auto;           
+    margin-top: 10px;     
+}

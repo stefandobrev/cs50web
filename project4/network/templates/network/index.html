@@ -1,0 +1,25 @@
+{% extends "network/layout.html" %}
+
+{% load static %}
+
+{% block body %}
+    <div class="container-fluid">
+        <h3>All Posts</h3>
+        {% if user.is_authenticated %}
+        <form class="new-post-form">
+            {% csrf_token %}
+            <div class="form-post">
+                <p><b>New Post</b></p>
+                <textarea id="content" placeholder="Add a new post" autofocus></textarea>
+                <button id="button-post"class="btn-primary">Add Post</button>
+            </div>
+        </form>
+        {% endif %}
+        <div id="view-posts">
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'network/index.js' %}"></script>
+{% endblock %}
