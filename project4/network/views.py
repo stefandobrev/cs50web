@@ -87,3 +87,6 @@ def new_post(request):
     )
     post.save()
     return JsonResponse({"message":"New post created!"}, status=201)
+
+def get_posts(reqest):
+    return JsonResponse({"message":"New post created!"}, status=200)
