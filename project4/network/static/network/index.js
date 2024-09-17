@@ -1,14 +1,17 @@
 document.addEventListener('DOMContentLoaded', () => {
     const textareaPost = document.getElementById('content');
     const buttonPost = document.getElementById('button-post');
-    const csrfToken = document.querySelector('input[name="csrfmiddlewaretoken"]').value;
 
-    buttonPost.addEventListener('click', (event) => {
-        event.preventDefault();
-        addNewPost(textareaPost, csrfToken).then (() => {
-            textareaPost.value = "";
-        }); 
-    });
+    if (textareaPost && buttonPost) {
+        const csrfToken = document.querySelector('input[name="csrfmiddlewaretoken"]').value;
+        
+        buttonPost.addEventListener('click', (event) => {
+            event.preventDefault();
+            addNewPost(textareaPost, csrfToken).then (() => {
+                textareaPost.value = "";
+            }); 
+        });
+    }
 });
 
 async function addNewPost(textarea, csrfToken) {
