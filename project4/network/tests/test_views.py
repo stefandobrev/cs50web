@@ -5,8 +5,11 @@ from django.urls import reverse
 import json
 
 class baseTest(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        cls.user = User.objects.create(username='testuser')
+    
     def setUp(self):
-        self.user = User.objects.create(username='testuser')
         self.client.force_login(self.user)
 
 class newPostTest(baseTest):
@@ -18,14 +21,13 @@ class newPostTest(baseTest):
         )
 
         self.assertEqual(response.status_code, 201)
-        self.assertJSONEqual(response.content, {"message": "New post created!"})
-        self.assertTrue(Post.objects.filter(content='Test content').exists())
+        self.assertTrue(Post.objects.filter(content='Test content', created_by=self.user).exists())
 
 class getPostsTest(baseTest):
-    def setUp(self):
-        super().setUp()
-        Post.objects.create(created_by=self.user, content='First content')
-        Post.objects.create(created_by=self.user, content='Second content')
+    @classmethod
+    def setUpTestData(cls):
+        super().setUpTestData()
+        cls.post = Post.objects.create(created_by=cls.user, content='First content')
 
     def test_get_posts(self):
         response = self.client.get(reverse('get-posts'))
@@ -34,6 +36,20 @@ class getPostsTest(baseTest):
 
         response_data =  response.json()
 
-        self.assertEqual(len(response_data), Post.objects.count())
+        self.assertEqual(len(response_data), 1)
         self.assertEqual(response_data[0]['content'], 'First content')
-        self.assertEqual(response_data[1]['content'], 'Second content')
+
+class viewUserTest(baseTest):
+    @classmethod
+    def setUpTestData(cls):
+        super().setUpTestData()
+
+    def test_view_user(self):
+        response = self.client.get(reverse('view-user', args=[self.user.id]))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'network/userpage.html')
+    
+    def test_user_not_found(self):
+        response = self.client.get(reverse('view-user', args=[999]))
+        self.assertEqual(response.status_code, 404)

@@ -1,0 +1,15 @@
+{% extends "network/layout.html" %}
+
+{% load static %}
+
+{% block body %}
+    <div id="userprofile-container" class="container-fluid">
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script>
+        const userId = "{{ viewed_user.id }}";
+    </script>
+    <script src="{% static 'network/userpage.js' %}"></script>
+{% endblock %}

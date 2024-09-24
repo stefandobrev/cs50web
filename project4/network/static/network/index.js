@@ -12,6 +12,8 @@ document.addEventListener('DOMContentLoaded', () => {
             }); 
         });
     }
+
+    getAllPosts();
 });
 
 async function addNewPost(textarea, csrfToken) {
@@ -20,7 +22,7 @@ async function addNewPost(textarea, csrfToken) {
     };
 
     try {
-        const response = await fetch('/new-post', {
+        const response = await fetch('posts/new/', {
             method: 'POST',
             headers: {
                 'Content-type': 'application/json',
@@ -36,8 +38,74 @@ async function addNewPost(textarea, csrfToken) {
         else {
             const result = await response.json();
             console.log('Success:', result);
+
+            // Dynamically add new post instead of fetching all data
+            addPostToUI(result);
         }
+
     } catch (error) {
         console.error('Error fetching data:', error);
     }
+}
+
+async function getAllPosts() {
+    try {
+        const response = await fetch('posts/');
+        if (!response.ok) {
+            const errorData = await response.json();
+            console.log('Error from server:', errorData)
+            return;
+        }
+
+        const data = await response.json();
+        console.log('Posts data:', data);
+
+        const allPostsView = document.querySelector('#view-posts')
+        if (!allPostsView) {
+            console.error('Element #view-posts not found');
+            return;
+        }
+
+        if (data.length === 0) {
+            allPostsView.innerHTML = '<p>No posts available.</p>';
+            return;
+        }
+
+        allPostsView.innerHTML = '';
+
+        data.forEach(post => {
+            const postDiv = renderPost(post);
+            allPostsView.append(postDiv);
+        });
+    } catch (error) {
+        console.error('Error fetching data:', error);
+    }    
+}
+
+function renderPost(post) {
+    const postDiv = document.createElement('div');
+    postDiv.classList.add('all-posts')
+    
+    const userUrl = `user/${post.created_by_id}/`; 
+
+    postDiv.innerHTML = `
+    <a href="${userUrl}">
+        <p class="text-username">${post.created_by}</p>
+    </a>
+    <p class="text-content">${post.content}</p>
+    <p class="text-timestamp">${post.timestamp} · The Network for iPhone</p>
+    `;
+
+    return postDiv;
+}
+
+function addPostToUI(post) {
+    const allPostsView = document.querySelector('#view-posts');
+    if (!allPostsView) {
+        console.error('Element view-posts not found!')
+        return;
+    }
+
+    const postDiv = renderPost(post);
+    allPostsView.prepend(postDiv);
 }

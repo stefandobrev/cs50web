@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 
 from django.http import JsonResponse
@@ -86,7 +86,29 @@ def new_post(request):
         created_by = user
     )
     post.save()
-    return JsonResponse({"message":"New post created!"}, status=201)
 
-def get_posts(reqest):
-    return JsonResponse({"message":"New post created!"}, status=200)
+    return JsonResponse(post.serialize(), status=201)
+
+def get_posts(request):
+    posts = Post.objects.all().order_by("-timestamp")
+    return JsonResponse([post.serialize() for post in posts], safe=False)
+
+def view_user(request, user_id):
+    # Render the user page
+    user_to_view = get_object_or_404(User, pk=user_id)
+    return render(request, "network/userpage.html", {"viewed_user": user_to_view})
+
+def fetch_user_data(request, user_id):
+    # Handle AJAX request to fetch user data
+    user_to_view = get_object_or_404(User, pk=user_id)
+    posts = Post.objects.filter(created_by=user_to_view).order_by("-timestamp")
+
+    data = {
+        "viewed_user": {
+            "id": user_to_view.id,
+            "username": user_to_view.username
+        },
+        "posts": [post.serialize() for post in posts]
+    }
+
+    return JsonResponse(data)

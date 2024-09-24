@@ -20,6 +20,16 @@ class Post(models.Model):
             MinValueValidator(0)
     ])
 
+    def serialize(self):
+        return {
+            "id": self.id,
+            "content": self.content,
+            "created_by": self.created_by.username,
+            "created_by_id": self.created_by.id,
+            "timestamp": self.timestamp.strftime("%I:%M %p · %B %d, %y"),
+            "likes": self.likes
+        }
+
     def __str__(self):
         content_preview = self.content[:20] + ('...' if len(self.content) > 20 else '')
         date_str = self.timestamp.strftime('%d-%m-%Y')
