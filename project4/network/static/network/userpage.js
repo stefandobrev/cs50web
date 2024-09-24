@@ -40,6 +40,7 @@ function renderProfile(viewed_user, posts) {
 
     postDiv.innerHTML = `
     <h1>${viewed_user.username}</h1>
+    <button>Follow</button>
     `;
 
     if (posts) {

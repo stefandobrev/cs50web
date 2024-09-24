@@ -8,6 +8,12 @@ from django.utils import timezone
 
 class User(AbstractUser):
     id = models.AutoField(primary_key=True)
+    following = models.ManyToManyField(
+        'self', 
+        related_name="followers",
+        symmetrical=False,
+        blank=True
+    )
 
 class Post(models.Model):
     id = models.AutoField(primary_key=True)

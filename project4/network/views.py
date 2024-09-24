@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 
 from django.http import JsonResponse
@@ -112,3 +112,18 @@ def fetch_user_data(request, user_id):
     }
 
     return JsonResponse(data)
+
+@login_required
+def followers(request, user_id):
+    if request.method == "POST":
+        followed_user = get_object_or_404(User, pk=user_id)
+        request_user = request.user
+
+        if followed_user in request_user.following(all):
+            request_user.following.remove(followed_user)
+            return JsonResponse({'message': 'Unfollowed'}, status=200)
+        else:
+            request_user.following.add(followed_user)
+            return JsonResponse({'message': 'Followed'}, status=200)
+
+    return JsonResponse({'error': 'Invalid request method'}, status=404)
