@@ -5,11 +5,19 @@
 {% block body %}
     <div id="userprofile-container" class="container-fluid">
     </div>
+    <div id="userpage-user-posts" class="container-fluid">
+    </div>
 {% endblock %}
 
 {% block script %}
     <script>
-        const userId = "{{ viewed_user.id }}";
+        const userId = "{{ viewed_user.id }}"; 
+
+        const loggedIn = JSON.parse("{{ logged_in|yesno:'true,false' }}");
+        const isDiffUser = JSON.parse("{{ different_user|yesno:'true,false' }}");
+        let isFollowed = JSON.parse("{{ is_followed|yesno:'true,false' }}");
+        editIconUrl = "{% static 'network/edit-button.png' %}";
+
     </script>
-    <script src="{% static 'network/userpage.js' %}"></script>
+    <script type="module" src="{% static 'network/userpage.js' %}" defer></script>
 {% endblock %}

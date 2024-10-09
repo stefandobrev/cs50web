@@ -11,7 +11,7 @@
             <div class="form-post">
                 <p><b>New Post</b></p>
                 <textarea id="content" placeholder="Add a new post" autofocus></textarea>
-                <button id="button-post"class="btn-primary">Add Post</button>
+                <button id="post-button">Add Post</button>
             </div>
         </form>
         {% endif %}
@@ -21,5 +21,8 @@
 {% endblock %}
 
 {% block script %}
-    <script src="{% static 'network/index.js' %}"></script>
+<script>
+    editIconUrl = "{% static 'network/edit-button.png' %}";
+</script>
+    <script type="module" src="{% static 'network/index.js' %}" defer></script>
 {% endblock %}

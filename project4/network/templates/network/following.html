@@ -1,5 +1,13 @@
 {% extends "network/layout.html" %}
 
+{% load static %}
+
 {% block body %}
-    TODO
+    <div id="following-container" class="container-fluid">
+        <h3>Following</h3>
+    </div>
+{% endblock %}
+    
+{% block script %}
+    <script type="module" src="{% static 'network/following.js' %}" defer></script>
 {% endblock %}

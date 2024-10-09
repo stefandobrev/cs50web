@@ -1,19 +1,20 @@
+import { renderPaginationControls } from './pagination.js';
+import { renderPost } from './posts.js';
+
 document.addEventListener('DOMContentLoaded', () => {
     const textareaPost = document.getElementById('content');
-    const buttonPost = document.getElementById('button-post');
+    const buttonPost = document.getElementById('post-button');
 
     if (textareaPost && buttonPost) {
         const csrfToken = document.querySelector('input[name="csrfmiddlewaretoken"]').value;
         
         buttonPost.addEventListener('click', (event) => {
             event.preventDefault();
-            addNewPost(textareaPost, csrfToken).then (() => {
-                textareaPost.value = "";
-            }); 
+            addNewPost(textareaPost, csrfToken);
         });
     }
 
-    getAllPosts();
+    getAllPosts(1);
 });
 
 async function addNewPost(textarea, csrfToken) {
@@ -21,8 +22,14 @@ async function addNewPost(textarea, csrfToken) {
         'content': textarea.value
     };
 
+    if (!content.content.trim()) {
+        alert('Content should not be empty.'); 
+        return; 
+    }
+
+    console.log('Sending new post:', content);
     try {
-        const response = await fetch('posts/new/', {
+        const response = await fetch('/posts/new/', {
             method: 'POST',
             headers: {
                 'Content-type': 'application/json',
@@ -34,6 +41,8 @@ async function addNewPost(textarea, csrfToken) {
         if (!response.ok) {
             const errorData = await response.json();
             console.error('Error response from server:', errorData);
+            alert(errorData.error);
+            textarea.value = content.content;
         }
         else {
             const result = await response.json();
@@ -41,6 +50,7 @@ async function addNewPost(textarea, csrfToken) {
 
             // Dynamically add new post instead of fetching all data
             addPostToUI(result);
+            textarea.value = ""; 
         }
 
     } catch (error) {
@@ -48,9 +58,9 @@ async function addNewPost(textarea, csrfToken) {
     }
 }
 
-async function getAllPosts() {
+async function getAllPosts(pageNumber = 1) {
     try {
-        const response = await fetch('posts/');
+        const response = await fetch(`/posts?page=${pageNumber}`);
         if (!response.ok) {
             const errorData = await response.json();
             console.log('Error from server:', errorData)
@@ -58,45 +68,28 @@ async function getAllPosts() {
         }
 
         const data = await response.json();
-        console.log('Posts data:', data);
 
-        const allPostsView = document.querySelector('#view-posts')
-        if (!allPostsView) {
-            console.error('Element #view-posts not found');
-            return;
-        }
+        const allPostsView = document.querySelector('#view-posts');
+        const paginationContainer = document.querySelector('#pagination-controls');
 
-        if (data.length === 0) {
-            allPostsView.innerHTML = '<p>No posts available.</p>';
+        if (!allPostsView || !paginationContainer) {
+            console.error('Element not found');
             return;
         }
 
         allPostsView.innerHTML = '';
 
-        data.forEach(post => {
+        
+        data.posts.forEach(post => {
             const postDiv = renderPost(post);
             allPostsView.append(postDiv);
         });
+
+        renderPaginationControls(data.data_paginator, paginationContainer, getAllPosts);
+
     } catch (error) {
         console.error('Error fetching data:', error);
     }    
-}
-
-function renderPost(post) {
-    const postDiv = document.createElement('div');
-    postDiv.classList.add('all-posts')
-    
-    const userUrl = `user/${post.created_by_id}/`; 
-
-    postDiv.innerHTML = `
-    <a href="${userUrl}">
-        <p class="text-username">${post.created_by}</p>
-    </a>
-    <p class="text-content">${post.content}</p>
-    <p class="text-timestamp">${post.timestamp} · The Network for iPhone</p>
-    `;
-
-    return postDiv;
 }
 
 function addPostToUI(post) {

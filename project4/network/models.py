@@ -1,11 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
-from django.core.validators import MinValueValidator
-
-from django.utils import timezone
-
-
 class User(AbstractUser):
     id = models.AutoField(primary_key=True)
     following = models.ManyToManyField(
@@ -13,27 +8,30 @@ class User(AbstractUser):
         related_name="followers",
         symmetrical=False,
         blank=True
-    )
+        )
 
 class Post(models.Model):
     id = models.AutoField(primary_key=True)
-    content = models.TextField(max_length=280)
+    content = models.CharField(max_length=280)
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
-    timestamp = models.DateTimeField(default=timezone.now)
-    likes = models.IntegerField(
-        default=0, 
-        validators= [
-            MinValueValidator(0)
-    ])
+    timestamp = models.DateTimeField(auto_now_add=True)
+    liked_by = models.ManyToManyField(
+        User, 
+        related_name="liked_posts",
+        blank=True
+        )
 
-    def serialize(self):
+    def serialize(self, current_user):
         return {
             "id": self.id,
             "content": self.content,
             "created_by": self.created_by.username,
             "created_by_id": self.created_by.id,
             "timestamp": self.timestamp.strftime("%I:%M %p · %B %d, %y"),
-            "likes": self.likes
+            "likes": self.liked_by.count(),
+            "liked": current_user in self.liked_by.all(),
+            "can_edit": current_user == self.created_by,
+            "can_like": current_user.is_authenticated and current_user != self.created_by
         }
 
     def __str__(self):
