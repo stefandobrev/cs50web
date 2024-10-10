@@ -30,7 +30,7 @@ class IndexTest(BaseTest):
     def test_edit_post(self):
         self.browser.get(self.live_server_url + '/')
 
-        WebDriverWait(self.browser, 10).until(
+        WebDriverWait(self.browser, 5).until(
             EC.presence_of_element_located((By.CSS_SELECTOR, ".all-posts"))
         )
 
