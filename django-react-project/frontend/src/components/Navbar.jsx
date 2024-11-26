@@ -7,33 +7,40 @@ import {
   MenuItem,
   MenuItems,
 } from '@headlessui/react';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
+
+import { fetchProfileData } from '../store/slices/userSlice';
+import { logout } from '../store/slices/authSlice';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }
 
-const Navbar = ({ isAuthenticated, setIsAuthenticated }) => {
-  const location = useLocation();
+const Navbar = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const navigation = [{ name: 'Home', href: '/' }];
+  const location = useLocation();
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const profile = useSelector((state) => state.user.profile);
 
-  if (isAuthenticated) {
-    navigation.push({
-      name: 'Exercises',
-      href: '/exercises',
-    });
-  } else {
-    navigation.push({
-      name: 'Member Portal',
-      href: '/login',
-    });
-  }
+  useEffect(() => {
+    if (isAuthenticated) {
+      dispatch(fetchProfileData());
+    }
+  }, [dispatch, isAuthenticated]);
 
-  const signOut = () => {
-    localStorage.clear();
-    setIsAuthenticated(false);
+  const navigation = [
+    { name: 'Home', href: '/' },
+    isAuthenticated
+      ? { name: 'Exercises', href: '/exercises' }
+      : { name: 'Member Portal', href: '/login' },
+  ];
+
+  const handleSignOut = () => {
+    dispatch(logout());
     navigate('/login');
   };
 
@@ -90,48 +97,51 @@ const Navbar = ({ isAuthenticated, setIsAuthenticated }) => {
           </div>
           <div className='absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0'>
             {/* Profile dropdown */}
-            <Menu as='div' className='relative ml-3'>
-              <div>
-                <MenuButton className='relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800'>
-                  <span className='absolute -inset-1.5' />
-                  <span className='sr-only'>Open user menu</span>
-                  <img
-                    alt=''
-                    src='https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'
-                    className='size-8 rounded-full'
-                  />
-                </MenuButton>
-              </div>
-              <MenuItems
-                transition
-                className='absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black/5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in'
-              >
-                <MenuItem>
-                  <a
-                    href='#'
-                    className='block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none'
-                  >
-                    Your Profile
-                  </a>
-                </MenuItem>
-                <MenuItem>
-                  <a
-                    href='#'
-                    className='block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none'
-                  >
-                    Settings
-                  </a>
-                </MenuItem>
-                <MenuItem>
-                  <button
-                    onClick={signOut}
-                    className='block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none'
-                  >
-                    Sign out
-                  </button>
-                </MenuItem>
-              </MenuItems>
-            </Menu>
+            {isAuthenticated && (
+              <Menu as='div' className='relative ml-3'>
+                <div>
+                  <MenuButton className='relative flex items-center rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800'>
+                    <img
+                      alt='User Avatar'
+                      src='public/defaultProfile.png'
+                      className='h-8 w-8 rounded-full'
+                    />
+                    <p className='ml-2 text-white text-lg font-bold'>
+                      {profile.first_name} {profile.last_name}
+                    </p>
+                  </MenuButton>
+                </div>
+                <MenuItems
+                  transition
+                  className='absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black/5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in'
+                >
+                  <MenuItem>
+                    <NavLink
+                      to='/profile'
+                      className='block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none'
+                    >
+                      Your Profile
+                    </NavLink>
+                  </MenuItem>
+                  <MenuItem>
+                    <NavLink
+                      to='/settings'
+                      className='block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none'
+                    >
+                      Settings
+                    </NavLink>
+                  </MenuItem>
+                  <MenuItem>
+                    <button
+                      onClick={handleSignOut}
+                      className='block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none'
+                    >
+                      Sign out
+                    </button>
+                  </MenuItem>
+                </MenuItems>
+              </Menu>
+            )}
           </div>
         </div>
       </div>
