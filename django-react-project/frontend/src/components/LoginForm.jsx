@@ -8,19 +8,18 @@ const LoginForm = ({ loginUserData }) => {
   const { handleSubmit } = useFormContext();
 
   return (
-    <form onSubmit={handleSubmit(loginUserData)} className='space-y-4'>
+    <form onSubmit={handleSubmit(loginUserData)} className='space-y-3'>
       <InputField label='Username' id='login_username' />
       <PasswordField label='Password' id='login_password' />
 
-      {/* Submit Button */}
-      <div className='flex flex-col justify-center items-center'>
+      <div className='flex flex-col justify-center items-center space-y-2'>
         <button
           type='submit'
-          className='mt-4 bg-blue-500 text-white py-2 px-4 rounded w-auto'
+          className='bg-blue-500 text-white py-2 px-4 rounded w-auto'
         >
           Sign In
         </button>
-        <Link to='/register' className='mt-2 text-blue-500 hover:underline'>
+        <Link to='/register' className='text-blue-500 hover:underline'>
           Don't have an account? Register
         </Link>
       </div>

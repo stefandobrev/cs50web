@@ -8,8 +8,8 @@ export const fetchUserProfile = async () => {
       throw new Error('Failed to fetch user profile');
     }
 
-    const fetchUserProfileData = await response.json();
-    return fetchUserProfileData;
+    const data = await response.json();
+    return data;
   } catch (error) {
     console.error('Error fetching profile:', error);
     throw error;

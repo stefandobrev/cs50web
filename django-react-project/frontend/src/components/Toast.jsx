@@ -1,19 +1,18 @@
 import { ToastContainer } from 'react-toastify';
 
-const Toast = () => {
-  return (
-    <ToastContainer
-      position='top-right'
-      autoClose={3000} // Closes after 3 seconds
-      hideProgressBar={false}
-      newestOnTop={false}
-      closeOnClick
-      rtl={false}
-      pauseOnFocusLoss
-      draggable
-      pauseOnHover
-      theme='colored' // Options: light, dark, colored
-    />
-  );
+const TOAST_CONFIG = {
+  position: 'top-right',
+  autoClose: 3000,
+  hideProgressBar: false,
+  newestOnTop: false,
+  closeOnClick: true,
+  rtl: false,
+  pauseOnFocusLoss: true,
+  draggable: true,
+  pauseOnHover: true,
+  theme: 'colored',
 };
+
+const Toast = () => <ToastContainer {...TOAST_CONFIG} />;
+
 export default Toast;

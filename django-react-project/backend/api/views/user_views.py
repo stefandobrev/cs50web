@@ -1,8 +1,5 @@
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
-from django.contrib.auth.decorators import login_required
-
-from ..models import User
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
 
 from ..controllers.user_controller import UserController
 
@@ -18,27 +15,18 @@ def login_user(request):
     return user_controller.login(request)
 
 @api_view(['GET', 'PUT'])
-@login_required
+@permission_classes([IsAuthenticated])
 def your_profile(request):
-    current_user = request.user
-    if request.method == 'GET':
-        current_user_data = {
-            'first_name': current_user.first_name,
-            'last_name': current_user.last_name,
-        }
-        return Response(current_user_data)
-    if request.method == 'PUT':
-        data = request.data 
-        current_user.first_name = data.get('first_name', current_user.first_name) 
-        current_user.last_name = data.get('last_name', current_user.last_name) 
-        current_user.save() 
-        updated_user_data = { 
-            'first_name': current_user.first_name, 
-            'last_name': current_user.last_name, 
-            } 
-        return Response(updated_user_data)
+    user_controller = UserController()
+    return user_controller.handle_profile(request)
 
 @api_view(['POST'])
 def refresh_token(request):
     user_controller = UserController()
     return user_controller.refresh_token(request)
+
+@api_view(['GET', 'PUT'])
+@permission_classes([IsAuthenticated])
+def profile_settings(request):
+    user_controller = UserController()
+    return user_controller.handle_settings(request)

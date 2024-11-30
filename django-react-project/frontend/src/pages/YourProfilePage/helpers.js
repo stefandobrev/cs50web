@@ -1,20 +1,16 @@
 import api from '../../utils/api';
 
-export const updateUserProfile = async (userProfileData) => {
+export const updateUserProfile = async (profileData) => {
   try {
-    const responseUpdateProfile = await api(
-      'user/profile/',
-      'PUT',
-      userProfileData
-    );
+    const response = await api('user/profile/', 'PUT', profileData);
 
-    if (!responseUpdateProfile.ok) {
-      throw new Error('Failed to fetch user profile');
+    if (!response.ok) {
+      throw new Error('Failed to update profile');
     }
 
-    const fetchUserProfileData = await responseUpdateProfile.json();
-    return fetchUserProfileData;
+    const data = await response.json();
+    return data;
   } catch (error) {
-    console.error('Error fetching profile:', error);
+    throw error;
   }
 };

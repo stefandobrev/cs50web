@@ -1,10 +1,9 @@
 import PageTitle from '../../components/PageTitle';
 
-const HomePage = () => {
+export const HomePage = () => {
   return (
     <section>
-      <PageTitle title='AlishFitness' />
+      <PageTitle />
     </section>
   );
 };
-export default HomePage;

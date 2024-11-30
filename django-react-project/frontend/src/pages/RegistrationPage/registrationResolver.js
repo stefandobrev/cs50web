@@ -32,10 +32,10 @@ const registrationResolver = async (data) => {
       type: 'required',
       message: 'Password is required',
     };
-  } else if (data.password.length < 6) {
+  } else if (data.password.length < 8) {
     errors.password = {
       type: 'minLength',
-      message: 'Password must be at least 6 characters long',
+      message: 'Password must be at least 8 characters long',
     };
   }
 

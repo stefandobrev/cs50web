@@ -1,56 +1,19 @@
-import {
-  Route,
-  RouterProvider,
-  createRoutesFromElements,
-  createBrowserRouter,
-} from 'react-router-dom';
+import { RouterProvider } from 'react-router-dom';
 import { Provider } from 'react-redux';
-
-// Layouts
-import MainLayout from './layouts/MainLayout';
-
-// Pages
-import HomePage from './pages/HomePage';
-import RegistrationPage from './pages/RegistrationPage';
-import LoginPage from './pages/LoginPage';
-import ProfileSettingsPage from './pages/ProfileSettingsPage';
-import YourProfilePage from './pages/YourProfilePage';
-import ExercisePage from './pages/ExercisePage';
-import NotFoundPage from './pages/NotFoundPage';
-
-//Other
+import { PersistGate } from 'redux-persist/integration/react';
+import { store, persistor } from './store/store';
+import { router } from './routes/router';
 import AuthWrapper from './components/AuthWrapper';
-import ProtectedRoute from './components/ProtectedRoute';
-import PublicRoute from './components/PublicRoute';
-import { store } from './store/store';
-
-const router = createBrowserRouter(
-  createRoutesFromElements(
-    <Route path='/' element={<MainLayout />}>
-      <Route index element={<HomePage />} />
-
-      <Route element={<PublicRoute />}>
-        <Route path='/register' element={<RegistrationPage />} />
-        <Route path='/login' element={<LoginPage />} />
-      </Route>
-
-      <Route element={<ProtectedRoute />}>
-        <Route path='/exercises' element={<ExercisePage />} />
-        <Route path='/profile' element={<YourProfilePage />} />
-        <Route path='/settings' element={<ProfileSettingsPage />} />
-      </Route>
-
-      <Route path='*' element={<NotFoundPage />} />
-    </Route>
-  )
-);
+import Spinner from './components/Spinner';
 
 const App = () => {
   return (
     <Provider store={store}>
-      <AuthWrapper>
-        <RouterProvider router={router} />
-      </AuthWrapper>
+      <PersistGate loading={<Spinner loading={true} />} persistor={persistor}>
+        <AuthWrapper>
+          <RouterProvider router={router} />
+        </AuthWrapper>
+      </PersistGate>
     </Provider>
   );
 };

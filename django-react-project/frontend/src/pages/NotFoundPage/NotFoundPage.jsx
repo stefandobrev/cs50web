@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { ExclamationTriangleIcon } from '@heroicons/react/24/solid';
 
-const NotFoundPage = () => {
+export const NotFoundPage = () => {
   return (
     <section className='text-center flex flex-col justify-center items-center h-96'>
       <ExclamationTriangleIcon className='text-yellow-400 h-24 w-24 mb-4' />
@@ -16,5 +16,3 @@ const NotFoundPage = () => {
     </section>
   );
 };
-
-export default NotFoundPage;

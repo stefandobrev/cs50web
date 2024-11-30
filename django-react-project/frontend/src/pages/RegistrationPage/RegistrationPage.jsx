@@ -6,9 +6,9 @@ import { toast } from 'react-toastify';
 import PageTitle from '../../components/PageTitle';
 import RegistrationForm from '../../components/RegistrationForm';
 import registrationResolver from './registrationResolver';
-import { addUser } from './helpers';
+import { registerUser } from './helpers';
 
-const RegistrationPage = () => {
+export const RegistrationPage = () => {
   const [message, setMessage] = useState('');
   const navigate = useNavigate();
   const methods = useForm({
@@ -16,7 +16,7 @@ const RegistrationPage = () => {
   });
 
   const onSubmit = async (userData) => {
-    const { type, text } = await addUser(userData);
+    const { type, text } = await registerUser(userData);
 
     if (type === 'error') {
       setMessage({ type, text });
@@ -30,18 +30,16 @@ const RegistrationPage = () => {
   };
 
   return (
-    <section className='flex flex-col items-center justify-center min-h-screen bg-gray-100'>
-      <PageTitle title='Create Profile | AlishFitness' />
-      <h2 className='text-3xl font-semibold text-center mb-6'>
-        Create Profile
-      </h2>
-      <div className='bg-white p-8 rounded shadow-md w-full max-w-md'>
+    <div className='flex items-center justify-center h-full'>
+      <PageTitle title='Create Profile' />
+      <div className='bg-white p-5 rounded shadow-md w-full max-w-sm mx-4'>
+        <h2 className='text-2xl font-semibold text-center mb-3'>
+          Create Profile
+        </h2>
         <FormProvider {...methods}>
           <RegistrationForm registerUser={onSubmit} message={message} />
         </FormProvider>
       </div>
-    </section>
+    </div>
   );
 };
-
-export default RegistrationPage;

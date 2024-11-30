@@ -1,19 +1,14 @@
 import api from '../../utils/api';
 
-export const addUser = async (userRegisterData) => {
+export const registerUser = async (userData) => {
   try {
-    const responseAddUser = await api(
-      'user/create-user/',
-      'POST',
-      userRegisterData
-    );
+    const response = await api('user/create-user/', 'POST', userData);
 
-    if (!responseAddUser.ok) {
-      const errorAddUserData = await responseAddUser.json();
+    if (!response.ok) {
+      const errorData = await response.json();
 
-      // Check if errorAddUserData contains a 'text' field with errors
       let errorMessage = 'Something went wrong';
-      if (errorAddUserData.username || errorAddUserData.email) {
+      if (errorData.username || errorData.email) {
         errorMessage = 'Username/Email unavailable';
       }
 
@@ -23,13 +18,9 @@ export const addUser = async (userRegisterData) => {
       };
     }
 
-    return {
-      type: 'success',
-    };
+    return { type: 'success' };
   } catch (error) {
     console.error('Error:', error);
-    return {
-      type: 'error',
-    };
+    return { type: 'error' };
   }
 };

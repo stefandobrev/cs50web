@@ -9,7 +9,7 @@ import LoginForm from '../../components/LoginForm';
 import { setUser } from '../../store/slices/authSlice';
 import { setLoading } from '../../store/slices/loadingSlice';
 
-const LoginPage = () => {
+export const LoginPage = () => {
   const methods = useForm();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -38,22 +38,22 @@ const LoginPage = () => {
       navigate('/exercises');
     } catch (error) {
       toast.error('Login failed');
-      console.error('kUV TI E PROBLEMA:', error);
     } finally {
       dispatch(setLoading(false));
     }
   };
 
   return (
-    <section className='flex flex-col items-center justify-center min-h-screen bg-gray-100'>
-      <PageTitle title='Member Login | AlishFitness' />
-      <h2 className='text-3xl font-semibold text-center mb-6'>Member Login</h2>
-      <div className='bg-white p-8 rounded shadow-md w-full max-w-md'>
+    <div className='flex items-center justify-center h-full'>
+      <PageTitle title='Member Login' />
+      <div className='bg-white p-5 rounded shadow-md w-full max-w-sm'>
+        <h2 className='text-2xl font-semibold text-center mb-3'>
+          Member Login
+        </h2>
         <FormProvider {...methods}>
           <LoginForm loginUserData={onSubmit} />
         </FormProvider>
       </div>
-    </section>
+    </div>
   );
 };
-export default LoginPage;

@@ -1,27 +1,19 @@
 import api from '../../utils/api';
 
-export const loginUser = async (userLoginData) => {
+export const loginUser = async (userData) => {
   try {
-    const responseLoginUser = await api('user/login/', 'POST', userLoginData);
-    if (!responseLoginUser.ok) {
-      return {
-        type: 'error',
-      };
-    }
-
-    const responseData = await responseLoginUser.json();
-    const tokens = {
-      access: responseData.access,
-      refresh: responseData.refresh,
-    };
+    const response = await api('user/login/', 'POST', userData);
+    const data = await response.json();
 
     return {
       type: 'success',
-      user: responseData.user,
-      tokens,
+      user: data.user,
+      tokens: {
+        access: data.access,
+        refresh: data.refresh,
+      },
     };
   } catch (error) {
-    console.error('Error:', error);
     return {
       type: 'error',
       text: 'An unexpected error occurred. Please try again later.',
