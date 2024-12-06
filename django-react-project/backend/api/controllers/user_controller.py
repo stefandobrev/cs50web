@@ -1,8 +1,9 @@
 from rest_framework import status
 from rest_framework_simplejwt.tokens import RefreshToken, TokenError
+from rest_framework_simplejwt.token_blacklist.models import BlacklistedToken, OutstandingToken
 from rest_framework.response import Response
 from django.core.exceptions import ValidationError
-from ..serializers import UserSerializer, LoginSerializer, UserSettingsSerializer
+from ..serializers import UserSerializer, LoginSerializer, UserSettingsSerializer, UpdatePasswordSerializer, TokenRefreshSerializer
 
 
 class UserController:
@@ -83,12 +84,38 @@ class UserController:
     def refresh_token(self, request):
         """
         Refresh access token using refresh token.
-        
-        Args:
-            request: HTTP request containing refresh token
+        """
+        try:
+            serializer = TokenRefreshSerializer(data=request.data)
+            if not serializer.is_valid():
+                return Response(
+                    serializer.errors,
+                    status=status.HTTP_400_BAD_REQUEST
+                )
             
-        Returns:
-            Response with new tokens or error message
+            token = serializer.validated_data['refresh']
+            tokens = {
+                'access': str(token.access_token),
+                'refresh': str(token)
+            }
+            
+            return Response({
+                'message': 'Token refreshed successfully',
+                **tokens
+            }, status=status.HTTP_200_OK)
+        
+        except Exception as e:
+            import traceback
+            print(f"Token refresh error: {str(e)}")
+            print(traceback.format_exc())
+            return Response(
+                {'error': 'Token refresh failed'}, 
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
+    
+    def blacklist_token(self, request):
+        """
+        Blacklist a refresh token.
         """
         refresh_token = request.data.get('refresh')
         if not refresh_token:
@@ -99,23 +126,23 @@ class UserController:
         
         try:
             refresh = RefreshToken(refresh_token)
-            tokens = {
-                'access': str(refresh.access_token),
-                'refresh': str(refresh)
-            }
+            # Add token to blacklist
+            refresh.blacklist()
             
             return Response({
-                'message': 'Token refreshed successfully',
-                **tokens
+                'message': 'Token blacklisted successfully'
             }, status=status.HTTP_200_OK)
-        except TokenError:
+        except TokenError as e:
             return Response(
-                {'error': 'Invalid or expired refresh token'}, 
+                {'error': f'Invalid or expired refresh token: {str(e)}'}, 
                 status=status.HTTP_401_UNAUTHORIZED
             )
         except Exception as e:
+            import traceback
+            print(f"Token blacklisting error: {str(e)}")
+            print(traceback.format_exc())
             return Response(
-                {'error': 'Token refresh failed'}, 
+                {'error': f'Token blacklisting failed: {str(e)}'}, 
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
 
@@ -220,3 +247,41 @@ class UserController:
                 {'error': 'Failed to update settings'},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
+
+    def update_password(self, request):
+        """
+        Update the user's password.
+        """
+        try:
+            serializer = UpdatePasswordSerializer(data=request.data, context={'request': request})
+            if not serializer.is_valid():
+                return Response(
+                    serializer.errors,
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+            
+            # Get refresh token from request data
+            refresh_token = request.data.get('refresh')
+            if refresh_token:
+                try:
+                    refresh = RefreshToken(refresh_token)
+                    refresh.blacklist()
+                except Exception as e:
+                    print(f"Failed to blacklist token: {str(e)}")
+                    # Continue with password update even if blacklisting fails
+            
+            serializer.save()
+            return Response({
+                'message': 'Password updated successfully. Please log in again.',
+                'requireReauth': True
+            }, status=status.HTTP_200_OK)
+        except Exception as e:
+            import traceback
+            print(f"Password update error: {str(e)}")
+            print(traceback.format_exc())
+            return Response(
+                {'error': 'Failed to update password'},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
+
+    

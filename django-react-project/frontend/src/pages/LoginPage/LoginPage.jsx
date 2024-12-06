@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 
 import { loginUser } from './helpers';
 import PageTitle from '../../components/PageTitle';
-import LoginForm from '../../components/LoginForm';
+import LoginForm from './LoginForm';
 import { setUser } from '../../store/slices/authSlice';
 import { setLoading } from '../../store/slices/loadingSlice';
 
@@ -19,24 +19,32 @@ export const LoginPage = () => {
     try {
       const responseLoginUser = await loginUser(userData);
 
-      if (responseLoginUser.type === 'error') {
-        toast.error('Invalid credentials');
+      if (responseLoginUser.status === 401) {
+        toast.error('Invalid username or password');
         return;
       }
 
-      console.log('responseLoginUser:', responseLoginUser);
+      if (!responseLoginUser.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData?.error || 'Server error');
+      }
+
+      const data = await responseLoginUser.json();
       dispatch(
         setUser({
           isAuthenticated: true,
-          user: responseLoginUser.user,
-          accessToken: responseLoginUser.tokens.access,
-          refreshToken: responseLoginUser.tokens.refresh,
+          user: {
+            username: data.username,
+          },
+          accessToken: data.access,
+          refreshToken: data.refresh,
         })
       );
 
       toast.success('User logged in successfully!');
       navigate('/exercises');
     } catch (error) {
+      console.error('Login error:', error);
       toast.error('Login failed');
     } finally {
       dispatch(setLoading(false));

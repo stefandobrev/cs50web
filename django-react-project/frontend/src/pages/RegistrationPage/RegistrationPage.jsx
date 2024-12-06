@@ -3,16 +3,16 @@ import { useNavigate } from 'react-router-dom';
 import { FormProvider, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 
-import PageTitle from '../../components/PageTitle';
-import RegistrationForm from '../../components/RegistrationForm';
-import registrationResolver from './registrationResolver';
 import { registerUser } from './helpers';
+import PageTitle from '../../components/PageTitle';
+import RegistrationForm from './RegistrationForm';
+import sharedResolver from '../../utils/sharedResolver';
 
 export const RegistrationPage = () => {
   const [message, setMessage] = useState('');
   const navigate = useNavigate();
   const methods = useForm({
-    resolver: registrationResolver,
+    resolver: sharedResolver,
   });
 
   const onSubmit = async (userData) => {

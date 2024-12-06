@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { blacklistToken } from './helpersAuth';
 
 const initialState = {
   isAuthenticated: false,
@@ -21,9 +22,23 @@ const authSlice = createSlice({
       state.accessToken = action.payload.access;
       state.refreshToken = action.payload.refresh;
     },
-    logout: () => initialState,
+    logout: () => {
+      return initialState;
+    },
   },
 });
+
+export const logoutWithBlacklist = () => async (dispatch, getState) => {
+  const { refreshToken } = getState().auth;
+  if (refreshToken) {
+    try {
+      await blacklistToken(refreshToken);
+    } catch (error) {
+      console.error('Failed to blacklist token:', error);
+    }
+  }
+  dispatch(logout());
+};
 
 export const { setUser, setTokens, logout } = authSlice.actions;
 export default authSlice.reducer;

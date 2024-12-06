@@ -6,9 +6,8 @@ import { toast } from 'react-toastify';
 import { updateUserProfile } from './helpers';
 import { setLoading } from '../../store/slices/loadingSlice';
 import { fetchProfileData } from '../../store/slices/userSlice';
-import EditButtons from '../../components/Buttons/EditButtons';
-import InputField from '../../components/Inputs/InputField';
 import PageTitle from '../../components/PageTitle';
+import { YourProfilePageForm } from './YourProfilePageForm';
 
 export const YourProfilePage = () => {
   const dispatch = useDispatch();
@@ -40,30 +39,18 @@ export const YourProfilePage = () => {
   };
 
   return (
-    <FormProvider {...methods}>
-      <form onSubmit={handleSubmit(handleSave)}>
-        <PageTitle title='Edit Profile' />
-        <div className='max-w-md mx-auto p-6'>
-          <h1 className='text-2xl font-semibold mb-4'>Your Profile</h1>
-          <div className='mb-4'>
-            <InputField
-              label='First Name'
-              id='first_name'
-              readOnly={!isEditing}
-            />
-          </div>
-          <div className='mb-6'>
-            <InputField
-              label='Last Name'
-              id='last_name'
-              readOnly={!isEditing}
-            />
-          </div>
-          <div className='flex space-x-4'>
-            <EditButtons isEditing={isEditing} setIsEditing={setIsEditing} />
-          </div>
-        </div>
-      </form>
-    </FormProvider>
+    <>
+      <PageTitle title='Edit Profile' />
+      <div className='max-w-md mx-auto p-6'>
+        <h1 className='text-2xl font-semibold mb-4'>Your Profile</h1>
+        <FormProvider {...methods}>
+          <YourProfilePageForm
+            isEditing={isEditing}
+            setIsEditing={setIsEditing}
+            onSubmit={handleSubmit(handleSave)}
+          />
+        </FormProvider>
+      </div>
+    </>
   );
 };

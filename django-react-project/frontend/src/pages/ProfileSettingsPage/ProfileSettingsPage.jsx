@@ -2,28 +2,28 @@ import { useState, useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
-import { fetchUserSettings, updateUserSettings } from './helpers';
+import {
+  fetchUserSettings,
+  updateUserSettings,
+  updateUserPassword,
+} from './helpers';
 import { setLoading } from '../../store/slices/loadingSlice';
-import EditButtons from '../../components/Buttons/EditButtons';
-import InputField from '../../components/Inputs/InputField';
+import { logoutWithBlacklist } from '../../store/slices/authSlice';
 import PageTitle from '../../components/PageTitle';
-import PasswordField from '../../components/Inputs/PasswordField';
+import { ProfileSettingsPageForm } from './ProfileSettingsForm';
+import { PasswordSettingsForm } from './PasswordSettingsForm';
+import sharedResolver from '../../utils/sharedResolver';
 
 export const ProfileSettingsPage = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [settings, setSettings] = useState({});
-  const methods = useForm();
-
-  const { handleSubmit, reset, watch } = methods;
+  const methods = useForm({ resolver: sharedResolver });
+  const { handleSubmit, reset } = methods;
   const [isEditing, setIsEditing] = useState(false);
-
-  const password = watch('password');
-  const confirm_password = watch('confirm_password');
-
-  const isPasswordInvalid = () => {
-    return password && confirm_password && password !== confirm_password;
-  };
+  const [isChangingPassword, setIsChangingPassword] = useState(false);
 
   useEffect(() => {
     const getUserSettings = async () => {
@@ -37,6 +37,7 @@ export const ProfileSettingsPage = () => {
 
   useEffect(() => {
     reset(settings);
+    reset(settings);
   }, [isEditing, reset, settings]);
 
   const handleSave = async (profileData) => {
@@ -46,7 +47,6 @@ export const ProfileSettingsPage = () => {
       const updatedSettings = await fetchUserSettings();
       setSettings(updatedSettings);
       setIsEditing(false);
-      console.log('profileData', profileData);
       toast.success('Settings updated successfully!');
     } catch (error) {
       toast.error('Failed to update profile.');
@@ -55,49 +55,54 @@ export const ProfileSettingsPage = () => {
     }
   };
 
+  const handlePasswordSave = async (passwordData) => {
+    try {
+      dispatch(setLoading(true));
+      await updateUserPassword(passwordData);
+      dispatch(logoutWithBlacklist());
+      navigate('/login');
+      toast.success('Password updated successfully. Please log in again.');
+    } catch (error) {
+      console.log(error.response);
+
+      const errorMessages = Object.values(error.response || {}).flat();
+      const errorMessage =
+        errorMessages.length > 0
+          ? errorMessages[0]
+          : 'Failed to update password';
+      toast.error(errorMessage);
+      return;
+    } finally {
+      dispatch(setLoading(false));
+    }
+  };
+
+  const handlePasswordChange = () => {
+    setIsChangingPassword(true);
+  };
+
   return (
     <>
       <PageTitle title='Settings' />
       <div className='max-w-md mx-auto p-6'>
         <h1 className='text-2xl font-semibold mb-4'>Profile Settings</h1>
         <FormProvider {...methods}>
-          <form onSubmit={handleSubmit(handleSave)}>
-            <div className='mb-4'>
-              <InputField label='Email' id='email' readOnly={!isEditing} />
-            </div>
-            <div className='mb-4'>
-              <InputField
-                label='Username'
-                id='username'
-                readOnly={!isEditing}
-              />
-            </div>
-            {isEditing && (
-              <>
-                <div className='mb-4'>
-                  <PasswordField label='Password' id='password' />
-                </div>
-                <div className='mb-4'>
-                  <PasswordField
-                    label='Confirm Password'
-                    id='confirm_password'
-                  />
-                </div>
-
-                {/* Password feedback */}
-                {isPasswordInvalid() && (
-                  <p className='text-red-500'>Passwords don't match!</p>
-                )}
-              </>
-            )}
-            <div className='flex space-x-4'>
-              <EditButtons
-                isEditing={isEditing}
-                setIsEditing={setIsEditing}
-                isDisabled={isPasswordInvalid()}
-              />
-            </div>
-          </form>
+          {isChangingPassword ? (
+            <PasswordSettingsForm
+              onSubmit={handleSubmit(handlePasswordSave)}
+              onCancel={() => {
+                setIsChangingPassword(false);
+                reset(settings);
+              }}
+            />
+          ) : (
+            <ProfileSettingsPageForm
+              isEditing={isEditing}
+              setIsEditing={setIsEditing}
+              onSubmit={handleSubmit(handleSave)}
+              onPasswordChange={handlePasswordChange}
+            />
+          )}
         </FormProvider>
       </div>
     </>

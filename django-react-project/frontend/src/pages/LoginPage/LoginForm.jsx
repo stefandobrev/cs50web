@@ -1,16 +1,24 @@
 import { useFormContext } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 
-import InputField from './Inputs/InputField';
-import PasswordField from './Inputs/PasswordField';
+import InputField from '../../components/Inputs/InputField';
+import PasswordField from '../../components/Inputs/PasswordField';
 
 const LoginForm = ({ loginUserData }) => {
-  const { handleSubmit } = useFormContext();
+  const { handleSubmit, register } = useFormContext();
 
   return (
     <form onSubmit={handleSubmit(loginUserData)} className='space-y-3'>
-      <InputField label='Username' id='login_username' />
-      <PasswordField label='Password' id='login_password' />
+      <InputField
+        label='Username'
+        id='login_username'
+        registration={register('login_username')}
+      />
+      <PasswordField
+        label='Password'
+        id='login_password'
+        registration={register('login_password')}
+      />
 
       <div className='flex flex-col justify-center items-center space-y-2'>
         <button

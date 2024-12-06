@@ -8,7 +8,6 @@ const AuthWrapper = ({ children }) => {
   const { accessToken, refreshToken } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    // If we have a refresh token but no access token, try to refresh
     if (!accessToken && refreshToken) {
       const refreshTokens = async () => {
         try {
@@ -23,6 +22,7 @@ const AuthWrapper = ({ children }) => {
             dispatch(logout());
           }
         } catch (error) {
+          console.error('Token refresh failed:', error);
           dispatch(logout());
         }
       };

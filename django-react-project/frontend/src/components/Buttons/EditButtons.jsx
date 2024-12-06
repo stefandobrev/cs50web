@@ -1,52 +1,61 @@
-const EditButtons = ({
+import Button from './Button';
+
+export const EditButton = ({ onClick, disabled }) => (
+  <Button
+    type='button'
+    onClick={onClick}
+    variant='success'
+    disabled={disabled}
+    aria-label='Edit'
+  >
+    Edit
+  </Button>
+);
+
+export const SaveButton = ({ disabled }) => (
+  <Button
+    type='submit'
+    disabled={disabled}
+    variant='primary'
+    aria-label='Save Changes'
+  >
+    Save
+  </Button>
+);
+
+export const CancelButton = ({ onClick }) => (
+  <Button
+    type='button'
+    onClick={onClick}
+    variant='secondary'
+    aria-label='Cancel Editing'
+  >
+    Cancel
+  </Button>
+);
+
+export const EditButtonGroup = ({
   isEditing,
   setIsEditing,
   onCancel,
-  isDisabled = false,
+  isDisabled,
 }) => {
-  const toggleEditing = (e) => {
+  const handleCancel = (e) => {
     e.preventDefault();
     onCancel ? onCancel() : setIsEditing(false);
   };
 
-  if (isEditing) {
-    return (
-      <div className='flex space-x-4'>
-        <button
-          type='submit'
-          disabled={isDisabled}
-          className={`${
-            isDisabled ? 'bg-blue-300' : 'bg-blue-500 hover:bg-blue-600'
-          } text-white px-4 py-2 rounded-md`}
-          aria-label='Save Changes'
-        >
-          Save
-        </button>
-        <button
-          type='button'
-          onClick={toggleEditing}
-          className='bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600'
-          aria-label='Cancel Editing'
-        >
-          Cancel
-        </button>
-      </div>
-    );
-  }
+  const handleEdit = (e) => {
+    e.preventDefault();
+    setIsEditing(true);
+  };
 
-  return (
-    <button
-      type='button'
-      onClick={(e) => {
-        e.preventDefault();
-        setIsEditing(true);
-      }}
-      className='bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600'
-      aria-label='Edit'
-    >
-      Edit
-    </button>
+  return isEditing ? (
+    <div className='flex space-x-4'>
+      <SaveButton disabled={isDisabled} />
+      <CancelButton onClick={handleCancel} />
+    </div>
+  ) : (
+    <EditButton onClick={handleEdit} />
   );
 };
-
-export default EditButtons;

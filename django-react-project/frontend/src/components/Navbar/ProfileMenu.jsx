@@ -1,17 +1,33 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { NavLink } from 'react-router-dom';
 import { profileMenuItems } from '../../config/navigation';
 
 const ProfileMenu = ({ profile, onSignOut }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const menuRef = useRef(null);
 
   const handleSignOut = () => {
     setIsOpen(false);
     onSignOut();
   };
 
+  // Close the menu if click happens outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setIsOpen(false); // Close the menu if the click is outside
+      }
+    };
+
+    document.addEventListener('click', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, []);
+
   return (
-    <div className='relative ml-3'>
+    <div className='relative ml-3' ref={menuRef}>
       {/* Profile Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}

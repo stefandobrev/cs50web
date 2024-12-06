@@ -1,5 +1,5 @@
-import InputField from './Inputs/InputField';
-import PasswordField from './Inputs/PasswordField';
+import InputField from '../../components/Inputs/InputField';
+import PasswordField from '../../components/Inputs/PasswordField';
 import { useFormContext } from 'react-hook-form';
 
 const RegistrationForm = ({ registerUser, message }) => {

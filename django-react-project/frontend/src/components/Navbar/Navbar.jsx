@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { fetchProfileData } from '../../store/slices/userSlice';
-import { logout } from '../../store/slices/authSlice';
+import { logoutWithBlacklist } from '../../store/slices/authSlice';
 import { getNavigation } from '../../config/navigation';
 import ProfileMenu from './ProfileMenu';
 import { classNames } from '../../utils/classNames';
@@ -13,8 +13,8 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const profile = useSelector((state) => state.user.profile);
+  const { isAuthenticated } = useSelector((state) => state.auth);
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -24,8 +24,8 @@ const Navbar = () => {
 
   const navigation = getNavigation(isAuthenticated);
 
-  const handleSignOut = () => {
-    dispatch(logout());
+  const handleSignOut = async () => {
+    dispatch(logoutWithBlacklist());
     navigate('/login');
   };
 

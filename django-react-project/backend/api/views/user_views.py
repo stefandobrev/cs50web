@@ -25,8 +25,19 @@ def refresh_token(request):
     user_controller = UserController()
     return user_controller.refresh_token(request)
 
+@api_view(['POST'])
+def blacklist_token(request):
+    user_controller = UserController()
+    return user_controller.blacklist_token(request)
+
 @api_view(['GET', 'PUT'])
 @permission_classes([IsAuthenticated])
 def profile_settings(request):
     user_controller = UserController()
     return user_controller.handle_settings(request)
+
+@api_view(['PUT'])
+@permission_classes([IsAuthenticated])
+def update_password(request):
+    user_controller = UserController()
+    return user_controller.update_password(request)
