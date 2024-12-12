@@ -1,3 +1,17 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.muscle-group {
+  @apply hover:fill-red-500 cursor-pointer;
+  fill: #e6e7e8;
+}
+
+.anatomy-images {
+  @apply flex items-center justify-center flex-col;
+  @apply md:flex-row;
+}
+
+.non-hovered {
+  fill: #fff;
+}
