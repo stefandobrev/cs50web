@@ -114,7 +114,7 @@ const Navbar = () => {
                   classNames(
                     isActive
                       ? 'bg-gray-900 text-white'
-                      : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                      : 'bg-gray-800 text-gray-300 hover:bg-gray-600 hover:text-white',
                     'block rounded-md px-4 py-3 text-base font-medium transition duration-150',
                     'hover:transform hover:translate-x-2'
                   )

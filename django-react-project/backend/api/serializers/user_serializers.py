@@ -2,10 +2,11 @@ from rest_framework import serializers
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth import authenticate
 from django.core.validators import EmailValidator
-from .models import User
+from ..models import User
 from rest_framework.exceptions import AuthenticationFailed
 from rest_framework_simplejwt.tokens import RefreshToken, TokenError
 from rest_framework_simplejwt.token_blacklist.models import BlacklistedToken, OutstandingToken
+
 
 class UserSerializer(serializers.ModelSerializer):
     """Serializer for user registration."""

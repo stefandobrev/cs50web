@@ -1,9 +1,8 @@
 from rest_framework import status
 from rest_framework_simplejwt.tokens import RefreshToken, TokenError
-from rest_framework_simplejwt.token_blacklist.models import BlacklistedToken, OutstandingToken
 from rest_framework.response import Response
 from django.core.exceptions import ValidationError
-from ..serializers import UserSerializer, LoginSerializer, UserSettingsSerializer, UpdatePasswordSerializer, TokenRefreshSerializer
+from ..serializers.user_serializers import UserSerializer, LoginSerializer, UserSettingsSerializer, UpdatePasswordSerializer, TokenRefreshSerializer
 
 
 class UserController:
