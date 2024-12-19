@@ -1,11 +1,19 @@
 import { UserCircleIcon, Cog6ToothIcon } from '@heroicons/react/24/outline';
 
-export const getNavigation = (isAuthenticated) => [
-  { name: 'Home', href: '/' },
-  isAuthenticated
-    ? { name: 'Exercises', href: '/exercises' }
-    : { name: 'Member Portal', href: '/login' },
-];
+export const getNavigation = (isAuthenticated) => {
+  const navigation = [{ name: 'Home', href: '/' }];
+
+  if (isAuthenticated) {
+    navigation.push(
+      { name: 'Exercises', href: '/exercises' },
+      { name: 'Manage', href: '/manage' }
+    );
+  } else {
+    navigation.push({ name: 'Member Portal', href: '/login' });
+  }
+
+  return navigation;
+};
 
 export const profileMenuItems = [
   {

@@ -3,7 +3,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 
-import { updateUserProfile } from './helpers';
+import { updateUserProfile } from './helpersYourProfile';
 import { setLoading } from '../../store/slices/loadingSlice';
 import { fetchProfileData } from '../../store/slices/userSlice';
 import PageTitle from '../../components/PageTitle';

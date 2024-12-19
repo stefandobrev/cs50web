@@ -8,12 +8,12 @@ import {
   fetchUserSettings,
   updateUserSettings,
   updateUserPassword,
-} from './helpers';
+} from './helpersProfileSettings';
 import { setLoading } from '../../store/slices/loadingSlice';
 import { logoutWithBlacklist } from '../../store/slices/authSlice';
 import PageTitle from '../../components/PageTitle';
-import { ProfileSettingsPageForm } from './ProfileSettingsForm';
-import { PasswordSettingsForm } from './PasswordSettingsForm';
+import { SettingsForm } from './SettingsForm';
+import { PasswordForm } from './PasswordForm';
 import sharedResolver from '../../utils/sharedResolver';
 
 export const ProfileSettingsPage = () => {
@@ -36,7 +36,6 @@ export const ProfileSettingsPage = () => {
   }, [reset]);
 
   useEffect(() => {
-    reset(settings);
     reset(settings);
   }, [isEditing, reset, settings]);
 
@@ -81,6 +80,8 @@ export const ProfileSettingsPage = () => {
     setIsChangingPassword(true);
   };
 
+  const isLoading = Object.keys(settings).length === 0;
+
   return (
     <>
       <PageTitle title='Settings' />
@@ -88,7 +89,7 @@ export const ProfileSettingsPage = () => {
         <h1 className='text-2xl font-semibold mb-4'>Profile Settings</h1>
         <FormProvider {...methods}>
           {isChangingPassword ? (
-            <PasswordSettingsForm
+            <PasswordForm
               onSubmit={handleSubmit(handlePasswordSave)}
               onCancel={() => {
                 setIsChangingPassword(false);
@@ -96,11 +97,12 @@ export const ProfileSettingsPage = () => {
               }}
             />
           ) : (
-            <ProfileSettingsPageForm
+            <SettingsForm
               isEditing={isEditing}
               setIsEditing={setIsEditing}
               onSubmit={handleSubmit(handleSave)}
               onPasswordChange={handlePasswordChange}
+              isLoading={isLoading}
             />
           )}
         </FormProvider>

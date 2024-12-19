@@ -10,9 +10,10 @@ import MainLayout from '../layouts/MainLayout';
 // Pages
 import {
   ExercisePage,
-  MuscleGroupPage,
   HomePage,
   LoginPage,
+  ManagePage,
+  MuscleGroupPage,
   NotFoundPage,
   ProfileSettingsPage,
   RegistrationPage,
@@ -36,6 +37,7 @@ export const router = createBrowserRouter(
       <Route element={<ProtectedRoute />}>
         <Route path='/exercises' element={<ExercisePage />} />
         <Route path='/exercises/:id' element={<MuscleGroupPage />} />
+        <Route path='/manage' element={<ManagePage />} />
         <Route path='/profile' element={<YourProfilePage />} />
         <Route path='/settings' element={<ProfileSettingsPage />} />
       </Route>

@@ -70,7 +70,7 @@ const api = async (path, method, data = null) => {
   try {
     let response = await makeRequest(path, method, data, accessToken);
 
-    if (response.status === 401) {
+    if (response.status === 401 && path !== 'user/login/') {
       if (!isRefreshing) {
         isRefreshing = true;
         try {

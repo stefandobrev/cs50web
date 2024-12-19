@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { FormProvider, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 
-import { registerUser } from './helpers';
+import { registerUser } from './helpersRegistration';
 import PageTitle from '../../components/PageTitle';
 import RegistrationForm from './RegistrationForm';
 import sharedResolver from '../../utils/sharedResolver';

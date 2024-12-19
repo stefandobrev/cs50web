@@ -2,7 +2,7 @@ import { useFormContext } from 'react-hook-form';
 import PasswordField from '../../components/Inputs/PasswordField';
 import { SaveButton, CancelButton } from '../../components/Buttons/EditButtons';
 
-export const PasswordSettingsForm = ({ onSubmit, onCancel }) => {
+export const PasswordForm = ({ onSubmit, onCancel }) => {
   const { watch } = useFormContext();
 
   const newPassword = watch('new_password');
