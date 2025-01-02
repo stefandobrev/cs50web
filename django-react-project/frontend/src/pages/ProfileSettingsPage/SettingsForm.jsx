@@ -7,14 +7,12 @@ import {
   CancelButton,
   EditButton,
 } from '../../components/Buttons/EditButtons';
-import Spinner from '../../components/Spinner';
 
 export const SettingsForm = ({
   isEditing,
   setIsEditing,
   onSubmit,
   onPasswordChange,
-  isLoading,
 }) => {
   const { watch } = useFormContext();
 
@@ -27,57 +25,53 @@ export const SettingsForm = ({
 
   return (
     <form onSubmit={onSubmit}>
-      {isLoading ? (
-        <Spinner loading={isLoading} />
-      ) : (
-        <>
-          <div className='mb-4'>
-            <InputField label='Email' id='email' readOnly={!isEditing} />
-          </div>
-          <div className='mb-4'>
-            <InputField label='Username' id='username' readOnly={!isEditing} />
-          </div>
-          {isEditing && (
-            <>
-              <div className='mb-4'>
-                <PasswordField label='Password' id='password' />
-              </div>
-              <div className='mb-4'>
-                <PasswordField label='Confirm Password' id='confirm_password' />
-              </div>
+      <>
+        <div className='mb-4'>
+          <InputField label='Email' id='email' readOnly={!isEditing} />
+        </div>
+        <div className='mb-4'>
+          <InputField label='Username' id='username' readOnly={!isEditing} />
+        </div>
+        {isEditing && (
+          <>
+            <div className='mb-4'>
+              <PasswordField label='Password' id='password' />
+            </div>
+            <div className='mb-4'>
+              <PasswordField label='Confirm Password' id='confirm_password' />
+            </div>
 
-              {/* Password feedback */}
-              {isPasswordInvalid() && (
-                <p className='text-red-500'>Passwords don't match!</p>
-              )}
+            {/* Password feedback */}
+            {isPasswordInvalid() && (
+              <p className='text-red-500'>Passwords don't match!</p>
+            )}
+          </>
+        )}
+        <div className='flex space-x-4'>
+          {isEditing ? (
+            <>
+              <SaveButton disabled={isPasswordInvalid()} />
+              <CancelButton onClick={() => setIsEditing(false)} />
+            </>
+          ) : (
+            <>
+              <EditButton onClick={() => setIsEditing(true)} />
+              <Button
+                variant='secondary'
+                onClick={(e) => {
+                  e.preventDefault();
+                  if (onPasswordChange) {
+                    onPasswordChange();
+                  }
+                }}
+                aria-label='Change Password'
+              >
+                Change Password
+              </Button>
             </>
           )}
-          <div className='flex space-x-4'>
-            {isEditing ? (
-              <>
-                <SaveButton disabled={isPasswordInvalid()} />
-                <CancelButton onClick={() => setIsEditing(false)} />
-              </>
-            ) : (
-              <>
-                <EditButton onClick={() => setIsEditing(true)} />
-                <Button
-                  variant='secondary'
-                  onClick={(e) => {
-                    e.preventDefault();
-                    if (onPasswordChange) {
-                      onPasswordChange();
-                    }
-                  }}
-                  aria-label='Change Password'
-                >
-                  Change Password
-                </Button>
-              </>
-            )}
-          </div>
-        </>
-      )}
+        </div>
+      </>
     </form>
   );
 };

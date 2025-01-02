@@ -15,6 +15,7 @@ import PageTitle from '../../components/PageTitle';
 import { SettingsForm } from './SettingsForm';
 import { PasswordForm } from './PasswordForm';
 import sharedResolver from '../../utils/sharedResolver';
+import Spinner from '../../components/Spinner';
 
 export const ProfileSettingsPage = () => {
   const dispatch = useDispatch();
@@ -84,29 +85,34 @@ export const ProfileSettingsPage = () => {
 
   return (
     <>
-      <PageTitle title='Settings' />
-      <div className='max-w-md mx-auto p-6'>
-        <h1 className='text-2xl font-semibold mb-4'>Profile Settings</h1>
-        <FormProvider {...methods}>
-          {isChangingPassword ? (
-            <PasswordForm
-              onSubmit={handleSubmit(handlePasswordSave)}
-              onCancel={() => {
-                setIsChangingPassword(false);
-                reset(settings);
-              }}
-            />
-          ) : (
-            <SettingsForm
-              isEditing={isEditing}
-              setIsEditing={setIsEditing}
-              onSubmit={handleSubmit(handleSave)}
-              onPasswordChange={handlePasswordChange}
-              isLoading={isLoading}
-            />
-          )}
-        </FormProvider>
-      </div>
+      {isLoading ? (
+        <Spinner loading={isLoading} />
+      ) : (
+        <>
+          <PageTitle title='Settings' />
+          <div className='max-w-md mx-auto p-6'>
+            <h1 className='text-2xl font-semibold mb-4'>Profile Settings</h1>
+            <FormProvider {...methods}>
+              {isChangingPassword ? (
+                <PasswordForm
+                  onSubmit={handleSubmit(handlePasswordSave)}
+                  onCancel={() => {
+                    setIsChangingPassword(false);
+                    reset(settings);
+                  }}
+                />
+              ) : (
+                <SettingsForm
+                  isEditing={isEditing}
+                  setIsEditing={setIsEditing}
+                  onSubmit={handleSubmit(handleSave)}
+                  onPasswordChange={handlePasswordChange}
+                />
+              )}
+            </FormProvider>
+          </div>
+        </>
+      )}
     </>
   );
 };

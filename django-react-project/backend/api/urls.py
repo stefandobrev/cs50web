@@ -13,5 +13,6 @@ urlpatterns = [
     path("user/settings/password/", user_views.update_password, name="update-password"),
 
     # exercise paths
+    path("exercises/fetch-muscle-groups/", exercise_views.fetch_muscle_groups, name="fetch-muscle-groups"),
     path("exercises/create-exercise/", exercise_views.create_exercise, name="create-exercise"),
 ]

@@ -3,7 +3,7 @@ import { store } from '../../store/store';
 
 export const fetchUserSettings = async () => {
   const response = await api('user/settings/', 'GET');
-  if (!response.ok) throw new Error('Failed to fetch settings');
+  if (!response.ok) throw new Error('Failed to fetch settings.');
   return response.json();
 };
 

@@ -3,7 +3,6 @@ import { refreshAccessToken } from '../store/slices/helpersAuth';
 import { toast } from 'react-toastify';
 
 let storeInstance = null;
-let navigate;
 let isRefreshing = false;
 let refreshSubscribers = []; // Array to hold pending requests
 
@@ -20,10 +19,6 @@ const addRefreshSubscriber = (callback) => {
 
 export const initializeStore = (store) => {
   storeInstance = store;
-};
-
-export const setNavigate = (nav) => {
-  navigate = nav;
 };
 
 export const makeRequest = async (path, method, data, token) => {
@@ -44,17 +39,15 @@ const refreshToken = async () => {
   const state = storeInstance.getState();
   const refreshToken = state.auth.refreshToken;
 
-  const data = await refreshAccessToken(refreshToken);
+  const response = await refreshAccessToken(refreshToken);
 
-  if (!data || data.error) {
+  if (!response.ok) {
     storeInstance.dispatch(logout());
     toast.info('Session expired. Please log in again.');
-    if (navigate) {
-      navigate('/login');
-    }
     throw new Error('Session expired. Please log in again.');
   }
 
+  const data = await response.json();
   storeInstance.dispatch(setTokens(data));
   onRefreshed(data.access);
   return data.access;

@@ -1,10 +1,26 @@
+import { useState, useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
+import { fetchMuscleGroups } from './helpersManage';
 import PageTitle from '../../components/PageTitle';
 import ManageForm from './ManageForm';
 
 export const ManagePage = () => {
   const methods = useForm();
+  const [muscleGroups, setMuscleGroups] = useState([]);
+
+  useEffect(() => {
+    const getMuscleGroups = async () => {
+      const fetchedMuscleGroups = await fetchMuscleGroups();
+      const transformedMuscleGroups = fetchedMuscleGroups.map((group) => ({
+        label: group.name,
+        value: group.slug,
+      }));
+      setMuscleGroups(transformedMuscleGroups);
+    };
+
+    getMuscleGroups();
+  }, []);
 
   const onSubmit = async (exerciseData) => {
     console.log(exerciseData);
@@ -17,7 +33,7 @@ export const ManagePage = () => {
           Manage Exercises
         </h2>
         <FormProvider {...methods}>
-          <ManageForm exerciseData={onSubmit} />
+          <ManageForm exerciseData={onSubmit} muscleGroups={muscleGroups} />
         </FormProvider>
       </div>
     </div>
