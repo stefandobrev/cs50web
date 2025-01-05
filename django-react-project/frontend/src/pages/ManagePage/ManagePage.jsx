@@ -1,13 +1,15 @@
 import { useState, useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
 
-import { fetchMuscleGroups } from './helpersManage';
+import { fetchMuscleGroups, createExercise } from './helpersManage';
 import PageTitle from '../../components/PageTitle';
 import ManageForm from './ManageForm';
 
 export const ManagePage = () => {
   const methods = useForm();
   const [muscleGroups, setMuscleGroups] = useState([]);
+  const [message, setMessage] = useState('');
 
   useEffect(() => {
     const getMuscleGroups = async () => {
@@ -23,7 +25,17 @@ export const ManagePage = () => {
   }, []);
 
   const onSubmit = async (exerciseData) => {
-    console.log(exerciseData);
+    const { type, text } = await createExercise(exerciseData);
+
+    if (type === error) {
+      setMessage(type, text);
+      return;
+    }
+
+    if (type === success) {
+      toast.success(text);
+      method.reset();
+    }
   };
   return (
     <div className='flex items-center justify-center h-full'>
@@ -33,7 +45,11 @@ export const ManagePage = () => {
           Manage Exercises
         </h2>
         <FormProvider {...methods}>
-          <ManageForm exerciseData={onSubmit} muscleGroups={muscleGroups} />
+          <ManageForm
+            exerciseData={onSubmit}
+            muscleGroups={muscleGroups}
+            message={message}
+          />
         </FormProvider>
       </div>
     </div>

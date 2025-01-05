@@ -16,39 +16,29 @@ export const LoginPage = () => {
 
   const onSubmit = async (userData) => {
     dispatch(setLoading(true));
-    try {
-      const responseLoginUser = await loginUser(userData);
+    const { type, text } = await loginUser(userData);
 
-      if (responseLoginUser.status === 401) {
-        toast.error('Invalid username or password');
-        return;
-      }
-
-      if (!responseLoginUser.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData?.error || 'Server error');
-      }
-
-      const data = await responseLoginUser.json();
-      dispatch(
-        setUser({
-          isAuthenticated: true,
-          user: {
-            username: data.username,
-          },
-          accessToken: data.access,
-          refreshToken: data.refresh,
-        })
-      );
-
-      toast.success('User logged in successfully!');
-      navigate('/exercises');
-    } catch (error) {
-      console.error('Login error:', error);
-      toast.error('Login failed');
-    } finally {
+    if (type === 'error') {
+      toast.error(text);
       dispatch(setLoading(false));
+      return;
     }
+
+    const data = text;
+    dispatch(
+      setUser({
+        isAuthenticated: true,
+        user: {
+          username: data.username,
+        },
+        accessToken: data.access,
+        refreshToken: data.refresh,
+      })
+    );
+
+    toast.success('User logged in successfully!');
+    navigate('/exercises');
+    dispatch(setLoading(false));
   };
 
   return (

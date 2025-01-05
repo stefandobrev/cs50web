@@ -24,7 +24,7 @@ export const RegistrationPage = () => {
     }
 
     if (type === 'success') {
-      toast.success('User created successfully!');
+      toast.success(text);
       navigate('/login');
     }
   };

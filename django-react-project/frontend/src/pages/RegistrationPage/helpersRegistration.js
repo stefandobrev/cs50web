@@ -18,9 +18,15 @@ export const registerUser = async (userData) => {
       };
     }
 
-    return { type: 'success' };
+    return {
+      type: 'success',
+      text: 'User created successfully!',
+    };
   } catch (error) {
     console.error('Error:', error);
-    return { type: 'error' };
+    return {
+      type: 'error',
+      text: 'Something went wrong',
+    };
   }
 };

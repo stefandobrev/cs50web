@@ -6,7 +6,7 @@ import DropdownField from '../../components/Inputs/DropdownField';
 import DropdownFieldWithTags from '../../components/Inputs/DropdownWithTagsField';
 import DynamicTextFieldList from '../../components/Inputs/DynamicTextFieldList';
 
-const ManageForm = ({ exerciseData, muscleGroups }) => {
+const ManageForm = ({ exerciseData, muscleGroups, message }) => {
   const { handleSubmit, register } = useFormContext();
   const [selectedPrimaryGroup, setSelectedPrimaryGroup] = useState('');
 
@@ -35,6 +35,10 @@ const ManageForm = ({ exerciseData, muscleGroups }) => {
         key={selectedPrimaryGroup}
       />
       <DynamicTextFieldList labelPrefix='Step' />
+      <InputField label='Gif Front' id='gif_link_front' type='url' required />
+      <InputField label='Gif Side' id='gif_link_side' type='url' required />
+      <InputField label='Video' id='video_link' type='url' required />
+      <DynamicTextFieldList labelPrefix='Mistake' />
       <div className='flex flex-col justify-center items-center space-y-2'>
         <button
           type='submit'
