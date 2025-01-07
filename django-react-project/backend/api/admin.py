@@ -13,8 +13,17 @@ class ExerciseAdmin(admin.ModelAdmin):
     ordering = ["title"]
     list_display = ["title", "primary_group"]
 
+class StepAdmin(admin.ModelAdmin):
+    ordering = ["exercise__title", "order"]
+    list_display = ["exercise", "order", "description"]
+
+class MistakeAdmin(admin.ModelAdmin):
+    ordering = ["exercise__title"]
+    list_display = ["exercise", "description"]
+
+
 admin.site.register(User, UserAdmin) 
 admin.site.register(MuscleGroup, MuscleGroupAdmin)
-admin.site.register(Exercise)
-admin.site.register(Step)
-admin.site.register(Mistake)
+admin.site.register(Exercise, ExerciseAdmin)
+admin.site.register(Step, StepAdmin)
+admin.site.register(Mistake, MistakeAdmin)

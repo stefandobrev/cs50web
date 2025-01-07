@@ -8,6 +8,10 @@ import ManageForm from './ManageForm';
 
 export const ManagePage = () => {
   const methods = useForm();
+  const {
+    reset,
+    formState: { isSubmitSuccessful },
+  } = methods;
   const [muscleGroups, setMuscleGroups] = useState([]);
   const [message, setMessage] = useState('');
 
@@ -27,16 +31,24 @@ export const ManagePage = () => {
   const onSubmit = async (exerciseData) => {
     const { type, text } = await createExercise(exerciseData);
 
-    if (type === error) {
-      setMessage(type, text);
+    if (type === 'error') {
+      setMessage({ type, text });
       return;
     }
 
-    if (type === success) {
+    if (type === 'success') {
       toast.success(text);
-      method.reset();
+      setMessage({ type, text });
     }
   };
+
+  useEffect(() => {
+    if (isSubmitSuccessful && message.type === 'success') {
+      reset();
+      setMessage('');
+    }
+  }, [isSubmitSuccessful, reset, message]);
+
   return (
     <div className='flex items-center justify-center h-full'>
       <PageTitle title='Manage' />

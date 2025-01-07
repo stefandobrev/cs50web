@@ -14,14 +14,17 @@ import { logoutWithBlacklist } from '../../store/slices/authSlice';
 import PageTitle from '../../components/PageTitle';
 import { SettingsForm } from './SettingsForm';
 import { PasswordForm } from './PasswordForm';
-import sharedResolver from '../../utils/sharedResolver';
+import userValidationResolver from '../../utils/userValidationResolver';
 import Spinner from '../../components/Spinner';
 
 export const ProfileSettingsPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [settings, setSettings] = useState({});
-  const methods = useForm({ resolver: sharedResolver });
+  const methods = useForm({
+    resolver: userValidationResolver,
+    context: 'profile',
+  });
   const { handleSubmit, reset } = methods;
   const [isEditing, setIsEditing] = useState(false);
   const [isChangingPassword, setIsChangingPassword] = useState(false);

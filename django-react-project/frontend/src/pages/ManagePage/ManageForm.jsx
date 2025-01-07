@@ -7,7 +7,7 @@ import DropdownFieldWithTags from '../../components/Inputs/DropdownWithTagsField
 import DynamicTextFieldList from '../../components/Inputs/DynamicTextFieldList';
 
 const ManageForm = ({ exerciseData, muscleGroups, message }) => {
-  const { handleSubmit, register } = useFormContext();
+  const { handleSubmit, register, watch } = useFormContext();
   const [selectedPrimaryGroup, setSelectedPrimaryGroup] = useState('');
 
   const handlePrimaryGroupChange = (event) => {
@@ -17,6 +17,11 @@ const ManageForm = ({ exerciseData, muscleGroups, message }) => {
   const filteredMuscleGroups = muscleGroups.filter(
     (group) => group.value !== selectedPrimaryGroup
   );
+
+  const gifFront = watch('gif_link_front');
+  const gifSide = watch('gif_link_side');
+
+  const areUrlsInvalid = gifFront && gifSide && gifFront === gifSide;
 
   return (
     <form onSubmit={handleSubmit(exerciseData)} className='space-y-3'>
@@ -34,14 +39,24 @@ const ManageForm = ({ exerciseData, muscleGroups, message }) => {
         options={filteredMuscleGroups}
         key={selectedPrimaryGroup}
       />
-      <DynamicTextFieldList labelPrefix='Step' />
+      <DynamicTextFieldList labelPrefix='Steps' />
       <InputField label='Gif Front' id='gif_link_front' type='url' required />
       <InputField label='Gif Side' id='gif_link_side' type='url' required />
       <InputField label='Video' id='video_link' type='url' required />
-      <DynamicTextFieldList labelPrefix='Mistake' />
+      <DynamicTextFieldList labelPrefix='Mistakes' />
+
+      {/* Url uniqness feedback */}
+      {areUrlsInvalid && (
+        <p className='text-red-500'>Gif links shouldn't be the same</p>
+      )}
+
+      {/* Show message */}
+      {message && <p className={'text-red-500'}>{message.text}</p>}
+
       <div className='flex flex-col justify-center items-center space-y-2'>
         <button
           type='submit'
+          disabled={areUrlsInvalid}
           className='bg-blue-500 text-white py-2 px-4 rounded w-auto'
         >
           Add Exercise

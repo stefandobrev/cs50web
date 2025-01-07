@@ -11,11 +11,12 @@ class ExerciseSerializer(serializers.ModelSerializer):
             "title", 
             "primary_group", 
             "secondary_group", 
+            "gif_link_front",
+            "gif_link_side",
             "video_link", 
-            "gif_link"
         ]
 
-    def validate_title(self, value):
+    def validate(self, data):
         """
         Validate the exercise registration data.
 
@@ -23,23 +24,29 @@ class ExerciseSerializer(serializers.ModelSerializer):
         - Title min length
         - Title contains only numbers and letters
         - Title uniqueness
+        - Gif links contain different urls
         """
-        if len(value) < 3:
+        if len(data["title"]) < 3:
             raise serializers.ValidationError(
                 {"title": "Title must be at least 3 characters long."}
             )
 
-        if not value.isalnum():
+        if not data["title"].isalnum():
             raise serializers.ValidationError(
                 {"title": "Title should only contain letters and numbers."}
             )
 
-        if Exercise.objects.filter(title__iexact=value).exists():
+        if Exercise.objects.filter(title__iexact=data["title"]).exists():
             raise serializers.ValidationError(
                 {"title": "An exercise with this title already exists."}
             )
+        
+        if data["gif_link_front"] == data["gif_link_side"]:
+            raise serializers.ValidationError(
+                {"gif links": "Gif links should be different"}
+            )
 
-        return value
+        return data
     
 class MuscleGroupSerializer(serializers.ModelSerializer):
     class Meta:

@@ -6,13 +6,14 @@ import { toast } from 'react-toastify';
 import { registerUser } from './helpersRegistration';
 import PageTitle from '../../components/PageTitle';
 import RegistrationForm from './RegistrationForm';
-import sharedResolver from '../../utils/sharedResolver';
+import userValidationResolver from '../../utils/userValidationResolver';
 
 export const RegistrationPage = () => {
   const [message, setMessage] = useState('');
   const navigate = useNavigate();
   const methods = useForm({
-    resolver: sharedResolver,
+    resolver: userValidationResolver,
+    context: 'registration',
   });
 
   const onSubmit = async (userData) => {

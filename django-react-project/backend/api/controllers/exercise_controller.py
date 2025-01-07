@@ -1,7 +1,7 @@
 from rest_framework import status
 from rest_framework.response import Response
 
-from ..models import MuscleGroup
+from ..models import MuscleGroup, Step, Mistake
 from ..serializers.exercise_serializers import ExerciseSerializer, MuscleGroupSerializer
 
 
@@ -16,29 +16,59 @@ class ExerciseController:
 
     def create(self, request):
         """
-        Create a new exercise model.
+        Create a new exercise model(optional: add steps and mistakes to it)
 
         Args:
             request: HTTP request containing data
 
         Returns:
-            Response with exercise data or error messages
+            Response with exercise, steps and mistakes data or error messages
         """
-        serializer = ExerciseSerializer(data=request.data)
+        exercise_data = {key: value for key, value in request.data.items() if key in ExerciseSerializer.Meta.fields }
+        steps_data = request.data.get("steps", [])
+        mistakes_data = request.data.get("mistakes", [])
+
+        primary_group_name = exercise_data.get("primary_group")
+        if primary_group_name:
+            primary_group = MuscleGroup.objects.filter(slug=primary_group_name).first()
+            if not primary_group:
+                return Response({"primary_group": "Primary group not found."}, status=status.HTTP_400_BAD_REQUEST)
+            exercise_data["primary_group"] = primary_group.id
+        
+        secondary_groups = []
+        if "secondary_group" in exercise_data:
+            for group_name in exercise_data["secondary_group"]:
+                group = MuscleGroup.objects.filter(slug=group_name).first()
+                if group:
+                    secondary_groups.append(group.id)
+            
+            exercise_data["secondary_group"] = secondary_groups
+
+        serializer = ExerciseSerializer(data=exercise_data)
         if not serializer.is_valid():
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
         exercise = serializer.save()
+
+        for index, step_description in enumerate(steps_data, start=1):
+            Step.objects.create(exercise=exercise, description=step_description, order=index)
+
+        for mistake_description in mistakes_data:
+            Mistake.objects.create(exercise=exercise, description=mistake_description)
+
         return Response(
             {
                 "message": "Exercise created successfully!",
                 "exercise": {
                     "id": exercise.id,
                     "title": exercise.title,
-                    "primary_group": exercise.primary_group,
-                    "secondary_group": exercise.secondary_group,
+                    "primary_group": exercise.primary_group.name,
+                    "secondary_group": [group.name for group in exercise.secondary_group.all()] if exercise.secondary_group.exists() else [],
+                    "gif_link_front": exercise.gif_link_front,
+                    "gif_link_side": exercise.gif_link_side,
                     "video_link": exercise.video_link,
-                    "gif_link": exercise.gif_link,
+                    "steps": [step.description for step in exercise.steps.all()] if exercise.steps.exists() else [],
+                    "mistakes": [mistake.description for mistake in exercise.mistakes.all()] if exercise.mistakes.exists() else [],
                 },
             }
         )

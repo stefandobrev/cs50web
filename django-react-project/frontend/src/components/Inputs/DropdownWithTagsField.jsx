@@ -4,10 +4,14 @@ import { useFormContext } from 'react-hook-form';
 const DropdownFieldWithTags = ({ label, id, options, placeholder = '--' }) => {
   const {
     setValue,
-    formState: { errors },
+    formState: { errors, isSubmitSuccessful },
   } = useFormContext();
 
   const [selectedTags, setSelectedTags] = useState([]);
+
+  useEffect(() => {
+    setSelectedTags([]);
+  }, [isSubmitSuccessful]);
 
   const handleSelectChange = (event) => {
     const selectedValue = event.target.value;

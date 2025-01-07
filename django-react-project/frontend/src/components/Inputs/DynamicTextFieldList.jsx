@@ -1,9 +1,25 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useFormContext, Controller } from 'react-hook-form';
 
 const DynamicTextFieldList = ({ labelPrefix = 'Item' }) => {
   const [fields, setFields] = useState([]);
-  const { control, unregister, setValue } = useFormContext();
+  const {
+    control,
+    unregister,
+    setValue,
+    formState: { isSubmitSuccessful },
+  } = useFormContext();
+
+  useEffect(() => {
+    setFields([]);
+  }, [isSubmitSuccessful]);
+
+  const singularize = (word) => {
+    if (word.toLowerCase().endsWith('s')) {
+      return word.slice(0, -1);
+    }
+    return word;
+  };
 
   const handleAddField = () => {
     const newIndex = fields.length;
@@ -37,7 +53,7 @@ const DynamicTextFieldList = ({ labelPrefix = 'Item' }) => {
     <div className='space-y-3'>
       {fields.map((fieldValue, index) => (
         <div key={index} className='block text-lg font-semibold'>
-          <label>{`${labelPrefix} ${index + 1}`}</label>
+          <label>{`${singularize(labelPrefix)} ${index + 1}`}</label>
           <div className='flex items-center space-x-2 font-normal'>
             <Controller
               name={`${labelPrefix.toLowerCase()}[${index}]`}
@@ -69,7 +85,7 @@ const DynamicTextFieldList = ({ labelPrefix = 'Item' }) => {
         onClick={handleAddField}
         className='bg-orange-500 text-white py-1 px-3 rounded'
       >
-        Add {labelPrefix}
+        Add {singularize(labelPrefix)}
       </button>
     </div>
   );

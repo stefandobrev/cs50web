@@ -8,9 +8,8 @@ const RegistrationForm = ({ registerUser, message }) => {
   const password = watch('password');
   const confirm_password = watch('confirm_password');
 
-  const isPasswordInvalid = () => {
-    return password && confirm_password && password !== confirm_password;
-  };
+  const isPasswordInvalid =
+    password && confirm_password && password !== confirm_password;
 
   return (
     <form onSubmit={handleSubmit(registerUser)} className='space-y-4'>
@@ -22,7 +21,7 @@ const RegistrationForm = ({ registerUser, message }) => {
       <PasswordField label='Confirm Password' id='confirm_password' />
 
       {/* Password feedback */}
-      {isPasswordInvalid() && (
+      {isPasswordInvalid && (
         <p className='text-red-500'>Passwords don't match!</p>
       )}
 
@@ -33,7 +32,7 @@ const RegistrationForm = ({ registerUser, message }) => {
       <div className='flex justify-center'>
         <button
           type='submit'
-          disabled={isPasswordInvalid()}
+          disabled={isPasswordInvalid}
           className='mt-4 bg-blue-500 text-white py-2 px-4 rounded'
         >
           Add User

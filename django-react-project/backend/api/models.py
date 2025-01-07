@@ -28,9 +28,10 @@ class Exercise(models.Model):
     secondary_group = models.ManyToManyField(
         MuscleGroup, related_name="secondary_exercises", blank=True
     )
-    video_link = models.URLField(max_length=255, blank=True, null=True)
+    
     gif_link_front = models.URLField(max_length=255, blank=True, null=True)
     gif_link_side = models.URLField(max_length=255, blank=True, null=True)
+    video_link = models.URLField(max_length=255, blank=True, null=True)
 
     def __str__(self):
         return self.title

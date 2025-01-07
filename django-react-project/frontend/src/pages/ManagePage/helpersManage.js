@@ -17,7 +17,8 @@ export const createExercise = async (exerciseData) => {
     if (!response.ok) {
       const errorData = await response.json();
 
-      let errorMessage = 'Something';
+      const key = Object.keys(errorData)[0];
+      const errorMessage = errorData[key]?.[0] || 'Something went wrong';
 
       return {
         type: 'error',
@@ -25,13 +26,15 @@ export const createExercise = async (exerciseData) => {
       };
     }
 
-    console.log('Success');
     return {
       type: 'success',
       text: 'Exercise created successfully!',
     };
   } catch (error) {
     console.log('Error', error);
-    return { type: 'error' };
+    return {
+      type: 'error',
+      text: 'An unexpected error occurred. Please try again later.',
+    };
   }
 };
