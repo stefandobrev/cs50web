@@ -38,13 +38,13 @@ const DropdownFieldWithTags = ({ label, id, options, placeholder = '--' }) => {
 
   return (
     <div>
-      <label htmlFor={id} className='block text-lg font-semibold'>
+      <label htmlFor={id} className='block text-lg font-semibold mb-2'>
         {label}:
       </label>
       <select
         id={id}
         onChange={handleSelectChange}
-        className='border border-gray-300 p-2 rounded w-full mb-2'
+        className='block border border-gray-300 p-2 rounded mb-2 w-full'
       >
         <option value=''>{placeholder}</option>
         {options.map((option) => (

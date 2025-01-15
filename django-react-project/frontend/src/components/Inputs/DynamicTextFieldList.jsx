@@ -83,7 +83,7 @@ const DynamicTextFieldList = ({ labelPrefix = 'Item' }) => {
       <button
         type='button'
         onClick={handleAddField}
-        className='bg-orange-500 text-white py-1 px-3 rounded'
+        className='bg-orange-500 text-white py-1 px-3 rounded w-full md:w-auto'
       >
         Add {singularize(labelPrefix)}
       </button>

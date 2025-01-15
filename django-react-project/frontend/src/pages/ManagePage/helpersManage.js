@@ -6,13 +6,26 @@ export const fetchMuscleGroups = async () => {
   return response.json();
 };
 
-export const createExercise = async (exerciseData) => {
+export const fetchExerciseTitles = async () => {
+  const response = await api('exercises/fetch-exercise-titles/', 'GET');
+  if (!response.ok) throw new Error('Failed to fetch exercises.');
+  return response.json();
+};
+
+export const saveExercise = async (exerciseData, id = null) => {
   try {
-    const response = await api(
-      'exercises/create-exercise/',
-      'POST',
-      exerciseData
-    );
+    const isEditMode = Boolean(id);
+    let response;
+
+    if (isEditMode) {
+      response = await api(
+        `exercises/update-exercise/${id}/`,
+        'PUT',
+        exerciseData
+      );
+    } else {
+      response = await api('exercises/create-exercise/', 'POST', exerciseData);
+    }
 
     if (!response.ok) {
       const errorData = await response.json();
@@ -26,9 +39,13 @@ export const createExercise = async (exerciseData) => {
       };
     }
 
+    const successMessage = isEditMode
+      ? 'Exercise updated successfully!'
+      : 'Exercise created successfully!';
+
     return {
       type: 'success',
-      text: 'Exercise created successfully!',
+      text: successMessage,
     };
   } catch (error) {
     console.log('Error', error);

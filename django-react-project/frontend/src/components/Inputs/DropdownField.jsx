@@ -14,12 +14,12 @@ const DropdownField = ({
   } = useFormContext();
   return (
     <div>
-      <label htmlFor={id} className='block text-lg font-semibold'>
+      <label htmlFor={id} className='block text-lg font-semibold mb-2'>
         {label}:
         <select
           id={id}
           {...register(id, { required })}
-          className='border border-gray-300 p-2 rounded w-full'
+          className='block border border-gray-300 p-2 rounded  w-full'
           {...rest}
         >
           <option value=''>{placeholder}</option>

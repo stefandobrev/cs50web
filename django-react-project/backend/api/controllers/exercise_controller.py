@@ -1,7 +1,7 @@
 from rest_framework import status
 from rest_framework.response import Response
 
-from ..models import MuscleGroup, Step, Mistake
+from ..models import Exercise, MuscleGroup, Step, Mistake
 from ..serializers.exercise_serializers import ExerciseSerializer, MuscleGroupSerializer
 
 
@@ -13,6 +13,12 @@ class ExerciseController:
         muscle_groups = MuscleGroup.objects.all().order_by("name")
         serializer = MuscleGroupSerializer(muscle_groups, many=True)
         return Response(serializer.data)
+    
+    def fetch_exercise_titles(self, request):
+        """Return a response containing all exercise titles from the DB."""
+        exercise_titles = Exercise.objects.values("id", "title").order_by("title")
+        return Response(list(exercise_titles))
+        
 
     def create(self, request):
         """

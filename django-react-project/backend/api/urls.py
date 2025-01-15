@@ -14,5 +14,6 @@ urlpatterns = [
 
     # exercise paths
     path("exercises/fetch-muscle-groups/", exercise_views.fetch_muscle_groups, name="fetch-muscle-groups"),
+    path("exercises/fetch-exercise-titles/", exercise_views.fetch_exercise_titles, name="fetch-exercise-titles"),
     path("exercises/create-exercise/", exercise_views.create_exercise, name="create-exercise"),
 ]
