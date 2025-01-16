@@ -1,6 +1,8 @@
 from rest_framework import serializers
 from ..models import Exercise, MuscleGroup
 
+import re
+
 
 class ExerciseSerializer(serializers.ModelSerializer):
     """Serializer for Exercise registration."""
@@ -31,7 +33,7 @@ class ExerciseSerializer(serializers.ModelSerializer):
                 {"title": "Title must be at least 3 characters long."}
             )
 
-        if not data["title"].isalnum():
+        if not re.match(r'^[a-zA-Z0-9 ]+$', data["title"]):
             raise serializers.ValidationError(
                 {"title": "Title should only contain letters and numbers."}
             )
