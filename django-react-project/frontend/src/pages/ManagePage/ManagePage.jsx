@@ -13,10 +13,7 @@ import ManageForm from './ManageForm';
 
 export const ManagePage = () => {
   const methods = useForm();
-  const {
-    reset,
-    formState: { isSubmitSuccessful },
-  } = methods;
+  const { reset } = methods;
   const [mode, setMode] = useState('add');
   const [selectedExercise, setSelectedExercise] = useState(null);
   const [muscleGroups, setMuscleGroups] = useState([]);
@@ -43,7 +40,11 @@ export const ManagePage = () => {
     };
 
     loadExerciseTitles();
-  }, []);
+
+    if (message?.type === 'success') {
+      loadExerciseTitles();
+    }
+  }, [message]);
 
   const onSubmit = async (submittedExerciseData) => {
     let response;
@@ -68,11 +69,11 @@ export const ManagePage = () => {
   };
 
   useEffect(() => {
-    if (isSubmitSuccessful && message.type === 'success' && mode === 'add') {
+    if (message.type === 'success' && mode === 'add') {
       reset();
       setMessage('');
     }
-  }, [isSubmitSuccessful, reset, message]);
+  }, [message]);
 
   const handleSelectExercise = (exercise) => {
     setSelectedExercise(exercise);

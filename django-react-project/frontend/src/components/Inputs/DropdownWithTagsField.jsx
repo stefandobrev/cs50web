@@ -1,24 +1,30 @@
 import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-const DropdownFieldWithTags = ({ label, id, options, placeholder = '--' }) => {
-  const {
-    setValue,
-    formState: { errors, isSubmitSuccessful },
-  } = useFormContext();
+const DropdownFieldWithTags = ({
+  label,
+  id,
+  options,
+  placeholder = '--',
+  message,
+}) => {
+  const { setValue } = useFormContext();
 
   const [selectedTags, setSelectedTags] = useState([]);
 
   useEffect(() => {
-    setSelectedTags([]);
-  }, [isSubmitSuccessful]);
+    if (message?.type === 'success') {
+      setSelectedTags([]);
+      setValue(id, []);
+    }
+  }, [message, id, setValue]);
 
   const handleSelectChange = (event) => {
     const selectedValue = event.target.value;
 
     if (selectedValue && !selectedTags.includes(selectedValue)) {
       setSelectedTags((prev) => [...prev, selectedValue]);
-      setValue(id, [...selectedTags, selectedValue]); // Update form state
+      setValue(id, [...selectedTags, selectedValue]);
     }
 
     // Reset dropdown value after selection
@@ -28,7 +34,7 @@ const DropdownFieldWithTags = ({ label, id, options, placeholder = '--' }) => {
   const handleTagRemove = (tag) => {
     const updatedTags = selectedTags.filter((t) => t !== tag);
     setSelectedTags(updatedTags);
-    setValue(id, updatedTags); // Update form state
+    setValue(id, updatedTags);
   };
 
   useEffect(() => {
@@ -71,7 +77,6 @@ const DropdownFieldWithTags = ({ label, id, options, placeholder = '--' }) => {
           </span>
         ))}
       </div>
-      {errors[id] && <p className='text-red-500'>{errors[id].message}</p>}
     </div>
   );
 };

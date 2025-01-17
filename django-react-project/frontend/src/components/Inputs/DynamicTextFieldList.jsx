@@ -1,18 +1,18 @@
 import { useState, useEffect } from 'react';
 import { useFormContext, Controller } from 'react-hook-form';
 
-const DynamicTextFieldList = ({ labelPrefix = 'Item' }) => {
+const DynamicTextFieldList = ({ labelPrefix = 'Item', message }) => {
   const [fields, setFields] = useState([]);
-  const {
-    control,
-    unregister,
-    setValue,
-    formState: { isSubmitSuccessful },
-  } = useFormContext();
+  const { control, unregister, setValue } = useFormContext();
 
   useEffect(() => {
-    setFields([]);
-  }, [isSubmitSuccessful]);
+    if (message?.type === 'success') {
+      setFields([]);
+      fields.forEach((_, index) => {
+        setValue(`${labelPrefix.toLowerCase()}[${index}]`, '');
+      });
+    }
+  }, [message]);
 
   const singularize = (word) => {
     if (word.toLowerCase().endsWith('s')) {

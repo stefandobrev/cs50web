@@ -51,8 +51,9 @@ const ManageForm = ({
           id='secondary_group'
           options={filteredMuscleGroups}
           key={selectedPrimaryGroup}
+          message={message}
         />
-        <DynamicTextFieldList labelPrefix='Steps' />
+        <DynamicTextFieldList labelPrefix='Steps' message={message} />
         <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
           <InputField
             label='Gif Front'
@@ -63,13 +64,15 @@ const ManageForm = ({
           <InputField label='Gif Side' id='gif_link_side' type='url' required />
           <InputField label='Video' id='video_link' type='url' required />
         </div>
-        <DynamicTextFieldList labelPrefix='Mistakes' />
+        <DynamicTextFieldList labelPrefix='Mistakes' message={message} />
 
-        {areUrlsInvalid && (
-          <p className='text-red-500'>Gif links shouldn't be the same</p>
-        )}
+        <div className='flex justify-center'>
+          {areUrlsInvalid && (
+            <p className='text-red-500'>Gif links shouldn't be the same</p>
+          )}
 
-        {message && <p className={'text-red-500'}>{message.text}</p>}
+          {message && <p className={'text-red-500'}>{message.text}</p>}
+        </div>
 
         <div className='flex flex-col justify-center items-center space-y-2'>
           <button
@@ -77,7 +80,7 @@ const ManageForm = ({
             disabled={areUrlsInvalid}
             className='bg-blue-500 text-white py-2 px-4 rounded w-full md:w-auto'
           >
-            Add Exercise
+            {mode === 'add' ? 'Add Exercise' : 'Edit Exercise'}
           </button>
         </div>
       </form>
