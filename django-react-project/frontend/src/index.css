@@ -4,13 +4,8 @@
 
 /* Anatomy */
 .muscle-group {
-  @apply hover:fill-red-500 active:fill-red-500 cursor-pointer;
+  @apply hover:fill-red-300 active:fill-red-300 cursor-pointer;
   fill: #e6e7e8;
-}
-
-.anatomy-images {
-  @apply flex items-center justify-center flex-col;
-  @apply md:flex-row;
 }
 
 .non-hovered {

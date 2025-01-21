@@ -20,19 +20,18 @@ export const ExerciseList = ({ exerciseTitles, onSelectExercise }) => {
         onChange={handleSearchChange}
         className='mb-4 p-2 border rounded w-full focus:outline-blue-500'
       />
-      <div className='overflow-y-auto max-h-96'>
-        <ul className='space-y-2'>
-          {filteredExercises.map((exercise) => (
-            <li
-              key={exercise.id}
-              className='p-2 cursor-pointer hover:bg-gray-100 rounded'
-              onClick={() => onSelectExercise(exercise)}
-            >
-              {exercise.title}
-            </li>
-          ))}
-        </ul>
-      </div>
+
+      <ul className='space-y-2'>
+        {filteredExercises.map((exercise) => (
+          <li
+            key={exercise.id}
+            className='p-2 cursor-pointer hover:bg-gray-100 rounded'
+            onClick={() => onSelectExercise(exercise)}
+          >
+            {exercise.title}
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };

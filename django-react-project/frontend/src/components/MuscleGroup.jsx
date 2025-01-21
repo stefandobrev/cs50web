@@ -1,14 +1,8 @@
-export const MuscleGroup = ({
-  id,
-  name,
-  onClick,
-  setHoveredMuscle,
-  children,
-}) => (
+export const MuscleGroup = ({ id, name, onClick, onHover, children }) => (
   <g
-    onClick={() => onClick(id)}
-    onMouseEnter={() => setHoveredMuscle(name)}
-    onMouseLeave={() => setHoveredMuscle('')}
+    onClick={() => onClick?.(id, name)}
+    onMouseEnter={() => onHover?.(name)}
+    onMouseLeave={() => onHover?.('')}
     id={id}
   >
     {children}
