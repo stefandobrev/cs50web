@@ -5,11 +5,13 @@ import InputField from '../../components/Inputs/InputField';
 import DropdownField from '../../components/Inputs/DropdownField';
 import DropdownFieldWithTags from '../../components/Inputs/DropdownWithTagsField';
 import DynamicTextFieldList from '../../components/Inputs/DynamicTextFieldList';
+import { SaveButton } from '../../components/Buttons/EditButtons';
 
 export const DefaultForm = ({
   submittedExerciseData,
   muscleGroups,
   message,
+  mode = 'add',
 }) => {
   const { handleSubmit, register, watch } = useFormContext();
   const [selectedPrimaryGroup, setSelectedPrimaryGroup] = useState('');
@@ -64,18 +66,9 @@ export const DefaultForm = ({
       </div>
 
       <div className='flex flex-col justify-center items-center space-y-2'>
-        <button
-          type='submit'
-          disabled={areUrlsInvalid}
-          className={`py-2 px-4 rounded-lg w-full md:w-auto font-semibold text-white transition duration-300 shadow-md 
-    ${
-      areUrlsInvalid
-        ? 'bg-gray-400 cursor-not-allowed'
-        : 'bg-blue-500 hover:bg-blue-600'
-    }`}
-        >
-          Add Exercise
-        </button>
+        <SaveButton disabled={areUrlsInvalid} className='w-full md:w-auto'>
+          {mode === 'add' ? 'Add Exercise' : 'Edit Exercise'}
+        </SaveButton>
       </div>
     </form>
   );

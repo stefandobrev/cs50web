@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 import InputField from '../../components/Inputs/InputField';
 import PasswordField from '../../components/Inputs/PasswordField';
+import { SaveButton } from '../../components/Buttons/EditButtons';
 
 const LoginForm = ({ loginUserData }) => {
   const { handleSubmit, register } = useFormContext();
@@ -21,12 +22,7 @@ const LoginForm = ({ loginUserData }) => {
       />
 
       <div className='flex flex-col justify-center items-center space-y-2'>
-        <button
-          type='submit'
-          className='bg-blue-500 text-white py-2 px-4 rounded w-auto'
-        >
-          Sign In
-        </button>
+        <SaveButton>Sign In</SaveButton>
         <Link to='/register' className='text-blue-500 hover:underline'>
           Don't have an account? Register
         </Link>

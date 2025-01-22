@@ -12,6 +12,12 @@ export const fetchExerciseTitles = async () => {
   return response.json();
 };
 
+export const fetchExerciseData = async (id) => {
+  const response = await api(`exercises/fetch-exercise/${id}/`, 'GET');
+  if (!response.ok) throw new Error('Failed to fetch exercise.');
+  return response.json();
+};
+
 export const saveExercise = async (exerciseData, id = null) => {
   try {
     const isEditMode = Boolean(id);

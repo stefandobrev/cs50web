@@ -1,6 +1,8 @@
+import { useFormContext } from 'react-hook-form';
+
 import InputField from '../../components/Inputs/InputField';
 import PasswordField from '../../components/Inputs/PasswordField';
-import { useFormContext } from 'react-hook-form';
+import { SaveButton } from '../../components/Buttons/EditButtons';
 
 const RegistrationForm = ({ registerUser, message }) => {
   const { handleSubmit, watch } = useFormContext();
@@ -30,13 +32,7 @@ const RegistrationForm = ({ registerUser, message }) => {
 
       {/* Submit Button */}
       <div className='flex justify-center'>
-        <button
-          type='submit'
-          disabled={isPasswordInvalid}
-          className='mt-4 bg-blue-500 text-white py-2 px-4 rounded'
-        >
-          Add User
-        </button>
+        <SaveButton disabled={isPasswordInvalid}>Add User</SaveButton>
       </div>
     </form>
   );

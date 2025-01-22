@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useFormContext, Controller } from 'react-hook-form';
 
+import { EditButton } from '../Buttons/EditButtons';
+
 const DynamicTextFieldList = ({ labelPrefix = 'Item', message }) => {
   const [fields, setFields] = useState([]);
   const { control, unregister, setValue } = useFormContext();
@@ -80,13 +82,13 @@ const DynamicTextFieldList = ({ labelPrefix = 'Item', message }) => {
           </div>
         </div>
       ))}
-      <button
-        type='button'
+      <EditButton
         onClick={handleAddField}
-        className='bg-orange-500 text-white py-1 px-3 rounded w-full md:w-auto'
+        variant='orange'
+        className='w-full md:w-auto'
       >
         Add {singularize(labelPrefix)}
-      </button>
+      </EditButton>
     </div>
   );
 };

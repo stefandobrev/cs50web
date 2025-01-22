@@ -15,6 +15,12 @@ def fetch_exercise_titles(request):
     exercise_controller = ExerciseController()
     return exercise_controller.fetch_exercise_titles(request)
 
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def fetch_exercise(request, id):
+    exercise_controller = ExerciseController()
+    return exercise_controller.fetch_exercise(request, id)
+
 @api_view(["POST"])
 # @permission_classes([IsAdminUser])
 def create_exercise(request):

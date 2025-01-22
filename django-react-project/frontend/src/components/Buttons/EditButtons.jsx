@@ -1,61 +1,49 @@
 import Button from './Button';
 
-export const EditButton = ({ onClick, disabled }) => (
+export const EditButton = ({
+  children = 'Edit',
+  variant = 'green',
+  onClick,
+  disabled,
+  className = '',
+}) => (
   <Button
     type='button'
     onClick={onClick}
-    variant='success'
+    variant={variant}
     disabled={disabled}
+    className={className}
     aria-label='Edit'
   >
-    Edit
+    {children}
   </Button>
 );
 
-export const SaveButton = ({ disabled }) => (
+export const SaveButton = ({ children = 'Save', disabled, className = '' }) => (
   <Button
     type='submit'
     disabled={disabled}
-    variant='primary'
+    variant='blue'
+    className={className}
     aria-label='Save Changes'
   >
-    Save
+    {children}
   </Button>
 );
 
-export const CancelButton = ({ onClick }) => (
+export const CancelButton = ({ children = 'Cancel', onClick }) => (
   <Button
     type='button'
     onClick={onClick}
-    variant='secondary'
+    variant='gray'
     aria-label='Cancel Editing'
   >
-    Cancel
+    {children}
   </Button>
 );
 
-export const EditButtonGroup = ({
-  isEditing,
-  setIsEditing,
-  onCancel,
-  isDisabled,
-}) => {
-  const handleCancel = (e) => {
-    e.preventDefault();
-    onCancel ? onCancel() : setIsEditing(false);
-  };
-
-  const handleEdit = (e) => {
-    e.preventDefault();
-    setIsEditing(true);
-  };
-
-  return isEditing ? (
-    <div className='flex space-x-4'>
-      <SaveButton disabled={isDisabled} />
-      <CancelButton onClick={handleCancel} />
-    </div>
-  ) : (
-    <EditButton onClick={handleEdit} />
-  );
-};
+export const DeleteButton = ({ children = 'Delete', onClick }) => (
+  <Button type='button' onClick={onClick} variant='red' aria-label='Delete'>
+    {children}
+  </Button>
+);

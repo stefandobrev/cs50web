@@ -18,6 +18,29 @@ class ExerciseController:
         """Return a response containing all exercise titles from the DB."""
         exercise_titles = Exercise.objects.values("id", "title").order_by("title")
         return Response(list(exercise_titles))
+    
+    def fetch_exercise(self, request, id):
+        """Return a response containing an exercise's data from the DB."""
+        try: 
+            exercise = Exercise.objects.prefetch_related(
+                "secondary_group", "steps", "mistakes"
+                ).select_related("primary_group").get(id=id)
+            
+            exercise_data = {
+                "id": exercise.id,
+                "title": exercise.title,
+                "primary_group": exercise.primary_group.name,
+                "secondary_group": [group.name for group in exercise.secondary_group.all()],
+                "gif_link_front": exercise.gif_link_front,
+                "gif_link_side": exercise.gif_link_side,
+                "video_link": exercise.video_link,
+                "steps": [{"id": step.id, "description": step.description, "order": step.order} for step in exercise.steps.all()],
+                "mistakes": [{"id": mistake.id, "description": mistake.description} for mistake in exercise.mistakes.all()],
+            }
+            return Response(exercise_data)
+        except Exercise.DoesNotExist:
+            return Response({"error": "Exercise not found"}, status=status.HTTP_404_NOT_FOUND)
+
         
 
     def create(self, request):
