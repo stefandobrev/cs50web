@@ -1,20 +1,14 @@
-import { useState, useEffect } from 'react';
-import { useFormContext, Controller } from 'react-hook-form';
-
+import { useFormContext, Controller, useWatch } from 'react-hook-form';
 import { EditButton } from '../Buttons/EditButtons';
 
-const DynamicTextFieldList = ({ labelPrefix = 'Item', message }) => {
-  const [fields, setFields] = useState([]);
-  const { control, unregister, setValue } = useFormContext();
+const DynamicTextFieldList = ({ labelPrefix = 'Item' }) => {
+  const { control, setValue, unregister } = useFormContext();
 
-  useEffect(() => {
-    if (message?.type === 'success') {
-      setFields([]);
-      fields.forEach((_, index) => {
-        setValue(`${labelPrefix.toLowerCase()}[${index}]`, '');
-      });
-    }
-  }, [message]);
+  const fields = useWatch({
+    control,
+    name: labelPrefix.toLowerCase(),
+    defaultValue: [],
+  });
 
   const singularize = (word) => {
     if (word.toLowerCase().endsWith('s')) {
@@ -24,26 +18,21 @@ const DynamicTextFieldList = ({ labelPrefix = 'Item', message }) => {
   };
 
   const handleAddField = () => {
-    const newIndex = fields.length;
-    setFields([...fields, '']);
-    setValue(`${labelPrefix.toLowerCase()}[${newIndex}]`, '');
-  };
-
-  const handleFieldChange = (index, value) => {
-    const updatedFields = [...fields];
-    updatedFields[index] = value;
-    setFields(updatedFields);
-    setValue(`${labelPrefix.toLowerCase()}[${index}]`, value);
+    const newFields = [...fields, ''];
+    setValue(labelPrefix.toLowerCase(), newFields);
   };
 
   const handleRemoveField = (index) => {
     const updatedFields = fields.filter((_, i) => i !== index);
-    setFields(updatedFields);
 
-    fields.forEach((_, i) => unregister(`${labelPrefix.toLowerCase()}[${i}]`));
-    updatedFields.forEach((value, i) =>
-      setValue(`${labelPrefix.toLowerCase()}[${i}]`, value)
-    );
+    updatedFields.forEach((value, i) => {
+      setValue(`${labelPrefix.toLowerCase()}[${i}]`, value);
+    });
+
+    const totalFields = fields.length;
+    for (let i = updatedFields.length; i < totalFields; i++) {
+      unregister(`${labelPrefix.toLowerCase()}[${i}]`);
+    }
   };
 
   const autoResize = (event) => {
@@ -60,12 +49,10 @@ const DynamicTextFieldList = ({ labelPrefix = 'Item', message }) => {
             <Controller
               name={`${labelPrefix.toLowerCase()}[${index}]`}
               control={control}
-              defaultValue={fieldValue}
+              defaultValue={fieldValue || ''}
               render={({ field }) => (
                 <textarea
                   {...field}
-                  value={fieldValue}
-                  onChange={(e) => handleFieldChange(index, e.target.value)}
                   onInput={autoResize}
                   className='border border-gray-300 p-2 rounded w-full resize-none overflow-hidden'
                   rows={1}

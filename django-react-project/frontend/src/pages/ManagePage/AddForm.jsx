@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { toast } from 'react-toastify';
 
@@ -7,7 +7,7 @@ import { DefaultForm } from './DefaultForm';
 
 const AddForm = ({ muscleGroups, onExerciseAdded }) => {
   const { reset } = useFormContext();
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState(null);
 
   const onSubmit = async (submittedExerciseData) => {
     const response = await saveExercise(submittedExerciseData);
@@ -20,17 +20,11 @@ const AddForm = ({ muscleGroups, onExerciseAdded }) => {
 
     if (type === 'success') {
       toast.success(text);
-      setMessage({ type, text });
       onExerciseAdded();
+      reset();
+      setMessage(null);
     }
   };
-
-  useEffect(() => {
-    if (message.type === 'success') {
-      reset();
-      setMessage('');
-    }
-  }, [message, reset]);
 
   return (
     <>
@@ -43,4 +37,5 @@ const AddForm = ({ muscleGroups, onExerciseAdded }) => {
     </>
   );
 };
+
 export default AddForm;

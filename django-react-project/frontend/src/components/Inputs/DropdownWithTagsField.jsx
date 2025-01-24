@@ -1,46 +1,33 @@
-import { useEffect, useState } from 'react';
-import { useFormContext } from 'react-hook-form';
+import { useEffect } from 'react';
+import { useFormContext, useWatch } from 'react-hook-form';
 
-const DropdownFieldWithTags = ({
-  label,
-  id,
-  options,
-  placeholder = '--',
-  message,
-}) => {
-  const { setValue } = useFormContext();
+const DropdownFieldWithTags = ({ label, id, options, placeholder = '--' }) => {
+  const { setValue, control } = useFormContext();
 
-  const [selectedTags, setSelectedTags] = useState([]);
+  const selectedTags = useWatch({
+    control,
+    name: id,
+    defaultValue: [],
+  });
 
   useEffect(() => {
-    if (message?.type === 'success') {
-      setSelectedTags([]);
-      setValue(id, []);
-    }
-  }, [message, id, setValue]);
+    setValue(id, []);
+  }, [id, setValue]);
 
   const handleSelectChange = (event) => {
     const selectedValue = event.target.value;
 
     if (selectedValue && !selectedTags.includes(selectedValue)) {
-      setSelectedTags((prev) => [...prev, selectedValue]);
       setValue(id, [...selectedTags, selectedValue]);
     }
 
-    // Reset dropdown value after selection
     event.target.value = '';
   };
 
   const handleTagRemove = (tag) => {
     const updatedTags = selectedTags.filter((t) => t !== tag);
-    setSelectedTags(updatedTags);
     setValue(id, updatedTags);
   };
-
-  useEffect(() => {
-    setSelectedTags([]);
-    setValue(id, []);
-  }, [id]);
 
   return (
     <div>

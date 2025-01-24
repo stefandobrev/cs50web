@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import InputField from '../../components/Inputs/InputField';
@@ -12,8 +12,9 @@ export const DefaultForm = ({
   muscleGroups,
   message,
   mode = 'add',
+  exerciseData,
 }) => {
-  const { handleSubmit, register, watch } = useFormContext();
+  const { handleSubmit, register, watch, setValue } = useFormContext();
   const [selectedPrimaryGroup, setSelectedPrimaryGroup] = useState('');
 
   const handlePrimaryGroupChange = (event) => {
@@ -23,6 +24,22 @@ export const DefaultForm = ({
   const filteredMuscleGroups = muscleGroups.filter(
     (group) => group.value !== selectedPrimaryGroup
   );
+
+  useEffect(() => {
+    if (exerciseData) {
+      setValue('title', exerciseData.title);
+      setValue('primary_group', exerciseData.primary_group);
+      setValue(
+        'secondary_group',
+        exerciseData.secondary_group ? [...exerciseData.secondary_group] : []
+      );
+
+      setValue(
+        'steps',
+        exerciseData.steps.map((step) => step.description)
+      );
+    }
+  }, [exerciseData, setValue]);
 
   const gifFront = watch('gif_link_front');
   const gifSide = watch('gif_link_side');
@@ -47,15 +64,14 @@ export const DefaultForm = ({
         id='secondary_group'
         options={filteredMuscleGroups}
         key={selectedPrimaryGroup}
-        message={message}
       />
-      <DynamicTextFieldList labelPrefix='Steps' message={message} />
+      <DynamicTextFieldList labelPrefix='Steps' />
       <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
         <InputField label='Gif Front' id='gif_link_front' type='url' required />
         <InputField label='Gif Side' id='gif_link_side' type='url' required />
         <InputField label='Video' id='video_link' type='url' required />
       </div>
-      <DynamicTextFieldList labelPrefix='Mistakes' message={message} />
+      <DynamicTextFieldList labelPrefix='Mistakes' />
 
       <div className='flex justify-center'>
         {areUrlsInvalid && (

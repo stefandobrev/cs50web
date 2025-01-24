@@ -29,8 +29,8 @@ class ExerciseController:
             exercise_data = {
                 "id": exercise.id,
                 "title": exercise.title,
-                "primary_group": exercise.primary_group.name,
-                "secondary_group": [group.name for group in exercise.secondary_group.all()],
+                "primary_group": exercise.primary_group.slug,
+                "secondary_group": [group.slug for group in exercise.secondary_group.all()],
                 "gif_link_front": exercise.gif_link_front,
                 "gif_link_side": exercise.gif_link_side,
                 "video_link": exercise.video_link,

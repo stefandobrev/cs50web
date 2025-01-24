@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
+import { FormProvider, useForm, useFormContext } from 'react-hook-form';
 
 import { fetchMuscleGroups, fetchExerciseTitles } from './helpersManage';
 import { ExerciseList } from '../../components/ExerciseList';
@@ -50,9 +50,10 @@ export const ManagePage = () => {
   const handleAddButtonClick = () => {
     setMode('add');
     setSelectedExercise(null);
+    methods.reset();
   };
 
-  const [muscleView, setMuscleView] = useState('front'); // front, back
+  const [muscleView, setMuscleView] = useState('front');
   const toggleMuscleView = () => {
     setMuscleView(muscleView === 'front' ? 'back' : 'front');
   };
