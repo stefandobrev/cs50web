@@ -11,6 +11,7 @@ const AddForm = ({ muscleGroups, onExerciseAdded }) => {
 
   const onSubmit = async (submittedExerciseData) => {
     const response = await saveExercise(submittedExerciseData);
+    console.log(submittedExerciseData);
     const { type, text } = response;
 
     if (type === 'error') {
@@ -22,6 +23,10 @@ const AddForm = ({ muscleGroups, onExerciseAdded }) => {
       toast.success(text);
       onExerciseAdded();
       reset();
+      reset({
+        steps: [],
+        mistakes: [],
+      });
       setMessage(null);
     }
   };

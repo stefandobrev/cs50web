@@ -17,7 +17,7 @@ const DropdownFieldWithTags = ({ label, id, options, placeholder = '--' }) => {
   const handleSelectChange = (event) => {
     const selectedValue = event.target.value;
 
-    if (selectedValue && !selectedTags.includes(selectedValue)) {
+    if (selectedValue) {
       setValue(id, [...selectedTags, selectedValue]);
     }
 
@@ -29,18 +29,21 @@ const DropdownFieldWithTags = ({ label, id, options, placeholder = '--' }) => {
     setValue(id, updatedTags);
   };
 
+  const filteredOptions = options.filter(
+    (option) => !selectedTags.includes(option.value)
+  );
+
   return (
     <div>
       <label htmlFor={id} className='block text-lg font-semibold mb-2'>
         {label}:
       </label>
       <select
-        id={id}
         onChange={handleSelectChange}
         className='block border border-gray-300 p-2 rounded mb-2 w-full'
       >
         <option value=''>{placeholder}</option>
-        {options.map((option) => (
+        {filteredOptions.map((option) => (
           <option key={option.value} value={option.value}>
             {option.label}
           </option>
@@ -57,7 +60,7 @@ const DropdownFieldWithTags = ({ label, id, options, placeholder = '--' }) => {
             <button
               type='button'
               onClick={() => handleTagRemove(tag)}
-              className='text-black  hover:text-red-500 ml-2'
+              className='text-black hover:text-red-500 ml-2'
             >
               &times;
             </button>

@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
-import { FormProvider, useForm, useFormContext } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 
 import { fetchMuscleGroups, fetchExerciseTitles } from './helpersManage';
 import { ExerciseList } from '../../components/ExerciseList';
 import PageTitle from '../../components/PageTitle';
 import AddForm from './AddForm';
 import EditForm from './EditForm';
-import { EditButton } from '../../components/Buttons/EditButtons';
+import { EditButton, ToggleButton } from '../../components/Buttons/EditButtons';
 import FrontAnatomy from '../../components/Anatomy/FrontAnatomy';
 import BackAnatomy from '../../components/Anatomy/BackAnatomy';
 
@@ -90,12 +90,12 @@ export const ManagePage = () => {
         </FormProvider>
       </div>
       <div className='w-full lg:w-2/6 p-4 flex flex-col items-center justify-center'>
-        <EditButton
+        <ToggleButton
           onClick={toggleMuscleView}
           variant={muscleView === 'front' ? 'blue' : 'green'}
         >
           {muscleView === 'front' ? 'Show back' : 'Show front'}
-        </EditButton>
+        </ToggleButton>
         {muscleView === 'front' ? <FrontAnatomy /> : <BackAnatomy />}
       </div>
     </div>

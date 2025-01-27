@@ -19,6 +19,25 @@ export const EditButton = ({
   </Button>
 );
 
+export const ToggleButton = ({
+  children = 'Toggle',
+  variant = 'blue',
+  onClick,
+  disabled,
+  className = '',
+}) => (
+  <Button
+    type='button'
+    onClick={onClick}
+    variant={variant}
+    disabled={disabled}
+    className={className}
+    aria-label='Toggle'
+  >
+    {children}
+  </Button>
+);
+
 export const SaveButton = ({ children = 'Save', disabled, className = '' }) => (
   <Button
     type='submit'

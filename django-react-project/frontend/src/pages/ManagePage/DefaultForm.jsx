@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import InputField from '../../components/Inputs/InputField';
@@ -16,6 +16,8 @@ export const DefaultForm = ({
 }) => {
   const { handleSubmit, register, watch, setValue } = useFormContext();
   const [selectedPrimaryGroup, setSelectedPrimaryGroup] = useState('');
+  const textAreaRefs = useRef([]);
+  const exerciseDataRef = useRef(exerciseData);
 
   const handlePrimaryGroupChange = (event) => {
     setSelectedPrimaryGroup(event.target.value);
@@ -33,13 +35,36 @@ export const DefaultForm = ({
         'secondary_group',
         exerciseData.secondary_group ? [...exerciseData.secondary_group] : []
       );
-
       setValue(
         'steps',
         exerciseData.steps.map((step) => step.description)
       );
+      setValue('gif_link_front', exerciseData.gif_link_front);
+      setValue('gif_link_side', exerciseData.gif_link_side);
+      setValue('video_link', exerciseData.video_link);
+      setValue(
+        'mistakes',
+        exerciseData.mistakes.map((mistake) => mistake.description)
+      );
+
+      exerciseDataRef.current = exerciseData;
     }
   }, [exerciseData, setValue]);
+
+  const autoResize = (event) => {
+    event.target.style.height = 'auto';
+    event.target.style.height = `${event.target.scrollHeight}px`;
+  };
+
+  useEffect(() => {
+    if (exerciseDataRef.current) {
+      textAreaRefs.current.forEach((textarea) => {
+        if (textarea) {
+          autoResize({ target: textarea });
+        }
+      });
+    }
+  }, [exerciseDataRef.current]);
 
   const gifFront = watch('gif_link_front');
   const gifSide = watch('gif_link_side');
@@ -65,14 +90,21 @@ export const DefaultForm = ({
         options={filteredMuscleGroups}
         key={selectedPrimaryGroup}
       />
-      <DynamicTextFieldList labelPrefix='Steps' />
+      <DynamicTextFieldList
+        labelPrefix='Steps'
+        textAreaRefs={textAreaRefs}
+        autoResize={autoResize}
+      />
       <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
         <InputField label='Gif Front' id='gif_link_front' type='url' required />
         <InputField label='Gif Side' id='gif_link_side' type='url' required />
         <InputField label='Video' id='video_link' type='url' required />
       </div>
-      <DynamicTextFieldList labelPrefix='Mistakes' />
-
+      <DynamicTextFieldList
+        labelPrefix='Mistakes'
+        textAreaRefs={textAreaRefs}
+        autoResize={autoResize}
+      />
       <div className='flex justify-center'>
         {areUrlsInvalid && (
           <p className='text-red-500'>Gif links shouldn't be the same</p>
