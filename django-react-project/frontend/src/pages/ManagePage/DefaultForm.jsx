@@ -12,6 +12,7 @@ export const DefaultForm = ({
   muscleGroups,
   message,
   mode = 'add',
+  title,
   exerciseData,
 }) => {
   const { handleSubmit, register, watch, setValue } = useFormContext();
@@ -72,52 +73,65 @@ export const DefaultForm = ({
   const areUrlsInvalid = gifFront && gifSide && gifFront === gifSide;
 
   return (
-    <form
-      onSubmit={handleSubmit(submittedExerciseData)}
-      className='flex flex-col w-full max-w-sm md:max-w-md lg:max-w-lg space-y-3'
-    >
-      <InputField label='Title' id='title' registration={register('title')} />
-      <DropdownField
-        label='Primary Group'
-        id='primary_group'
-        options={muscleGroups}
-        placeholder='Select primary group'
-        onChange={handlePrimaryGroupChange}
-      />
-      <DropdownFieldWithTags
-        label='Secondary Group'
-        id='secondary_group'
-        options={filteredMuscleGroups}
-        key={selectedPrimaryGroup}
-      />
-      <DynamicTextFieldList
-        labelPrefix='Steps'
-        textAreaRefs={textAreaRefs}
-        autoResize={autoResize}
-      />
-      <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
-        <InputField label='Gif Front' id='gif_link_front' type='url' required />
-        <InputField label='Gif Side' id='gif_link_side' type='url' required />
-        <InputField label='Video' id='video_link' type='url' required />
-      </div>
-      <DynamicTextFieldList
-        labelPrefix='Mistakes'
-        textAreaRefs={textAreaRefs}
-        autoResize={autoResize}
-      />
-      <div className='flex justify-center'>
+    <div className='flex flex-col w-full max-w-sm md:max-w-md lg:max-w-lg'>
+      <h2 className='text-2xl font-semibold text-center mb-3 sticky top-0 bg-white z-10'>
+        {title}
+      </h2>
+
+      <form
+        id='exercise-form'
+        onSubmit={handleSubmit(submittedExerciseData)}
+        className='flex flex-col space-y-3 overflow-y-auto lg:max-h-[67vh] px-2'
+      >
+        <InputField label='Title' id='title' registration={register('title')} />
+        <DropdownField
+          label='Primary Group'
+          id='primary_group'
+          options={muscleGroups}
+          placeholder='Select primary group'
+          onChange={handlePrimaryGroupChange}
+        />
+        <DropdownFieldWithTags
+          label='Secondary Group'
+          id='secondary_group'
+          options={filteredMuscleGroups}
+          key={selectedPrimaryGroup}
+        />
+        <DynamicTextFieldList
+          labelPrefix='Steps'
+          textAreaRefs={textAreaRefs}
+          autoResize={autoResize}
+        />
+        <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+          <InputField
+            label='Gif Front'
+            id='gif_link_front'
+            type='url'
+            required
+          />
+          <InputField label='Gif Side' id='gif_link_side' type='url' required />
+          <InputField label='Video' id='video_link' type='url' required />
+        </div>
+        <DynamicTextFieldList
+          labelPrefix='Mistakes'
+          textAreaRefs={textAreaRefs}
+          autoResize={autoResize}
+        />
         {areUrlsInvalid && (
           <p className='text-red-500'>Gif links shouldn't be the same</p>
         )}
+        {message && <p className='text-red-500'>{message.text}</p>}
+      </form>
 
-        {message && <p className={'text-red-500'}>{message.text}</p>}
-      </div>
-
-      <div className='flex flex-col justify-center items-center space-y-2'>
-        <SaveButton disabled={areUrlsInvalid} className='w-full md:w-auto'>
+      <div className='mt-4 flex justify-center sticky bottom-0 bg-white py-2'>
+        <SaveButton
+          disabled={areUrlsInvalid}
+          form='exercise-form'
+          className='w-full md:w-auto'
+        >
           {mode === 'add' ? 'Add Exercise' : 'Edit Exercise'}
         </SaveButton>
       </div>
-    </form>
+    </div>
   );
 };

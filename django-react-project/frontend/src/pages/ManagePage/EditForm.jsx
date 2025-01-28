@@ -11,7 +11,6 @@ const EditForm = ({ muscleGroups, exercise, onExerciseUpdated, mode }) => {
   useEffect(() => {
     const loadExerciseData = async () => {
       const data = await fetchExerciseData(exercise.id);
-      console.log(data);
       setExerciseData(data);
     };
     loadExerciseData();
@@ -21,16 +20,14 @@ const EditForm = ({ muscleGroups, exercise, onExerciseUpdated, mode }) => {
     pass;
   };
   return (
-    <>
-      <h2 className='text-2xl font-semibold text-center mb-3'>Edit Exercise</h2>
-      <DefaultForm
-        submittedExerciseData={onSubmit}
-        muscleGroups={muscleGroups}
-        message={message}
-        mode={mode}
-        exerciseData={exerciseData}
-      />
-    </>
+    <DefaultForm
+      submittedExerciseData={onSubmit}
+      muscleGroups={muscleGroups}
+      message={message}
+      mode={mode}
+      title={'Edit Exercise'}
+      exerciseData={exerciseData}
+    />
   );
 };
 export default EditForm;

@@ -38,13 +38,19 @@ export const ToggleButton = ({
   </Button>
 );
 
-export const SaveButton = ({ children = 'Save', disabled, className = '' }) => (
+export const SaveButton = ({
+  children = 'Save',
+  disabled,
+  className = '',
+  ...props
+}) => (
   <Button
     type='submit'
     disabled={disabled}
     variant='blue'
     className={className}
     aria-label='Save Changes'
+    {...props}
   >
     {children}
   </Button>

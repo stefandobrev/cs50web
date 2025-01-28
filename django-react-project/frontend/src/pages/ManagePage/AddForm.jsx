@@ -11,7 +11,6 @@ const AddForm = ({ muscleGroups, onExerciseAdded }) => {
 
   const onSubmit = async (submittedExerciseData) => {
     const response = await saveExercise(submittedExerciseData);
-    console.log(submittedExerciseData);
     const { type, text } = response;
 
     if (type === 'error') {
@@ -32,14 +31,12 @@ const AddForm = ({ muscleGroups, onExerciseAdded }) => {
   };
 
   return (
-    <>
-      <h2 className='text-2xl font-semibold text-center mb-3'>Add Exercise</h2>
-      <DefaultForm
-        submittedExerciseData={onSubmit}
-        muscleGroups={muscleGroups}
-        message={message}
-      />
-    </>
+    <DefaultForm
+      submittedExerciseData={onSubmit}
+      muscleGroups={muscleGroups}
+      message={message}
+      title={'Add Exercise'}
+    />
   );
 };
 
