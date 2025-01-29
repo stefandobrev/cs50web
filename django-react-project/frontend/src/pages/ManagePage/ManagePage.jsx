@@ -17,6 +17,7 @@ export const ManagePage = () => {
   const [refreshKey, setRefreshKey] = useState(0);
   const [muscleGroups, setMuscleGroups] = useState([]);
   const [exerciseTitles, setExerciseTitles] = useState([]);
+  const [isExerciseListVisible, setIsExerciseListVisible] = useState(false);
 
   useEffect(() => {
     const loadMuscleGroups = async () => {
@@ -58,19 +59,50 @@ export const ManagePage = () => {
     setMuscleView(muscleView === 'front' ? 'back' : 'front');
   };
 
+  const toggleExerciseListVisibility = () => {
+    setIsExerciseListVisible((prev) => !prev);
+  };
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 1024) {
+        setIsExerciseListVisible(true);
+      } else {
+        setIsExerciseListVisible(false);
+      }
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [selectedExercise]);
+
   return (
     <div className='flex flex-col h-full lg:flex-row'>
       <PageTitle title='Manage' />
-      <div className='w-full lg:w-2/6 p-4 flex flex-col items-center justify-start'>
+      <div className='w-full lg:w-2/6 p-4 flex flex-col items-center justify-start gap-5'>
         {mode !== 'add' && (
           <EditButton onClick={handleAddButtonClick} variant='red'>
             Add New Exercise
           </EditButton>
         )}
-        <ExerciseList
-          exerciseTitles={exerciseTitles}
-          onSelectExercise={handleSelectExercise}
-        />
+
+        <ToggleButton
+          onClick={toggleExerciseListVisibility}
+          className='lg:hidden'
+        >
+          {isExerciseListVisible ? 'Hide Exercises' : 'Show Exercises'}
+        </ToggleButton>
+
+        {isExerciseListVisible && (
+          <ExerciseList
+            exerciseTitles={exerciseTitles}
+            onSelectExercise={handleSelectExercise}
+          />
+        )}
       </div>
       <div className='bg-white w-full lg:w-5/6 p-5 flex flex-col items-center justify-start'>
         <FormProvider {...methods}>
@@ -92,7 +124,7 @@ export const ManagePage = () => {
       <div className='w-full lg:w-2/6 p-4 flex flex-col items-center justify-center'>
         <ToggleButton
           onClick={toggleMuscleView}
-          variant={muscleView === 'front' ? 'blue' : 'green'}
+          variant={muscleView === 'front' ? 'green' : 'blue'}
         >
           {muscleView === 'front' ? 'Show back' : 'Show front'}
         </ToggleButton>

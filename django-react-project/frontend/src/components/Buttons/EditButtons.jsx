@@ -21,7 +21,7 @@ export const EditButton = ({
 
 export const ToggleButton = ({
   children = 'Toggle',
-  variant = 'blue',
+  variant = 'green',
   onClick,
   disabled,
   className = '',
