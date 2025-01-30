@@ -30,23 +30,18 @@ export const DefaultForm = ({
 
   useEffect(() => {
     if (exerciseData) {
+      setValue('id', exerciseData.id);
       setValue('title', exerciseData.title);
       setValue('primary_group', exerciseData.primary_group);
       setValue(
         'secondary_group',
         exerciseData.secondary_group ? [...exerciseData.secondary_group] : []
       );
-      setValue(
-        'steps',
-        exerciseData.steps.map((step) => step.description)
-      );
+      setValue('steps', exerciseData.steps);
       setValue('gif_link_front', exerciseData.gif_link_front);
       setValue('gif_link_side', exerciseData.gif_link_side);
       setValue('video_link', exerciseData.video_link);
-      setValue(
-        'mistakes',
-        exerciseData.mistakes.map((mistake) => mistake.description)
-      );
+      setValue('mistakes', exerciseData.mistakes);
 
       exerciseDataRef.current = exerciseData;
     }

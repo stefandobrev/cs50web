@@ -34,8 +34,8 @@ class ExerciseController:
                 "gif_link_front": exercise.gif_link_front,
                 "gif_link_side": exercise.gif_link_side,
                 "video_link": exercise.video_link,
-                "steps": [{"id": step.id, "description": step.description, "order": step.order} for step in exercise.steps.all()],
-                "mistakes": [{"id": mistake.id, "description": mistake.description} for mistake in exercise.mistakes.all()],
+                "steps": [step.description for step in exercise.steps.all()],
+                "mistakes": [mistake.description for mistake in exercise.mistakes.all()]
             }
             return Response(exercise_data)
         except Exercise.DoesNotExist:
