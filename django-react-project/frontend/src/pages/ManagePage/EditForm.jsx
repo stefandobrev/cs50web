@@ -47,8 +47,19 @@ const EditForm = ({ muscleGroups, exercise, onExerciseUpdated, mode }) => {
   const onSubmit = async (submittedExerciseData) => {
     const changedData = getChangedFields(exerciseData, submittedExerciseData);
     const response = await saveExercise(changedData, exercise.id);
+    const { type, text } = response;
 
-    console.log('Update ', response);
+    if (type === 'error') {
+      toast.error(text);
+      setMessage({ type, text });
+      return;
+    }
+
+    if (type === 'success') {
+      toast.success(text);
+      onExerciseUpdated();
+      setMessage(null);
+    }
   };
 
   return (

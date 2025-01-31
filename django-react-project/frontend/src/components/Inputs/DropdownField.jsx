@@ -6,12 +6,12 @@ const DropdownField = ({
   options,
   required = true,
   placeholder = '--',
-  ...rest
 }) => {
   const {
     register,
     formState: { errors },
   } = useFormContext();
+
   return (
     <div>
       <label htmlFor={id} className='block text-lg font-semibold mb-2'>
@@ -20,7 +20,6 @@ const DropdownField = ({
           id={id}
           {...register(id, { required })}
           className='block border border-gray-300 p-2 rounded  w-full'
-          {...rest}
         >
           <option value=''>{placeholder}</option>
           {options.map((option) => (

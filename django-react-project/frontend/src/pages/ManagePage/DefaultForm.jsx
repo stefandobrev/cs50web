@@ -21,9 +21,13 @@ export const DefaultForm = ({
   const textAreaRefs = useRef([]);
   const exerciseDataRef = useRef(exerciseData);
 
-  const handlePrimaryGroupChange = (event) => {
-    setSelectedPrimaryGroup(event.target.value);
-  };
+  const primaryGroupValue = watch('primary_group');
+
+  useEffect(() => {
+    if (primaryGroupValue !== selectedPrimaryGroup) {
+      setSelectedPrimaryGroup(primaryGroupValue);
+    }
+  }, [primaryGroupValue]);
 
   const filteredMuscleGroups = muscleGroups.filter(
     (group) => group.value !== selectedPrimaryGroup
@@ -45,6 +49,7 @@ export const DefaultForm = ({
     }
   }, [exerciseData, setValue]);
 
+  /* Cosmetic changes */
   const autoResize = (event) => {
     event.target.style.height = 'auto';
     event.target.style.height = `${event.target.scrollHeight}px`;
@@ -82,7 +87,6 @@ export const DefaultForm = ({
           id='primary_group'
           options={muscleGroups}
           placeholder='Select primary group'
-          onChange={handlePrimaryGroupChange}
         />
         <DropdownFieldWithTags
           label='Secondary Group'
