@@ -17,4 +17,5 @@ urlpatterns = [
     path("exercises/fetch-exercise-titles/", exercise_views.fetch_exercise_titles, name="fetch-exercise-titles"),
     path("exercises/fetch-exercise/<int:id>/", exercise_views.fetch_exercise, name="fetch-exercise"),
     path("exercises/create-exercise/", exercise_views.create_exercise, name="create-exercise"),
+    path("exercises/update-exercise/<int:id>/", exercise_views.update_exercise, name="update-exercise"),
 ]

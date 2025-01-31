@@ -13,7 +13,6 @@ const AddForm = ({ muscleGroups, onExerciseAdded }) => {
     const response = await saveExercise(submittedExerciseData);
     const { type, text } = response;
 
-    console.log(submittedExerciseData);
     if (type === 'error') {
       setMessage({ type, text });
       return;

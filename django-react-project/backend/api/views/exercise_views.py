@@ -26,3 +26,9 @@ def fetch_exercise(request, id):
 def create_exercise(request):
     exercise_controller = ExerciseController()
     return exercise_controller.create(request)
+
+@api_view(["PUT"])
+# @permission_classes([IsAdminUser])
+def update_exercise(request, id):
+    exercise_controller = ExerciseController()
+    return exercise_controller.update(request, id)

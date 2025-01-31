@@ -14,6 +14,7 @@ export const DefaultForm = ({
   mode = 'add',
   title,
   exerciseData,
+  hasChanges,
 }) => {
   const { handleSubmit, register, watch, setValue } = useFormContext();
   const [selectedPrimaryGroup, setSelectedPrimaryGroup] = useState('');
@@ -33,10 +34,7 @@ export const DefaultForm = ({
       setValue('id', exerciseData.id);
       setValue('title', exerciseData.title);
       setValue('primary_group', exerciseData.primary_group);
-      setValue(
-        'secondary_group',
-        exerciseData.secondary_group ? [...exerciseData.secondary_group] : []
-      );
+      setValue('secondary_group', exerciseData.secondary_group);
       setValue('steps', exerciseData.steps);
       setValue('gif_link_front', exerciseData.gif_link_front);
       setValue('gif_link_side', exerciseData.gif_link_side);
@@ -120,7 +118,9 @@ export const DefaultForm = ({
 
       <div className='mt-4 flex justify-center sticky bottom-0 bg-white py-2'>
         <SaveButton
-          disabled={areUrlsInvalid}
+          disabled={
+            mode === 'edit' ? !hasChanges || areUrlsInvalid : areUrlsInvalid
+          }
           form='exercise-form'
           className='w-full md:w-auto'
         >
