@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import InputField from '../../components/Inputs/InputField';
@@ -17,20 +17,19 @@ export const DefaultForm = ({
   hasChanges,
 }) => {
   const { handleSubmit, register, watch, setValue } = useFormContext();
-  const [selectedPrimaryGroup, setSelectedPrimaryGroup] = useState('');
   const textAreaRefs = useRef([]);
   const exerciseDataRef = useRef(exerciseData);
 
   const primaryGroupValue = watch('primary_group');
 
   useEffect(() => {
-    if (primaryGroupValue !== selectedPrimaryGroup) {
-      setSelectedPrimaryGroup(primaryGroupValue);
+    if (exerciseDataRef.current?.primary_group !== primaryGroupValue) {
+      setValue('secondary_group', []);
     }
-  }, [primaryGroupValue]);
+  }, [primaryGroupValue, setValue]);
 
   const filteredMuscleGroups = muscleGroups.filter(
-    (group) => group.value !== selectedPrimaryGroup
+    (group) => group.value !== primaryGroupValue
   );
 
   useEffect(() => {
@@ -92,7 +91,7 @@ export const DefaultForm = ({
           label='Secondary Group'
           id='secondary_group'
           options={filteredMuscleGroups}
-          key={selectedPrimaryGroup}
+          key={primaryGroupValue}
         />
         <DynamicTextFieldList
           labelPrefix='Steps'

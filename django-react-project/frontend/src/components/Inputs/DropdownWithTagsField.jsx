@@ -10,10 +10,6 @@ const DropdownFieldWithTags = ({ label, id, options, placeholder = '--' }) => {
     defaultValue: [],
   });
 
-  useEffect(() => {
-    setValue(id, []);
-  }, [id, setValue]);
-
   const handleSelectChange = (event) => {
     const selectedValue = event.target.value;
 

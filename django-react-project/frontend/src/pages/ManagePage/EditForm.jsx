@@ -16,6 +16,7 @@ const EditForm = ({ muscleGroups, exercise, onExerciseUpdated, mode }) => {
       const data = await fetchExerciseData(exercise.id);
       setExerciseData(data);
     };
+
     loadExerciseData();
   }, [exercise.id]);
 
@@ -42,7 +43,7 @@ const EditForm = ({ muscleGroups, exercise, onExerciseUpdated, mode }) => {
     const formValues = watch();
     const changedData = getChangedFields(exerciseData, formValues);
     setHasChanges(Object.keys(changedData).length > 0);
-  }, [exerciseData, watch]);
+  }, [watch(), exerciseData]);
 
   const onSubmit = async (submittedExerciseData) => {
     const changedData = getChangedFields(exerciseData, submittedExerciseData);
@@ -59,6 +60,9 @@ const EditForm = ({ muscleGroups, exercise, onExerciseUpdated, mode }) => {
       toast.success(text);
       onExerciseUpdated();
       setMessage(null);
+
+      const updatedData = await fetchExerciseData(exercise.id);
+      setExerciseData(updatedData);
     }
   };
 

@@ -93,8 +93,8 @@ class ExerciseController:
         exercise = get_object_or_404(Exercise, id=id)
 
         exercise_data = {key: value for key, value in request.data.items() if key in ExerciseSerializer.Meta.fields}
-        steps_data = request.data.get("steps", [])
-        mistakes_data = request.data.get("mistakes", [])
+        steps_data = request.data.get("steps")
+        mistakes_data = request.data.get("mistakes")
 
         if "primary_group" in exercise_data: 
             primary_group_name = exercise_data["primary_group"]
@@ -117,12 +117,12 @@ class ExerciseController:
 
         exercise = serializer.save()
 
-        if steps_data:
+        if steps_data is not None:
             exercise.steps.all().delete()
             for index, step_description in enumerate(steps_data, start=1):
                 Step.objects.create(exercise=exercise, description=step_description, order=index)
         
-        if mistakes_data:
+        if mistakes_data is not None:
             exercise.mistakes.all().delete()
             for mistake_description in mistakes_data:
                 Mistake.objects.create(exercise=exercise, description=mistake_description)
