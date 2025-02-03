@@ -67,14 +67,30 @@ export const CancelButton = ({ children = 'Cancel', onClick }) => (
   </Button>
 );
 
-export const DeleteButton = ({ children = 'Delete', onClick }) => (
-  <Button type='button' onClick={onClick} variant='red' aria-label='Delete'>
+export const DeleteButton = ({
+  children = 'Delete',
+  onClick,
+  className = '',
+}) => (
+  <Button
+    type='button'
+    onClick={onClick}
+    variant='red'
+    className={className}
+    aria-label='Delete'
+  >
     {children}
   </Button>
 );
 
-export const ViewButton = ({ children = 'View', onClick }) => (
-  <Button type='button' onClick={onClick} variant='red' aria-label='Delete'>
+export const ViewButton = ({ children = 'View', onClick, className = '' }) => (
+  <Button
+    type='button'
+    onClick={onClick}
+    variant='green'
+    className={className}
+    aria-label='View'
+  >
     {children}
   </Button>
 );

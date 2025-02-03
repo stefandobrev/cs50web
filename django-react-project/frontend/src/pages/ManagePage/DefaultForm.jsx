@@ -5,7 +5,11 @@ import InputField from '../../components/Inputs/InputField';
 import DropdownField from '../../components/Inputs/DropdownField';
 import DropdownFieldWithTags from '../../components/Inputs/DropdownWithTagsField';
 import DynamicTextFieldList from '../../components/Inputs/DynamicTextFieldList';
-import { SaveButton } from '../../components/Buttons/EditButtons';
+import {
+  SaveButton,
+  DeleteButton,
+  ViewButton,
+} from '../../components/Buttons/EditButtons';
 
 export const DefaultForm = ({
   submittedExerciseData,
@@ -119,16 +123,17 @@ export const DefaultForm = ({
         {message && <p className='text-red-500'>{message.text}</p>}
       </form>
 
-      <div className='mt-4 flex justify-center sticky bottom-0 bg-white py-2'>
+      <div className='mt-4 flex sticky bottom-0 justify-center  bg-white gap-2 py-2'>
         <SaveButton
           disabled={
             mode === 'edit' ? !hasChanges || areUrlsInvalid : areUrlsInvalid
           }
           form='exercise-form'
-          className='w-full md:w-auto'
         >
           {mode === 'add' ? 'Add Exercise' : 'Edit Exercise'}
         </SaveButton>
+        {mode === 'edit' && <DeleteButton>Delete Exercise</DeleteButton>}
+        {mode === 'edit' && <ViewButton>View Exercise</ViewButton>}
       </div>
     </div>
   );

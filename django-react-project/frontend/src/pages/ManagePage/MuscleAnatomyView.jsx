@@ -4,26 +4,26 @@ import { ToggleButton } from '../../components/Buttons/EditButtons';
 import FrontAnatomy from '../../components/Anatomy/FrontAnatomy';
 import BackAnatomy from '../../components/Anatomy/BackAnatomy';
 
-const MuscleAnatomyView = ({ className = '' }) => {
-  const [muscleView, setMuscleView] = useState('front');
+const MuscleAnatomyView = () => {
+  const [isFrontView, setIsFrontView] = useState('yes');
 
-  const toggleMuscleView = () => {
-    setMuscleView((prev) => (prev === 'front' ? 'back' : 'front'));
+  const toggleIsFrontView = () => {
+    setIsFrontView((prev) => (prev === 'yes' ? 'no' : 'yes'));
   };
 
   return (
-    <div className={`flex flex-col items-center justify-center ${className}`}>
+    <div className={'flex flex-col items-center justify-center'}>
       <ToggleButton
-        onClick={toggleMuscleView}
-        variant={muscleView === 'front' ? 'green' : 'blue'}
+        onClick={toggleIsFrontView}
+        variant={isFrontView === 'yes' ? 'green' : 'blue'}
       >
-        {muscleView === 'front' ? 'Show back' : 'Show front'}
+        {isFrontView === 'yes' ? 'Show back' : 'Show front'}
       </ToggleButton>
 
       <AnimatePresence mode='wait'>
-        {muscleView === 'front' ? (
+        {isFrontView === 'yes' ? (
           <motion.div
-            key='front'
+            key='yes'
             initial={{ rotateY: 90, opacity: 0 }}
             animate={{ rotateY: 0, opacity: 1 }}
             exit={{ rotateY: -90, opacity: 0 }}
@@ -34,7 +34,7 @@ const MuscleAnatomyView = ({ className = '' }) => {
           </motion.div>
         ) : (
           <motion.div
-            key='back'
+            key='no'
             initial={{ rotateY: -90, opacity: 0 }}
             animate={{ rotateY: 0, opacity: 1 }}
             exit={{ rotateY: 90, opacity: 0 }}
