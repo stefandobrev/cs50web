@@ -2,7 +2,7 @@ const variants = {
   blue: 'bg-blue-500 hover:bg-blue-600 disabled:bg-blue-300',
   gray: 'bg-gray-500 hover:bg-gray-600 disabled:bg-gray-300',
   green: 'bg-green-500 hover:bg-green-600 disabled:bg-green-300',
-  red: 'bg-red-500 hover:bg-red-600 disabled:bg-red-300',
+  red: 'bg-[rgba(195,42,42,1)] hover:bg-[rgba(170,30,30,1)] disabled:bg-[rgba(195,42,42,0.5)]',
   orange: 'bg-orange-500 hover:bg-orange-600 disabled:bg-orange-300',
 };
 

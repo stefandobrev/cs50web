@@ -7,8 +7,7 @@ import PageTitle from '../../components/PageTitle';
 import AddForm from './AddForm';
 import EditForm from './EditForm';
 import { EditButton, ToggleButton } from '../../components/Buttons/EditButtons';
-import FrontAnatomy from '../../components/Anatomy/FrontAnatomy';
-import BackAnatomy from '../../components/Anatomy/BackAnatomy';
+import MuscleAnatomyView from './MuscleAnatomyView';
 
 export const ManagePage = () => {
   const methods = useForm();
@@ -52,11 +51,6 @@ export const ManagePage = () => {
     setMode('add');
     setSelectedExercise(null);
     methods.reset();
-  };
-
-  const [muscleView, setMuscleView] = useState('front');
-  const toggleMuscleView = () => {
-    setMuscleView(muscleView === 'front' ? 'back' : 'front');
   };
 
   const toggleExerciseListVisibility = () => {
@@ -121,14 +115,8 @@ export const ManagePage = () => {
           )}
         </FormProvider>
       </div>
-      <div className='w-full lg:w-2/6 p-4 flex flex-col items-center justify-center'>
-        <ToggleButton
-          onClick={toggleMuscleView}
-          variant={muscleView === 'front' ? 'green' : 'blue'}
-        >
-          {muscleView === 'front' ? 'Show back' : 'Show front'}
-        </ToggleButton>
-        {muscleView === 'front' ? <FrontAnatomy /> : <BackAnatomy />}
+      <div className='w-full lg:w-2/6 p-4'>
+        <MuscleAnatomyView />
       </div>
     </div>
   );
