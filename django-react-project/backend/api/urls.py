@@ -18,4 +18,5 @@ urlpatterns = [
     path("exercises/fetch-exercise/<int:id>/", exercise_views.fetch_exercise, name="fetch-exercise"),
     path("exercises/create-exercise/", exercise_views.create_exercise, name="create-exercise"),
     path("exercises/update-exercise/<int:id>/", exercise_views.update_exercise, name="update-exercise"),
+    path("exercises/delete-exercise/<int:id>/", exercise_views.delete_exercise, name="delete-exercise"),
 ]

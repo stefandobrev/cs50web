@@ -32,3 +32,10 @@ def create_exercise(request):
 def update_exercise(request, id):
     exercise_controller = ExerciseController()
     return exercise_controller.update(request, id)
+
+
+@api_view(["DELETE"])
+# @permission_classes([IsAdminUser])
+def delete_exercise(request, id):
+    exercise_controller = ExerciseController()
+    return exercise_controller.delete(request, id)

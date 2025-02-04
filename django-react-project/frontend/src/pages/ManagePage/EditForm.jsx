@@ -2,7 +2,11 @@ import { useState, useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { toast } from 'react-toastify';
 
-import { saveExercise, fetchExerciseData } from './helpersManage';
+import {
+  saveExercise,
+  fetchExerciseData,
+  deleteExercise,
+} from './helpersManage';
 import { DefaultForm } from './DefaultForm';
 
 const EditForm = ({ muscleGroups, exercise, onExerciseUpdated, mode }) => {
@@ -66,6 +70,11 @@ const EditForm = ({ muscleGroups, exercise, onExerciseUpdated, mode }) => {
     }
   };
 
+  const handleDelete = async () => {
+    const response = await deleteExercise(exercise.id);
+    const { type, text } = response;
+  };
+
   return (
     <DefaultForm
       submittedExerciseData={onSubmit}
@@ -75,6 +84,7 @@ const EditForm = ({ muscleGroups, exercise, onExerciseUpdated, mode }) => {
       title={'Edit Exercise'}
       exerciseData={exerciseData}
       hasChanges={hasChanges}
+      handleDeleteButton={handleDelete}
     />
   );
 };

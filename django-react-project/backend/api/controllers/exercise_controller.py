@@ -128,3 +128,8 @@ class ExerciseController:
                 Mistake.objects.create(exercise=exercise, description=mistake_description)
         
         return Response({"message": "Exercise updated successfully!"})
+    
+    def delete(self, request, id):
+        """ Delete an existing exercise model"""
+        exercise = get_object_or_404(Exercise, id=id)
+        pass

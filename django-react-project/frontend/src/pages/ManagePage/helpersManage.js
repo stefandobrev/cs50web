@@ -61,3 +61,9 @@ export const saveExercise = async (exerciseData, id = null) => {
     };
   }
 };
+
+export const deleteExercise = async (id) => {
+  const response = await api(`exercises/delete-exercise/${id}/`, 'DELETE');
+  if (!response.ok) throw new Error('Failed to delete exercise.');
+  return response.json();
+};
