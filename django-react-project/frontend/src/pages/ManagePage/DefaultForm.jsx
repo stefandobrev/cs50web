@@ -1,15 +1,11 @@
-import { useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import InputField from '../../components/Inputs/InputField';
 import DropdownField from '../../components/Inputs/DropdownField';
 import DropdownFieldWithTags from '../../components/Inputs/DropdownWithTagsField';
 import DynamicTextFieldList from '../../components/Inputs/DynamicTextFieldList';
-import {
-  SaveButton,
-  DeleteButton,
-  ViewButton,
-} from '../../components/Buttons/EditButtons';
+import { MdScreenButtons, SmScreenButtons } from './DefaultFormButtons';
 
 export const DefaultForm = ({
   submittedExerciseData,
@@ -23,6 +19,7 @@ export const DefaultForm = ({
   const { handleSubmit, register, watch, setValue } = useFormContext();
   const textAreaRefs = useRef([]);
   const exerciseDataRef = useRef(exerciseData);
+  const [isMdScreen, setIsMdScreen] = useState(false);
 
   const primaryGroupValue = watch('primary_group');
 
@@ -72,6 +69,13 @@ export const DefaultForm = ({
   const gifSide = watch('gif_link_side');
 
   const areUrlsInvalid = gifFront && gifSide && gifFront === gifSide;
+
+  useEffect(() => {
+    const handleResize = () => setIsMdScreen(window.innerWidth >= 768);
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   return (
     <div className='flex flex-col w-full max-w-sm md:max-w-md lg:max-w-lg'>
@@ -123,18 +127,19 @@ export const DefaultForm = ({
         {message && <p className='text-red-500'>{message.text}</p>}
       </form>
 
-      <div className='mt-4 flex sticky bottom-0 justify-center  bg-white gap-2 py-2'>
-        <SaveButton
-          disabled={
-            mode === 'edit' ? !hasChanges || areUrlsInvalid : areUrlsInvalid
-          }
-          form='exercise-form'
-        >
-          {mode === 'add' ? 'Add Exercise' : 'Edit Exercise'}
-        </SaveButton>
-        {mode === 'edit' && <DeleteButton>Delete Exercise</DeleteButton>}
-        {mode === 'edit' && <ViewButton>View Exercise</ViewButton>}
-      </div>
+      {isMdScreen ? (
+        <MdScreenButtons
+          mode={mode}
+          hasChanges={hasChanges}
+          areUrlsInvalid={areUrlsInvalid}
+        />
+      ) : (
+        <SmScreenButtons
+          mode={mode}
+          hasChanges={hasChanges}
+          areUrlsInvalid={areUrlsInvalid}
+        />
+      )}
     </div>
   );
 };
