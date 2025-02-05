@@ -12,7 +12,7 @@ export const ExerciseList = ({ exerciseTitles, onSelectExercise }) => {
   };
 
   return (
-    <div className='flex flex-col w-full max-w-sm bg-white p-4 shadow-md rounded'>
+    <div className='flex flex-col w-full max-w-sm bg-white p-4 shadow-md rounded overflow-y-auto lg:max-h-[67vh]'>
       <input
         type='text'
         placeholder='Search Exercises'

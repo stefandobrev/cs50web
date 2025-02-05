@@ -11,7 +11,7 @@ class MuscleGroupAdmin(admin.ModelAdmin):
 
 class ExerciseAdmin(admin.ModelAdmin):
     ordering = ["title"]
-    list_display = ["id","title", "primary_group"]
+    list_display = ["title", "primary_group", "id"]
 
 class StepAdmin(admin.ModelAdmin):
     ordering = ["exercise__title", "order"]

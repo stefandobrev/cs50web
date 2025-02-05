@@ -8,6 +8,7 @@ import {
   deleteExercise,
 } from './helpersManage';
 import { DefaultForm } from './DefaultForm';
+import DeleteConfirmation from './DeleteConfirmation';
 
 const EditForm = ({
   muscleGroups,
@@ -19,6 +20,7 @@ const EditForm = ({
   const [message, setMessage] = useState('');
   const [exerciseData, setExerciseData] = useState(null);
   const [hasChanges, setHasChanges] = useState(false);
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const { watch } = useFormContext();
 
   useEffect(() => {
@@ -76,7 +78,11 @@ const EditForm = ({
     }
   };
 
-  const handleDelete = async () => {
+  const handleDelete = () => {
+    setIsDeleteDialogOpen(true);
+  };
+
+  const handleDeleteConfirm = async () => {
     const response = await deleteExercise(exercise.id);
     const { type, text } = response;
 
@@ -94,16 +100,26 @@ const EditForm = ({
   };
 
   return (
-    <DefaultForm
-      submittedExerciseData={onSubmit}
-      muscleGroups={muscleGroups}
-      message={message}
-      mode={mode}
-      title={'Edit Exercise'}
-      exerciseData={exerciseData}
-      hasChanges={hasChanges}
-      handleDeleteButton={handleDelete}
-    />
+    <>
+      <DefaultForm
+        submittedExerciseData={onSubmit}
+        muscleGroups={muscleGroups}
+        message={message}
+        mode={mode}
+        title={'Edit Exercise'}
+        exerciseData={exerciseData}
+        hasChanges={hasChanges}
+        handleDeleteButton={handleDelete}
+      />
+
+      {isDeleteDialogOpen && (
+        <DeleteConfirmation
+          onConfirm={handleDeleteConfirm}
+          onClose={() => setIsDeleteDialogOpen(false)}
+          title={exercise.title}
+        />
+      )}
+    </>
   );
 };
 export default EditForm;
