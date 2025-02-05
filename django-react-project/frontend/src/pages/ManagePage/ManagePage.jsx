@@ -82,11 +82,13 @@ export const ManagePage = () => {
     <div className='flex flex-col h-full lg:flex-row'>
       <PageTitle title='Manage' />
       <div className='w-full lg:w-2/6 p-4 flex flex-col items-center justify-start gap-5'>
-        {mode !== 'add' && (
-          <EditButton onClick={handleAddButtonClick} variant='red'>
-            Add New Exercise
-          </EditButton>
-        )}
+        <div className='h-[40px] flex items-center justify-center'>
+          {mode !== 'add' && (
+            <EditButton onClick={handleAddButtonClick} variant='red'>
+              Add New Exercise
+            </EditButton>
+          )}
+        </div>
 
         <ToggleButton
           onClick={toggleExerciseListVisibility}
