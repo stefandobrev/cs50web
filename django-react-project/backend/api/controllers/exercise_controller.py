@@ -132,4 +132,5 @@ class ExerciseController:
     def delete(self, request, id):
         """ Delete an existing exercise model"""
         exercise = get_object_or_404(Exercise, id=id)
-        pass
+        exercise.delete()
+        return Response({"message": "Exercise deleted successfully!"})

@@ -9,7 +9,13 @@ import {
 } from './helpersManage';
 import { DefaultForm } from './DefaultForm';
 
-const EditForm = ({ muscleGroups, exercise, onExerciseUpdated, mode }) => {
+const EditForm = ({
+  muscleGroups,
+  exercise,
+  onExerciseUpdated,
+  mode,
+  launchAddMode,
+}) => {
   const [message, setMessage] = useState('');
   const [exerciseData, setExerciseData] = useState(null);
   const [hasChanges, setHasChanges] = useState(false);
@@ -73,6 +79,18 @@ const EditForm = ({ muscleGroups, exercise, onExerciseUpdated, mode }) => {
   const handleDelete = async () => {
     const response = await deleteExercise(exercise.id);
     const { type, text } = response;
+
+    if (type === 'error') {
+      toast.error(text);
+      setMessage({ type, text });
+      return;
+    }
+
+    if (type === 'success') {
+      toast.success(text);
+      onExerciseUpdated();
+      launchAddMode();
+    }
   };
 
   return (

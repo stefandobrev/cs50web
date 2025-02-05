@@ -54,7 +54,6 @@ export const saveExercise = async (exerciseData, id = null) => {
       text: successMessage,
     };
   } catch (error) {
-    console.log('Error', error);
     return {
       type: 'error',
       text: 'An unexpected error occurred. Please try again later.',
@@ -63,7 +62,23 @@ export const saveExercise = async (exerciseData, id = null) => {
 };
 
 export const deleteExercise = async (id) => {
-  const response = await api(`exercises/delete-exercise/${id}/`, 'DELETE');
-  if (!response.ok) throw new Error('Failed to delete exercise.');
-  return response.json();
+  try {
+    const response = await api(`exercises/delete-exercise/${id}/`, 'DELETE');
+    if (!response.ok) {
+      return {
+        type: 'error',
+        text: 'Failed to delete the exercise.',
+      };
+    }
+
+    return {
+      type: 'success',
+      text: 'Exercise deleted successfully!',
+    };
+  } catch (error) {
+    return {
+      type: 'error',
+      text: 'Something went wrong',
+    };
+  }
 };

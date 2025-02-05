@@ -42,15 +42,19 @@ export const ManagePage = () => {
 
   const triggerRefresh = () => setRefreshKey((prev) => prev + 1);
 
+  const launchAddMode = () => {
+    setMode('add');
+    setSelectedExercise(null);
+    methods.reset();
+  };
+
   const handleSelectExercise = (exercise) => {
     setSelectedExercise(exercise);
     setMode('edit');
   };
 
   const handleAddButtonClick = () => {
-    setMode('add');
-    setSelectedExercise(null);
-    methods.reset();
+    launchAddMode();
   };
 
   const toggleExerciseListVisibility = () => {
@@ -111,6 +115,7 @@ export const ManagePage = () => {
               exercise={selectedExercise}
               onExerciseUpdated={triggerRefresh}
               mode={mode}
+              launchAddMode={launchAddMode}
             />
           )}
         </FormProvider>
