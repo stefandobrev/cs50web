@@ -22,10 +22,6 @@ const AddForm = ({ muscleGroups, onExerciseAdded }) => {
       toast.success(text);
       onExerciseAdded();
       reset();
-      reset({
-        steps: [],
-        mistakes: [],
-      });
       setMessage(null);
     }
   };

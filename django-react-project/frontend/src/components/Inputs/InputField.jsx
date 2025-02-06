@@ -10,16 +10,17 @@ const InputField = ({ label, id, type = 'text', required = true, ...rest }) => {
     <div>
       <label htmlFor={id} className='block text-lg font-semibold'>
         {label}:
-        <div className='relative'>
-          <input
-            id={id}
-            type={type}
-            {...register(id, { required })}
-            className='flex border border-gray-300 p-2 rounded w-full '
-            {...rest}
-          />
-        </div>
       </label>
+      <div className='relative'>
+        <input
+          id={id}
+          type={type}
+          {...register(id, { required })}
+          className='flex border border-gray-300 p-2 rounded w-full'
+          {...rest}
+        />
+      </div>
+
       {errors && errors[id] && (
         <p className='text-red-500'>{errors[id].message}</p>
       )}

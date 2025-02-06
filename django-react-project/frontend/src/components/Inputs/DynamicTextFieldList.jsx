@@ -23,9 +23,11 @@ const DynamicTextFieldList = ({
   return (
     <div className='space-y-3'>
       {fields.map((fieldValue, index) => (
-        <div key={fieldValue.id} className='block text-lg font-semibold'>
-          <label>{`${singularize(labelPrefix)} ${index + 1}`}</label>
-          <div className='flex items-center space-x-2 font-normal'>
+        <div key={fieldValue.id} className='block '>
+          <label className='text-lg font-semibold'>{`${singularize(
+            labelPrefix
+          )} ${index + 1}`}</label>
+          <div className='flex items-center space-x-2'>
             <Controller
               name={`${labelPrefix.toLowerCase()}[${index}]`}
               control={control}

@@ -1,4 +1,5 @@
-import { useFormContext } from 'react-hook-form';
+import { useFormContext, Controller } from 'react-hook-form';
+import Select from 'react-select';
 
 const DropdownField = ({
   label,
@@ -8,7 +9,7 @@ const DropdownField = ({
   placeholder = '--',
 }) => {
   const {
-    register,
+    control,
     formState: { errors },
   } = useFormContext();
 
@@ -16,23 +17,28 @@ const DropdownField = ({
     <div>
       <label htmlFor={id} className='block text-lg font-semibold mb-2'>
         {label}:
-        <select
-          id={id}
-          {...register(id, { required })}
-          className='block border border-gray-300 p-2 rounded  w-full'
-        >
-          <option value=''>{placeholder}</option>
-          {options.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.label}
-            </option>
-          ))}
-        </select>
       </label>
-      {errors && errors[id] && (
-        <p className='text-red-500'>{errors[id].message}</p>
-      )}
+      <Controller
+        name={id}
+        control={control}
+        rules={{ required }}
+        render={({ field }) => (
+          <Select
+            {...field}
+            options={options}
+            isClearable
+            placeholder={placeholder}
+            onChange={(selected) => field.onChange(selected?.value)}
+            value={
+              options.find((option) => option.value === field.value) || null
+            }
+            className='font-semibold w-full'
+          />
+        )}
+      />
+      {errors[id] && <p className='text-red-500'>{errors[id].message}</p>}
     </div>
   );
 };
+
 export default DropdownField;
