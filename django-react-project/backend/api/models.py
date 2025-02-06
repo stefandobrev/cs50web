@@ -33,6 +33,9 @@ class Exercise(models.Model):
     gif_link_side = models.URLField(max_length=255, blank=True, null=True)
     video_link = models.URLField(max_length=255, blank=True, null=True)
 
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
     def __str__(self):
         return self.title
 

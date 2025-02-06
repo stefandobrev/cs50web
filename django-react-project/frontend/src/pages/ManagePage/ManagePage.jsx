@@ -101,6 +101,7 @@ export const ManagePage = () => {
           <ExerciseList
             exerciseTitles={exerciseTitles}
             onSelectExercise={handleSelectExercise}
+            muscleGroups={muscleGroups}
           />
         )}
       </div>

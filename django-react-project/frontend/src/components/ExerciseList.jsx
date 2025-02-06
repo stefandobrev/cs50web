@@ -1,13 +1,18 @@
 import { useState } from 'react';
 
-export const ExerciseList = ({ exerciseTitles, onSelectExercise }) => {
+export const ExerciseList = ({
+  exerciseTitles,
+  onSelectExercise,
+  muscleGroups,
+}) => {
   const [searchQuery, setSearchQuery] = useState('');
 
   const filteredExercises = exerciseTitles.filter((exercise) =>
     exercise.title.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  console.log(exerciseTitles);
+  console.log('Exercise titles: ', exerciseTitles);
+  console.log('MuscleGroups: ', muscleGroups);
 
   const handleSearchChange = (event) => {
     setSearchQuery(event.target.value);

@@ -16,8 +16,11 @@ class ExerciseController:
         return Response(serializer.data)
     
     def fetch_exercise_titles(self, request):
-        """Return a response containing all exercise titles from the DB."""
-        exercise_titles = Exercise.objects.values("id", "title").order_by("title")
+        """
+        Return a response containing all exercise titles and information for filtering
+        from the DB.
+        """
+        exercise_titles = Exercise.objects.values("id", "title", "created_at", "updated_at", "primary_group__name", "primary_group__slug").order_by("title")
         return Response(list(exercise_titles))
     
     def fetch_exercise(self, request, id):
