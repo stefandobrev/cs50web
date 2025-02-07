@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { toast } from 'react-toastify';
 
+import { EditButton } from '../../components/Buttons/EditButtons';
+
 import {
   saveExercise,
   fetchExerciseData,
@@ -16,6 +18,7 @@ const EditForm = ({
   onExerciseUpdated,
   mode,
   launchAddMode,
+  handleAddButtonClick,
 }) => {
   const [message, setMessage] = useState('');
   const [exerciseData, setExerciseData] = useState(null);
@@ -99,6 +102,17 @@ const EditForm = ({
     }
   };
 
+  const editFormTitle = (
+    <div className='flex justify-between items-center px-2'>
+      <h2 className='text-2xl font-semibold text-center mb-3 sticky top-0 bg-white z-10'>
+        Edit Exercise
+      </h2>
+      <EditButton onClick={handleAddButtonClick} variant='blue'>
+        Add New Exercise
+      </EditButton>
+    </div>
+  );
+
   return (
     <>
       <DefaultForm
@@ -106,7 +120,7 @@ const EditForm = ({
         muscleGroups={muscleGroups}
         message={message}
         mode={mode}
-        title={'Edit Exercise'}
+        title={editFormTitle}
         exerciseData={exerciseData}
         hasChanges={hasChanges}
         handleDeleteButton={handleDelete}

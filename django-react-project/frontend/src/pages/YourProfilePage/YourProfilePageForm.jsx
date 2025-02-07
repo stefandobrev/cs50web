@@ -11,7 +11,7 @@ export const YourProfilePageForm = ({ isEditing, setIsEditing, onSubmit }) => {
       <div className='mb-4'>
         <InputField label='First Name' id='first_name' readOnly={!isEditing} />
       </div>
-      <div className='mb-6'>
+      <div className='mb-4'>
         <InputField label='Last Name' id='last_name' readOnly={!isEditing} />
       </div>
       <div className='flex space-x-4'>

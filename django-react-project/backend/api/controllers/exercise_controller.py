@@ -1,6 +1,8 @@
 from rest_framework import status
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
+from django.core.paginator import Paginator
+from django.db.models import Q
 
 from ..models import Exercise, MuscleGroup, Step, Mistake
 from ..serializers.exercise_serializers import ExerciseSerializer, MuscleGroupSerializer
@@ -17,10 +19,37 @@ class ExerciseController:
     
     def fetch_exercise_titles(self, request):
         """
-        Return a response containing all exercise titles and information for filtering
-        from the DB.
+        Creates and returns a filtered list of exercise titles.
         """
-        exercise_titles = Exercise.objects.values("id", "title", "created_at", "updated_at", "primary_group__name", "primary_group__slug").order_by("title")
+        offset = request.data.get('offset', 0)
+        search = request.data.get('search', '')
+        sort = request.data.get('sort', None)
+        muscle_groups = request.data.get('muscleGroups', [])
+
+        # Start building the query
+        query = Exercise.objects.all()
+
+        # Apply muscle group filter if any
+        if muscle_groups:
+            query = query.filter(
+                primary_group__slug__in=muscle_groups
+            )
+
+        # Apply search filter if present (use regex for a case-insensitive match)
+        if search:
+            query = query.filter(Q(title__icontains=search) | Q(title__regex=search))
+
+        # Apply sorting
+        if sort == 'newest':
+            query = query.order_by('-created_at')
+        elif sort == 'last_edited':
+            query = query.order_by('-updated_at')
+        else:
+            query = query.order_by('title')  # Default sort by title
+
+        ITEMS_PER_PAGE = 10
+        exercise_titles = query[offset : offset + ITEMS_PER_PAGE].values("id", "title")
+        
         return Response(list(exercise_titles))
     
     def fetch_exercise(self, request, id):
@@ -43,19 +72,20 @@ class ExerciseController:
             }
             return Response(exercise_data)
         except Exercise.DoesNotExist:
-            return Response({"error": "Exercise not found"}, status=status.HTTP_404_NOT_FOUND)
+            return Response({"error": "Exercise not found."}, status=status.HTTP_404_NOT_FOUND)
 
         
 
     def create(self, request):
         """
-        Create a new exercise model(optional: add steps and mistakes to it)
+        Create a new exercise model(optional: add secondary_group, 
+        steps and mistakes to it.)
 
         Args:
-            request: HTTP request containing data
+            request: HTTP request containing data.
 
         Returns:
-            Response with exercise, steps and mistakes data or error messages
+            Response with exercise, steps and mistakes data or error messages.
         """
         exercise_data = {key: value for key, value in request.data.items() if key in ExerciseSerializer.Meta.fields }
         steps_data = request.data.get("steps", [])
@@ -92,7 +122,7 @@ class ExerciseController:
         return Response({"message": "Exercise created successfully!"})
 
     def update(self, request, id):
-        """ Update an existing exercise model (only provided fields)"""
+        """ Update an existing exercise model (only provided fields)."""
         exercise = get_object_or_404(Exercise, id=id)
 
         exercise_data = {key: value for key, value in request.data.items() if key in ExerciseSerializer.Meta.fields}
@@ -133,7 +163,7 @@ class ExerciseController:
         return Response({"message": "Exercise updated successfully!"})
     
     def delete(self, request, id):
-        """ Delete an existing exercise model"""
+        """ Delete an existing exercise model."""
         exercise = get_object_or_404(Exercise, id=id)
         exercise.delete()
         return Response({"message": "Exercise deleted successfully!"})

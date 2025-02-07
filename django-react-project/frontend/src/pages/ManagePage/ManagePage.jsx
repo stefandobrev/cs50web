@@ -1,22 +1,21 @@
 import { useState, useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
-import { fetchMuscleGroups, fetchExerciseTitles } from './helpersManage';
-import { ExerciseList } from '../../components/ExerciseList';
+import { fetchMuscleGroups } from './helpersManage';
 import PageTitle from '../../components/PageTitle';
 import AddForm from './AddForm';
 import EditForm from './EditForm';
 import { EditButton, ToggleButton } from '../../components/Buttons/EditButtons';
 import MuscleAnatomyView from './MuscleAnatomyView';
+import { ExerciseList } from './ExerciseList';
 
 export const ManagePage = () => {
   const methods = useForm();
   const [mode, setMode] = useState('add');
   const [selectedExercise, setSelectedExercise] = useState(null);
-  const [refreshKey, setRefreshKey] = useState(0);
   const [muscleGroups, setMuscleGroups] = useState([]);
-  const [exerciseTitles, setExerciseTitles] = useState([]);
   const [isExerciseListVisible, setIsExerciseListVisible] = useState(false);
+  const [refreshTitleListKey, setRefreshTitleListKey] = useState(0);
 
   useEffect(() => {
     const loadMuscleGroups = async () => {
@@ -31,16 +30,7 @@ export const ManagePage = () => {
     loadMuscleGroups();
   }, []);
 
-  useEffect(() => {
-    const loadExerciseTitles = async () => {
-      const exerciseTitlesData = await fetchExerciseTitles();
-      setExerciseTitles(exerciseTitlesData);
-    };
-
-    loadExerciseTitles();
-  }, [refreshKey]);
-
-  const triggerRefresh = () => setRefreshKey((prev) => prev + 1);
+  const triggerRefresh = () => setRefreshTitleListKey((prev) => prev + 1);
 
   const launchAddMode = () => {
     setMode('add');
@@ -82,14 +72,6 @@ export const ManagePage = () => {
     <div className='flex flex-col h-full lg:flex-row'>
       <PageTitle title='Manage' />
       <div className='w-full lg:w-2/6 p-4 flex flex-col items-center justify-start gap-5'>
-        <div className='h-[40px] flex items-center justify-center'>
-          {mode !== 'add' && (
-            <EditButton onClick={handleAddButtonClick} variant='red'>
-              Add New Exercise
-            </EditButton>
-          )}
-        </div>
-
         <ToggleButton
           onClick={toggleExerciseListVisibility}
           className='lg:hidden'
@@ -99,7 +81,7 @@ export const ManagePage = () => {
 
         {isExerciseListVisible && (
           <ExerciseList
-            exerciseTitles={exerciseTitles}
+            refreshTitlesKey={refreshTitleListKey}
             onSelectExercise={handleSelectExercise}
             muscleGroups={muscleGroups}
           />
@@ -119,6 +101,7 @@ export const ManagePage = () => {
               onExerciseUpdated={triggerRefresh}
               mode={mode}
               launchAddMode={launchAddMode}
+              handleAddButtonClick={handleAddButtonClick}
             />
           )}
         </FormProvider>

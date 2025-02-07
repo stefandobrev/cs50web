@@ -80,9 +80,7 @@ export const DefaultForm = ({
 
   return (
     <div className='flex flex-col w-full max-w-sm md:max-w-md lg:max-w-lg'>
-      <h2 className='text-2xl font-semibold text-center mb-3 sticky top-0 bg-white z-10'>
-        {title}
-      </h2>
+      {title}
 
       <form
         id='exercise-form'

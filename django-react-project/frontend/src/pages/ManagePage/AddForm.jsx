@@ -22,6 +22,10 @@ const AddForm = ({ muscleGroups, onExerciseAdded }) => {
       toast.success(text);
       onExerciseAdded();
       reset();
+      reset({
+        steps: [],
+        mistakes: [],
+      });
       setMessage(null);
     }
   };
@@ -31,7 +35,11 @@ const AddForm = ({ muscleGroups, onExerciseAdded }) => {
       submittedExerciseData={onSubmit}
       muscleGroups={muscleGroups}
       message={message}
-      title={'Add Exercise'}
+      title={
+        <h2 className='text-start text-2xl font-semibold px-2 mb-3 sticky top-0 bg-white z-10'>
+          Add Exercise
+        </h2>
+      }
     />
   );
 };
