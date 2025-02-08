@@ -57,7 +57,7 @@ export const SettingsForm = ({
             <>
               <EditButton onClick={() => setIsEditing(true)} />
               <Button
-                variant='gray'
+                variant='grayDark'
                 onClick={(e) => {
                   e.preventDefault();
                   if (onPasswordChange) {

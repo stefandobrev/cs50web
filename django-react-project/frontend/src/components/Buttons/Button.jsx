@@ -1,15 +1,14 @@
 const variants = {
-  blue: 'bg-blue-500 hover:bg-blue-600 disabled:bg-blue-300',
-  gray: 'bg-gray-500 hover:bg-gray-600 disabled:bg-gray-300',
-  green: 'bg-green-500 hover:bg-green-600 disabled:bg-green-300',
-  red: 'bg-[rgba(195,42,42,1)] hover:bg-[rgba(170,30,30,1)] disabled:bg-[rgba(195,42,42,0.5)]',
-  orange: 'bg-orange-500 hover:bg-orange-600 disabled:bg-orange-300',
+  red: 'bg-[rgba(195,42,42,1)] hover:bg-[rgba(170,30,30,1)] disabled:bg-[rgba(195,42,42,0.5)] text-white disabled:text-gray-300',
+  grayDark:
+    'bg-gray-600 hover:bg-gray-900 disabled:bg-gray-300 text-white disabled:text-gray-300 ',
+  white: 'bg-white hover:bg-gray-300 text-gray-800 hover:text-gray-900',
 };
 
 const Button = ({
   children,
   type = 'button',
-  variant = 'blue',
+  variant = 'red',
   className = '',
   disabled = false,
   onClick,
@@ -21,7 +20,7 @@ const Button = ({
     onClick={onClick}
     className={`
       ${variants[variant]}
-      text-white px-4 py-2 rounded-md shadow-md
+       px-4 py-2 rounded-md shadow-md border-2 border-gray-800 hover:border-gray-600 disabled:border-gray-300
       ${className}
     `}
     {...props}

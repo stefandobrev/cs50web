@@ -64,7 +64,7 @@ export const ExerciseListItems = ({ exercises, onSelectExercise }) => (
     {exercises.map((exercise) => (
       <li
         key={exercise.id}
-        className='p-3 cursor-pointer rounded-lg transition duration-200 ease-in-out hover:bg-blue-100 active:bg-blue-200'
+        className='p-3 cursor-pointer rounded-lg transition duration-200 ease-in-out hover:bg-gray-200 active:bg-gray-200'
         onClick={() => onSelectExercise(exercise)}
       >
         <span className='text-gray-700'>{exercise.title}</span>

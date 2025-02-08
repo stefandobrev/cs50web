@@ -2,7 +2,7 @@ import Button from './Button';
 
 export const EditButton = ({
   children = 'Edit',
-  variant = 'green',
+  variant = 'red',
   onClick,
   disabled,
   className = '',
@@ -21,7 +21,6 @@ export const EditButton = ({
 
 export const ToggleButton = ({
   children = 'Toggle',
-  variant = 'green',
   onClick,
   disabled,
   className = '',
@@ -29,7 +28,7 @@ export const ToggleButton = ({
   <Button
     type='button'
     onClick={onClick}
-    variant={variant}
+    variant='grayDark'
     disabled={disabled}
     className={className}
     aria-label='Toggle'
@@ -47,7 +46,7 @@ export const SaveButton = ({
   <Button
     type='submit'
     disabled={disabled}
-    variant='blue'
+    variant='red'
     className={className}
     aria-label='Save Changes'
     {...props}
@@ -60,7 +59,7 @@ export const CancelButton = ({ children = 'Cancel', onClick }) => (
   <Button
     type='button'
     onClick={onClick}
-    variant='gray'
+    variant='grayDark'
     aria-label='Cancel Editing'
   >
     {children}
@@ -69,13 +68,14 @@ export const CancelButton = ({ children = 'Cancel', onClick }) => (
 
 export const DeleteButton = ({
   children = 'Delete',
+  variant = 'red',
   onClick,
   className = '',
 }) => (
   <Button
     type='button'
     onClick={onClick}
-    variant='red'
+    variant={variant}
     className={className}
     aria-label='Delete'
   >
@@ -87,7 +87,7 @@ export const ViewButton = ({ children = 'View', onClick, className = '' }) => (
   <Button
     type='button'
     onClick={onClick}
-    variant='green'
+    variant='grayDark'
     className={className}
     aria-label='View'
   >

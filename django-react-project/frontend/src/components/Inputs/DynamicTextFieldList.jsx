@@ -54,7 +54,7 @@ const DynamicTextFieldList = ({
       ))}
       <EditButton
         onClick={() => append('')}
-        variant='orange'
+        variant='white'
         className='w-full md:w-auto'
       >
         Add {singularize(labelPrefix)}

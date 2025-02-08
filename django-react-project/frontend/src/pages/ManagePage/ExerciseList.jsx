@@ -114,7 +114,7 @@ export const ExerciseList = ({
       <div className='flex flex-col w-full sm:max-w-sm bg-white px-6 rounded-lg'>
         <div className='flex justify-between items-center px-2 mb-4'>
           <h2 className='text-xl font-semibold text-gray-800'>Exercise List</h2>
-          <EditButton onClick={resetFilters} variant='blue'>
+          <EditButton onClick={resetFilters} variant='grayDark'>
             Reset
           </EditButton>
         </div>

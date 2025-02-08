@@ -9,7 +9,7 @@ export const NotFoundPage = () => {
       <p className='text-xl mb-5'>This page does not exist</p>
       <Link
         to='/'
-        className='text-white bg-indigo-700 hover:bg-indigo-900 px-4 py-2 rounded-md shadow-md'
+        className='bg-[rgba(195,42,42,1)] hover:bg-[rgba(170,30,30,1)] border-2 border-gray-800 hover:border-gray-600 text-white px-4 py-2 rounded-md shadow-md'
       >
         Go Back
       </Link>

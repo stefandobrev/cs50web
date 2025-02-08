@@ -13,11 +13,8 @@ const MuscleAnatomyView = () => {
 
   return (
     <div className={'flex flex-col items-center justify-center'}>
-      <ToggleButton
-        onClick={toggleIsFrontView}
-        variant={isFrontView === 'yes' ? 'green' : 'blue'}
-      >
-        {isFrontView === 'yes' ? 'Show back' : 'Show front'}
+      <ToggleButton onClick={toggleIsFrontView}>
+        {isFrontView === 'yes' ? 'Show Back' : 'Show Front'}
       </ToggleButton>
 
       <AnimatePresence mode='wait'>

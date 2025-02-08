@@ -1,7 +1,6 @@
 from rest_framework import status
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
-from django.core.paginator import Paginator
 from django.db.models import Q
 
 from ..models import Exercise, MuscleGroup, Step, Mistake
@@ -26,26 +25,23 @@ class ExerciseController:
         sort = request.data.get('sort', None)
         muscle_groups = request.data.get('muscleGroups', [])
 
-        # Start building the query
         query = Exercise.objects.all()
 
-        # Apply muscle group filter if any
         if muscle_groups:
             query = query.filter(
                 primary_group__slug__in=muscle_groups
             )
 
-        # Apply search filter if present (use regex for a case-insensitive match)
         if search:
-            query = query.filter(Q(title__icontains=search) | Q(title__regex=search))
+            query = query.filter(Q(title__iexact=search) |  
+        Q(title__icontains=search))
 
-        # Apply sorting
         if sort == 'newest':
             query = query.order_by('-created_at')
         elif sort == 'last_edited':
             query = query.order_by('-updated_at')
         else:
-            query = query.order_by('title')  # Default sort by title
+            query = query.order_by('title') 
 
         ITEMS_PER_PAGE = 10
         exercise_titles = query[offset : offset + ITEMS_PER_PAGE].values("id", "title")

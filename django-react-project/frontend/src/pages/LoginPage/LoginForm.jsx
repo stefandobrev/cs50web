@@ -23,7 +23,7 @@ const LoginForm = ({ loginUserData }) => {
 
       <div className='flex flex-col justify-center items-center space-y-2'>
         <SaveButton>Sign In</SaveButton>
-        <Link to='/register' className='text-blue-500 hover:underline'>
+        <Link to='/register' className='text-gray-900 hover:underline'>
           Don't have an account? Register
         </Link>
       </div>

@@ -22,7 +22,11 @@ export const MdScreenButtons = ({
     </SaveButton>
     {mode === 'edit' && (
       <div className='flex justify-center gap-2 mt-2 md:mt-0 w-full md:w-auto'>
-        <DeleteButton onClick={handleDeleteButton} className='w-full md:w-auto'>
+        <DeleteButton
+          onClick={handleDeleteButton}
+          variant='grayDark'
+          className='w-full md:w-auto'
+        >
           Delete Exercise
         </DeleteButton>
         <ViewButton className='w-full md:w-auto'>View Exercise</ViewButton>
@@ -51,7 +55,11 @@ export const SmScreenButtons = ({
     </div>
     {mode === 'edit' && (
       <div className='mt-4 flex justify-center gap-2'>
-        <DeleteButton onClick={handleDeleteButton} className='w-full md:w-auto'>
+        <DeleteButton
+          onClick={handleDeleteButton}
+          variant='grayDark'
+          className='w-full md:w-auto'
+        >
           Delete Exercise
         </DeleteButton>
         <ViewButton className='w-full md:w-auto'>View Exercise</ViewButton>

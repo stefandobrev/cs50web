@@ -107,9 +107,7 @@ const EditForm = ({
       <h2 className='text-2xl font-semibold text-center mb-3 sticky top-0 bg-white z-10'>
         Edit Exercise
       </h2>
-      <EditButton onClick={handleAddButtonClick} variant='blue'>
-        Add New Exercise
-      </EditButton>
+      <EditButton onClick={handleAddButtonClick}>Add New Exercise</EditButton>
     </div>
   );
 
