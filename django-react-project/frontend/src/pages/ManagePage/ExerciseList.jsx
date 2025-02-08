@@ -7,7 +7,7 @@ import {
   MuscleGroupFilter,
   SortFilter,
   ExerciseListItems,
-} from './helperComponents';
+} from './managePageComponents';
 
 const INITIAL_OFFSET = 0;
 const ITEMS_PER_PAGE = 10;
@@ -85,6 +85,7 @@ export const ExerciseList = ({
       sort: sortBy,
       muscleGroups: selectedMuscleGroups,
     });
+
     handleExercisePropsUpdate({
       offset: currentOffset + ITEMS_PER_PAGE,
       loadMore: false,
@@ -143,6 +144,7 @@ export const ExerciseList = ({
         <ExerciseListItems
           exercises={exerciseTitles}
           onSelectExercise={onSelectExercise}
+          sortBy={sortBy}
         />
       </div>
     </>

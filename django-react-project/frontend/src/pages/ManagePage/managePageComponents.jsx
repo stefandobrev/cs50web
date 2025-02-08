@@ -1,4 +1,5 @@
 import Select from 'react-select';
+import { formatDistanceToNow } from 'date-fns';
 
 export const SearchInput = ({ value, onChange }) => (
   <input
@@ -38,7 +39,7 @@ export const SortFilter = ({ sortBy, onChange }) => (
     <label className='block font-semibold mb-2 text-gray-700'>Sort by</label>
     <Select
       options={[
-        { label: 'Newest', value: 'created_at' },
+        { label: 'Last Created', value: 'created_at' },
         { label: 'Last Edited', value: 'updated_at' },
       ]}
       onChange={(selectedOption) =>
@@ -47,7 +48,7 @@ export const SortFilter = ({ sortBy, onChange }) => (
       value={
         sortBy
           ? {
-              label: sortBy === 'created_at' ? 'Newest' : 'Last Edited',
+              label: sortBy === 'created_at' ? 'Last Created' : 'Last Edited',
               value: sortBy,
             }
           : null
@@ -59,16 +60,27 @@ export const SortFilter = ({ sortBy, onChange }) => (
   </div>
 );
 
-export const ExerciseListItems = ({ exercises, onSelectExercise }) => (
+export const ExerciseListItems = ({ exercises, onSelectExercise, sortBy }) => (
   <ul className='space-y-2'>
-    {exercises.map((exercise) => (
-      <li
-        key={exercise.id}
-        className='p-3 cursor-pointer rounded-lg transition duration-200 ease-in-out hover:bg-gray-200 active:bg-gray-200'
-        onClick={() => onSelectExercise(exercise)}
-      >
-        <span className='text-gray-700'>{exercise.title}</span>
-      </li>
-    ))}
+    {exercises.map((exercise) => {
+      const timestamp =
+        sortBy === 'created_at' ? exercise.created_at : exercise.updated_at;
+      const timeAgo = sortBy
+        ? formatDistanceToNow(new Date(timestamp), { addSuffix: true })
+        : null;
+
+      return (
+        <li
+          key={exercise.id}
+          className='p-3 cursor-pointer rounded-lg transition duration-200 ease-in-out hover:bg-gray-200 active:bg-gray-200 flex justify-between'
+          onClick={() => onSelectExercise(exercise)}
+        >
+          <span className='text-gray-800'>{exercise.title}</span>
+          {timeAgo && (
+            <span className='text-sm text-[rgba(195,42,42,1)]'>{timeAgo}</span>
+          )}
+        </li>
+      );
+    })}
   </ul>
 );

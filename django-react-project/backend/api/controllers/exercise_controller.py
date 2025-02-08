@@ -20,10 +20,10 @@ class ExerciseController:
         """
         Creates and returns a filtered list of exercise titles.
         """
-        offset = request.data.get('offset', 0)
-        search = request.data.get('search', '')
-        sort = request.data.get('sort', None)
-        muscle_groups = request.data.get('muscleGroups', [])
+        offset = request.data.get("offset", 0)
+        search = request.data.get("search", "")
+        sort = request.data.get("sort", None)
+        muscle_groups = request.data.get("muscleGroups", [])
 
         query = Exercise.objects.all()
 
@@ -33,23 +33,22 @@ class ExerciseController:
             )
 
         if search:
-            query = query.filter(Q(title__iexact=search) |  
-        Q(title__icontains=search))
+            query = query.filter(Q(title__iexact=search) |  Q(title__icontains=search))
 
-        if sort == 'newest':
-            query = query.order_by('-created_at')
-        elif sort == 'last_edited':
-            query = query.order_by('-updated_at')
+        if sort == "created_at":
+            query = query.order_by("-created_at")
+        elif sort == "updated_at":
+            query = query.order_by("-updated_at")
         else:
-            query = query.order_by('title') 
+            query = query.order_by("title") 
 
         ITEMS_PER_PAGE = 10
-        exercise_titles = query[offset : offset + ITEMS_PER_PAGE].values("id", "title")
+        exercise_titles = query[offset : offset + ITEMS_PER_PAGE].values("id", "title", "created_at", "updated_at")
         
         return Response(list(exercise_titles))
     
     def fetch_exercise(self, request, id):
-        """Return a response containing an exercise's data from the DB."""
+        """Return a response containing an exercise"s data from the DB."""
         try: 
             exercise = Exercise.objects.prefetch_related(
                 "secondary_group", "steps", "mistakes"
