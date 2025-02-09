@@ -139,7 +139,7 @@ export const ExerciseList = ({
       </div>
       <div
         ref={listContainerRef}
-        className='flex flex-col w-full sm:max-w-sm bg-white px-6 rounded-lg overflow-y-auto max-h-[37vh] lg:max-h-[47vh]'
+        className='flex flex-col w-full sm:max-w-sm bg-white px-6 rounded-lg overflow-y-auto max-h-[40vh] lg:max-h-[47vh]'
       >
         <ExerciseListItems
           exercises={exerciseTitles}

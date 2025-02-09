@@ -84,3 +84,14 @@ export const ExerciseListItems = ({ exercises, onSelectExercise, sortBy }) => (
     })}
   </ul>
 );
+
+export const TabButton = ({ label, isActive, onClick }) => (
+  <button
+    onClick={onClick}
+    className={`w-24 h-full flex flex-col items-center justify-center rounded-md hover:bg-gray-800 active:bg-gray-800 transition ${
+      isActive ? 'text-white bg-gray-800' : 'text-gray-300 active:text-white'
+    }`}
+  >
+    <span>{label}</span>
+  </button>
+);
