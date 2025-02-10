@@ -4,7 +4,7 @@ import { ToggleButton } from '../../components/Buttons/EditButtons';
 import FrontAnatomy from '../../components/Anatomy/FrontAnatomy';
 import BackAnatomy from '../../components/Anatomy/BackAnatomy';
 
-const MuscleAnatomyView = () => {
+const MuscleAnatomyView = ({ handleMuscleClick, selectedMuscle }) => {
   const [isFrontView, setIsFrontView] = useState('yes');
 
   const toggleIsFrontView = () => {
@@ -27,7 +27,10 @@ const MuscleAnatomyView = () => {
             transition={{ duration: 0.3, ease: 'easeInOut' }}
             className='w-full'
           >
-            <FrontAnatomy />
+            <FrontAnatomy
+              onMuscleClick={handleMuscleClick}
+              selectedMuscle={selectedMuscle}
+            />
           </motion.div>
         ) : (
           <motion.div
@@ -38,7 +41,10 @@ const MuscleAnatomyView = () => {
             transition={{ duration: 0.3, ease: 'easeInOut' }}
             className='w-full'
           >
-            <BackAnatomy />
+            <BackAnatomy
+              onMuscleClick={handleMuscleClick}
+              selectedMuscle={selectedMuscle}
+            />
           </motion.div>
         )}
       </AnimatePresence>

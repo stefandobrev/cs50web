@@ -1,13 +1,3 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-/* Anatomy */
-.muscle-group {
-  @apply hover:fill-red-300 active:fill-red-300 cursor-pointer;
-  fill: #e6e7e8;
-}
-
-.non-hovered {
-  fill: #fff;
-}

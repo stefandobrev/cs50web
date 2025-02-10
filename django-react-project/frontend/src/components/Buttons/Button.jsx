@@ -20,7 +20,7 @@ const Button = ({
     onClick={onClick}
     className={`
       ${variants[variant]}
-       px-4 py-2 rounded-md shadow-md border-2 border-gray-800 hover:border-gray-600 disabled:border-gray-300
+       px-4 py-2 rounded-md shadow-md border border-gray-800 hover:border-gray-600 disabled:border-gray-300
       ${className}
     `}
     {...props}

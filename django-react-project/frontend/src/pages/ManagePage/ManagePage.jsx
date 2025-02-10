@@ -16,6 +16,7 @@ export const ManagePage = () => {
   const [muscleGroups, setMuscleGroups] = useState([]);
   const [refreshTitleListKey, setRefreshTitleListKey] = useState(0);
   const [activeTab, setActiveTab] = useState('form');
+  const [selectedMuscleSVG, setSelectedMuscleSVG] = useState(null);
 
   useEffect(() => {
     const loadMuscleGroups = async () => {
@@ -48,63 +49,62 @@ export const ManagePage = () => {
     launchAddMode();
   };
 
+  const handleMuscleClick = (muscle) => {
+    methods.setValue('primary_group', muscle);
+    setSelectedMuscleSVG(muscle);
+  };
+
+  useEffect(() => {
+    const subscription = methods.watch((values) => {
+      if (values.primary_group) {
+        setSelectedMuscleSVG(values.primary_group);
+      } else {
+        setSelectedMuscleSVG(null);
+      }
+    });
+    return () => subscription.unsubscribe();
+  }, [methods]);
+
   return (
-    <div className='h-full relative'>
-      {/* Page Title */}
-      <PageTitle title='Manage' />
-
-      {/* === Large Screen Layout === */}
-      <div className='hidden lg:flex h-full flex-row'>
-        {/* Exercise List Column */}
-        <div className='w-full lg:w-1/4 p-4'>
-          <ExerciseList
-            refreshTitlesKey={refreshTitleListKey}
-            onSelectExercise={handleSelectExercise}
-            muscleGroups={muscleGroups}
-          />
-        </div>
-
-        {/* Form Column */}
-        <div className='bg-white flex justify-center w-full lg:w-1/2 p-5'>
-          <FormProvider {...methods}>
-            {mode === 'add' ? (
-              <AddForm
-                muscleGroups={muscleGroups}
-                onExerciseAdded={triggerRefresh}
-              />
-            ) : (
-              <EditForm
-                muscleGroups={muscleGroups}
-                exercise={selectedExercise}
-                onExerciseUpdated={triggerRefresh}
-                mode={mode}
-                launchAddMode={launchAddMode}
-                handleAddButtonClick={handleAddButtonClick}
-              />
-            )}
-          </FormProvider>
-        </div>
-
-        {/* Muscle Anatomy Column */}
-        <div className='w-full lg:w-1/4 p-4'>
-          <MuscleAnatomyView />
-        </div>
+    <>
+      <div className='sticky top-20 z-50 bg-gray-600 border-t border-gray-800 lg:hidden flex justify-around p-2 h-16'>
+        <TabButton
+          label='Exercises'
+          isActive={activeTab === 'exercise'}
+          onClick={() => setActiveTab('exercise')}
+        />
+        <TabButton
+          label='Form'
+          isActive={activeTab === 'form'}
+          onClick={() => setActiveTab('form')}
+        />
+        <TabButton
+          label='Anatomy'
+          isActive={activeTab === 'anatomy'}
+          onClick={() => setActiveTab('anatomy')}
+        />
       </div>
+      <div className='h-full relative'>
+        <PageTitle title='Manage' />
 
-      {/* === Small Screen Layout === */}
-      <div className='lg:hidden'>
-        {/* Conditionally render the active view */}
-        {activeTab === 'exercise' && (
-          <div className='w-full p-4 flex flex-col items-center'>
+        <div className='h-full flex flex-col lg:flex-row'>
+          <div
+            className={`w-full flex flex-col items-center lg:w-1/4 p-4 ${
+              activeTab !== 'exercise' ? 'hidden lg:block' : ''
+            }`}
+          >
             <ExerciseList
               refreshTitlesKey={refreshTitleListKey}
               onSelectExercise={handleSelectExercise}
               muscleGroups={muscleGroups}
             />
           </div>
-        )}
-        {activeTab === 'form' && (
-          <div className='bg-white flex justify-center w-full p-5'>
+
+          <div
+            className={`bg-white flex justify-center w-full lg:w-1/2 p-5 ${
+              activeTab !== 'form' ? 'hidden lg:flex' : ''
+            }`}
+          >
             <FormProvider {...methods}>
               {mode === 'add' ? (
                 <AddForm
@@ -123,32 +123,19 @@ export const ManagePage = () => {
               )}
             </FormProvider>
           </div>
-        )}
-        {activeTab === 'anatomy' && (
-          <div className='w-full p-4'>
-            <MuscleAnatomyView />
-          </div>
-        )}
-      </div>
 
-      {/* === Bottom Tabs for Small Screens === */}
-      <div className='bottom-0 left-0 right-0 bg-gray-600 border-t border-gray-800 lg:hidden flex justify-around p-2 h-16'>
-        <TabButton
-          label='Exercises'
-          isActive={activeTab === 'exercise'}
-          onClick={() => setActiveTab('exercise')}
-        />
-        <TabButton
-          label='Form'
-          isActive={activeTab === 'form'}
-          onClick={() => setActiveTab('form')}
-        />
-        <TabButton
-          label='Anatomy'
-          isActive={activeTab === 'anatomy'}
-          onClick={() => setActiveTab('anatomy')}
-        />
+          <div
+            className={`w-full lg:w-1/4 p-4 ${
+              activeTab !== 'anatomy' ? 'hidden lg:block' : ''
+            }`}
+          >
+            <MuscleAnatomyView
+              handleMuscleClick={handleMuscleClick}
+              selectedMuscle={selectedMuscleSVG}
+            />
+          </div>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
