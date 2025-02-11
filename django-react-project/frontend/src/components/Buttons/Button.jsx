@@ -1,5 +1,5 @@
 const variants = {
-  red: 'bg-[rgba(195,42,42,1)] hover:bg-[rgba(170,30,30,1)] disabled:bg-[rgba(195,42,42,0.5)] text-white disabled:text-gray-300',
+  red: 'bg-logoRed hover:bg-logoRed-hover disabled:bg-logoRed-disabled text-white disabled:text-gray-300',
   grayDark:
     'bg-gray-600 hover:bg-gray-900 disabled:bg-gray-300 text-white disabled:text-gray-300 ',
   white: 'bg-white hover:bg-gray-300 text-gray-800 hover:text-gray-900',

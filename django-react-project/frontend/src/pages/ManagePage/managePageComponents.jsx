@@ -7,7 +7,7 @@ export const SearchInput = ({ value, onChange }) => (
     placeholder='Search exercise'
     value={value}
     onChange={(e) => onChange(e.target.value)}
-    className='mb-4 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200 ease-in-out w-full'
+    className='mb-4 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-logoRed focus:border-logoRed transition duration-200 ease-in-out w-full'
   />
 );
 
@@ -17,7 +17,7 @@ export const MuscleGroupFilter = ({
   onChange,
 }) => (
   <div className='mb-4'>
-    <label className='block font-semibold mb-2 text-gray-700'>
+    <label className='block font-semibold mb-2 text-gray-700 '>
       Filter by Muscle Group
     </label>
     <Select
@@ -29,6 +29,7 @@ export const MuscleGroupFilter = ({
       value={muscleGroups.filter((group) =>
         selectedMuscleGroups.includes(group.value)
       )}
+      classNamePrefix='react-select'
       className='w-full'
     />
   </div>
@@ -55,6 +56,7 @@ export const SortFilter = ({ sortBy, onChange }) => (
       }
       isClearable
       placeholder='--'
+      classNamePrefix='react-select'
       className='w-full'
     />
   </div>

@@ -32,7 +32,8 @@ const DropdownField = ({
             value={
               options.find((option) => option.value === field.value) || null
             }
-            className='font-semibold w-full'
+            classNamePrefix='react-select'
+            className='font-semibold w-full '
           />
         )}
       />

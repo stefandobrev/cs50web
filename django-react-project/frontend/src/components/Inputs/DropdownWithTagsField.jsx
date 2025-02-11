@@ -24,6 +24,7 @@ const DropdownFieldWithTags = ({ label, id, options, placeholder = '--' }) => {
             value={options.filter((option) =>
               field.value?.includes(option.value)
             )}
+            classNamePrefix='react-select'
             className='w-full'
           />
         )}

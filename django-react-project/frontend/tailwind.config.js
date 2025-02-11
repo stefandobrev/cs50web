@@ -3,10 +3,22 @@ export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
-      color: {
-        logoRed: 'rgba(195, 42, 42, 1)',
+      colors: {
+        logoRed: {
+          DEFAULT: '#C32A2A',
+          hover: '#AA1E1E',
+          disabled: 'rgba(195,42,42,0.5)',
+        },
       },
     },
   },
-  plugins: [],
+  plugins: [
+    function ({ addBase, theme }) {
+      addBase({
+        ':root': {
+          '--logoRed': theme('colors.logoRed.DEFAULT'),
+        },
+      });
+    },
+  ],
 };
