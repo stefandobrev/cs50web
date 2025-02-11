@@ -3,29 +3,21 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ToggleButton } from '../../components/Buttons/EditButtons';
 import FrontAnatomy from '../../components/Anatomy/FrontAnatomy';
 import BackAnatomy from '../../components/Anatomy/BackAnatomy';
+import { frontMuscleGroupNames } from '../../common/constants';
 
-const FRONT_MUSCLES = new Set([
-  'abdominals',
-  'quadriceps',
-  'calves',
-  'adductors',
-  'obliques',
-  'biceps',
-  'neck',
-  'forearms',
-  'traps-upper',
-  'deltoid-lateral',
-  'deltoid-anterior',
-  'pectoralis-upper',
-  'pectoralis-middle-lower',
-]);
-
-const MuscleAnatomyView = ({ handleMuscleClick, selectedMuscle }) => {
+const MuscleAnatomyView = ({
+  handleMuscleClick,
+  selectedPrimaryMuscle,
+  selectedSecondaryMuscles,
+}) => {
   const [isFrontView, setIsFrontView] = useState(true);
 
   useEffect(() => {
-    setIsFrontView(!selectedMuscle || FRONT_MUSCLES.has(selectedMuscle));
-  }, [selectedMuscle]);
+    setIsFrontView(
+      !selectedPrimaryMuscle ||
+        Object.values(frontMuscleGroupNames).includes(selectedPrimaryMuscle)
+    );
+  }, [selectedPrimaryMuscle]);
 
   const toggleIsFrontView = () => {
     setIsFrontView((prev) => !prev);
@@ -49,7 +41,8 @@ const MuscleAnatomyView = ({ handleMuscleClick, selectedMuscle }) => {
           >
             <FrontAnatomy
               onMuscleClick={handleMuscleClick}
-              selectedMuscle={selectedMuscle}
+              selectedPrimaryMuscle={selectedPrimaryMuscle}
+              selectedSecondaryMuscles={selectedSecondaryMuscles}
             />
           </motion.div>
         ) : (
@@ -63,7 +56,8 @@ const MuscleAnatomyView = ({ handleMuscleClick, selectedMuscle }) => {
           >
             <BackAnatomy
               onMuscleClick={handleMuscleClick}
-              selectedMuscle={selectedMuscle}
+              selectedPrimaryMuscle={selectedPrimaryMuscle}
+              selectedSecondaryMuscles={selectedSecondaryMuscles}
             />
           </motion.div>
         )}

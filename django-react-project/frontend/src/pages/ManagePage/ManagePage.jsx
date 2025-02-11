@@ -16,7 +16,10 @@ export const ManagePage = () => {
   const [muscleGroups, setMuscleGroups] = useState([]);
   const [refreshTitleListKey, setRefreshTitleListKey] = useState(0);
   const [activeTab, setActiveTab] = useState('form');
-  const [selectedMuscleSVG, setSelectedMuscleSVG] = useState(null);
+  const [selectedPrimaryMuscleSVG, setSelectedPrimaryMuscleSVG] =
+    useState(null);
+  const [selectedSecondaryMusclesSVG, setSelectedSecondaryMusclesSVG] =
+    useState([]);
 
   useEffect(() => {
     const loadMuscleGroups = async () => {
@@ -50,17 +53,34 @@ export const ManagePage = () => {
   };
 
   const handleMuscleClick = (muscle) => {
-    methods.setValue('primary_group', muscle);
-    setSelectedMuscleSVG(muscle);
+    const currentPrimaryMuscle = methods.getValues('primary_group');
+    const currentSecondaryMuscles = methods.getValues('secondary_group') || [];
+
+    if (!currentPrimaryMuscle) {
+      methods.setValue('primary_group', muscle);
+      setSelectedPrimaryMuscleSVG(muscle);
+    } else if (currentPrimaryMuscle === muscle) {
+      methods.setValue('primary_group', null);
+      setSelectedPrimaryMuscleSVG(null);
+    } else {
+      if (currentSecondaryMuscles.includes(muscle)) {
+        const updatedSecondaries = currentSecondaryMuscles.filter(
+          (m) => m !== muscle
+        );
+        methods.setValue('secondary_group', updatedSecondaries);
+        setSelectedSecondaryMusclesSVG(updatedSecondaries);
+      } else {
+        const updatedSecondaries = [...currentSecondaryMuscles, muscle];
+        methods.setValue('secondary_group', updatedSecondaries);
+        setSelectedSecondaryMusclesSVG(updatedSecondaries);
+      }
+    }
   };
 
   useEffect(() => {
     const subscription = methods.watch((values) => {
-      if (values.primary_group) {
-        setSelectedMuscleSVG(values.primary_group);
-      } else {
-        setSelectedMuscleSVG(null);
-      }
+      setSelectedPrimaryMuscleSVG(values.primary_group || null);
+      setSelectedSecondaryMusclesSVG(values.secondary_group || []);
     });
     return () => subscription.unsubscribe();
   }, [methods]);
@@ -131,7 +151,8 @@ export const ManagePage = () => {
           >
             <MuscleAnatomyView
               handleMuscleClick={handleMuscleClick}
-              selectedMuscle={selectedMuscleSVG}
+              selectedPrimaryMuscle={selectedPrimaryMuscleSVG}
+              selectedSecondaryMuscles={selectedSecondaryMusclesSVG}
             />
           </div>
         </div>

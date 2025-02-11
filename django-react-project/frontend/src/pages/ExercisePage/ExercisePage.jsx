@@ -22,12 +22,16 @@ export const ExercisePage = () => {
         <FrontAnatomy
           onMuscleClick={handleMuscleClick}
           onMuscleHover={handleMuscleHover}
+          selectedPrimaryMuscle={null}
+          selectedSecondaryMuscles={[]}
         />
       </div>
       <div className='lg:w-1/3 h-[calc(100vh-104px)]'>
         <BackAnatomy
           onMuscleClick={handleMuscleClick}
           onMuscleHover={handleMuscleHover}
+          selectedPrimaryMuscle={null}
+          selectedSecondaryMuscles={[]}
         />
       </div>
       <div

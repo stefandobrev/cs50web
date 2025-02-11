@@ -3,10 +3,12 @@ export const MuscleGroup = ({
   name,
   onClick,
   onHover,
-  selectedMuscle,
+  selectedPrimaryMuscle,
+  selectedSecondaryMuscles,
   children,
 }) => {
-  const isSelected = selectedMuscle === id;
+  const isPrimary = selectedPrimaryMuscle === id;
+  const isSecondary = selectedSecondaryMuscles.includes(id);
 
   return (
     <g
@@ -15,8 +17,10 @@ export const MuscleGroup = ({
       onMouseLeave={() => onHover?.('')}
       id={id}
       className={`cursor-pointer ${
-        isSelected
+        isPrimary
           ? 'fill-red-500'
+          : isSecondary
+          ? 'fill-amber-300'
           : 'fill-[#e6e7e8] hover:fill-red-300 active:fill-red-300'
       }`}
     >

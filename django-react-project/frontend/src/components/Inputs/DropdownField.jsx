@@ -28,7 +28,7 @@ const DropdownField = ({
             options={options}
             isClearable
             placeholder={placeholder}
-            onChange={(selected) => field.onChange(selected?.value)}
+            onChange={(selected) => field.onChange(selected?.value ?? null)}
             value={
               options.find((option) => option.value === field.value) || null
             }
