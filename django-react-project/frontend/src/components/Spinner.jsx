@@ -1,8 +1,8 @@
 import ClipLoader from 'react-spinners/ClipLoader';
 
-const Spinner = ({ loading }) => {
+const Spinner = ({ loading, className }) => {
   return (
-    <div className='fixed inset-0 flex items-center justify-center'>
+    <div className={`flex items-center justify-center h-full ${className}`}>
       <ClipLoader color='#4338ca' loading={loading} size={150} />
     </div>
   );

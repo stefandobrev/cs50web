@@ -87,7 +87,7 @@ export const ManagePage = () => {
 
   return (
     <>
-      <div className='sticky top-20 z-50 bg-gray-600 border-t border-gray-800 lg:hidden flex justify-around p-2 h-16'>
+      <div className='sticky top-20 z-40 bg-gray-600 border-t border-gray-800 lg:hidden flex justify-around p-2 h-16'>
         <TabButton
           label='Exercises'
           isActive={activeTab === 'exercise'}

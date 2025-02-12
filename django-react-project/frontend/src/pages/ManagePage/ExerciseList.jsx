@@ -9,6 +9,8 @@ import {
   ExerciseListItems,
 } from './managePageComponents';
 
+import Spinner from '../../components/Spinner';
+
 const INITIAL_OFFSET = 0;
 const ITEMS_PER_PAGE = 10;
 const defaultFilters = {
@@ -26,6 +28,7 @@ export const ExerciseList = ({
   muscleGroups,
 }) => {
   const [exerciseTitles, setExerciseTitles] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const [
     { searchQuery, sortBy, offset, selectedMuscleGroups, hasMore, loadMore },
@@ -39,6 +42,7 @@ export const ExerciseList = ({
       hasMore: true,
       loadMore: false,
     });
+    setIsLoading(true);
     loadExerciseTitles();
   }, [searchQuery, sortBy, selectedMuscleGroups, refreshTitlesKey]);
 
@@ -78,6 +82,7 @@ export const ExerciseList = ({
 
   const loadExerciseTitles = async (offset) => {
     const currentOffset = offset ?? INITIAL_OFFSET;
+    setIsLoading(true);
 
     const exerciseTitlesData = await fetchExerciseTitles({
       offset: currentOffset,
@@ -97,13 +102,11 @@ export const ExerciseList = ({
 
     if (currentOffset === INITIAL_OFFSET) {
       setExerciseTitles(exerciseTitlesData);
-      return;
-    }
-
-    const hasExcercises = exerciseTitlesData.length > 0;
-    if (hasExcercises) {
+    } else if (exerciseTitlesData.length > 0) {
       setExerciseTitles((prevTitles) => [...prevTitles, ...exerciseTitlesData]);
     }
+
+    setIsLoading(false);
   };
 
   const resetFilters = () => {
@@ -141,11 +144,15 @@ export const ExerciseList = ({
         ref={listContainerRef}
         className='flex flex-col w-full sm:max-w-sm bg-white px-6 rounded-lg overflow-y-auto max-h-[40vh] lg:max-h-[47vh]'
       >
-        <ExerciseListItems
-          exercises={exerciseTitles}
-          onSelectExercise={onSelectExercise}
-          sortBy={sortBy}
-        />
+        {isLoading ? (
+          <Spinner loading={true} className='min-h-[40vh] lg:min-h-[47vh]' />
+        ) : (
+          <ExerciseListItems
+            exercises={exerciseTitles}
+            onSelectExercise={onSelectExercise}
+            sortBy={sortBy}
+          />
+        )}
       </div>
     </>
   );

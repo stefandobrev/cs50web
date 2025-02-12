@@ -11,6 +11,7 @@ import {
 } from './helpersManage';
 import { DefaultForm } from './DefaultForm';
 import DeleteConfirmation from './DeleteConfirmation';
+import Spinner from '../../components/Spinner';
 
 const EditForm = ({
   muscleGroups,
@@ -24,12 +25,14 @@ const EditForm = ({
   const [exerciseData, setExerciseData] = useState(null);
   const [hasChanges, setHasChanges] = useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const { watch } = useFormContext();
 
   useEffect(() => {
     const loadExerciseData = async () => {
       const data = await fetchExerciseData(exercise.id);
       setExerciseData(data);
+      setIsLoading(false);
     };
 
     loadExerciseData();
@@ -113,16 +116,20 @@ const EditForm = ({
 
   return (
     <>
-      <DefaultForm
-        submittedExerciseData={onSubmit}
-        muscleGroups={muscleGroups}
-        message={message}
-        mode={mode}
-        title={editFormTitle}
-        exerciseData={exerciseData}
-        hasChanges={hasChanges}
-        handleDeleteButton={handleDelete}
-      />
+      {isLoading ? (
+        <Spinner loading={isLoading} className='fixed inset-0' />
+      ) : (
+        <DefaultForm
+          submittedExerciseData={onSubmit}
+          muscleGroups={muscleGroups}
+          message={message}
+          mode={mode}
+          title={editFormTitle}
+          exerciseData={exerciseData}
+          hasChanges={hasChanges}
+          handleDeleteButton={handleDelete}
+        />
+      )}
 
       {isDeleteDialogOpen && (
         <DeleteConfirmation

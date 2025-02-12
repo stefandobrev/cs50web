@@ -17,7 +17,11 @@ const MainLayout = () => {
         <Navbar />
       </nav>
       <main className='flex-grow'>
-        {isLoading ? <Spinner loading={isLoading} /> : <Outlet />}
+        {isLoading ? (
+          <Spinner loading={isLoading} className={'fixed inset-0'} />
+        ) : (
+          <Outlet />
+        )}
       </main>
       <footer className='bg-gray-800 h-7'>
         <div className='container mx-auto px-4 h-full flex items-center justify-center'>

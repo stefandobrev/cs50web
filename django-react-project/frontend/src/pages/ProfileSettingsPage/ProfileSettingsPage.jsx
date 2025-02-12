@@ -89,7 +89,7 @@ export const ProfileSettingsPage = () => {
   return (
     <>
       {isLoading ? (
-        <Spinner loading={isLoading} />
+        <Spinner loading={isLoading} className={'fixed inset-0'} />
       ) : (
         <>
           <PageTitle title='Settings' />
