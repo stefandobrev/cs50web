@@ -57,14 +57,14 @@ export const DefaultForm = ({
   };
 
   useEffect(() => {
-    if (exerciseDataRef.current) {
+    if (exerciseData) {
       textAreaRefs.current.forEach((textarea) => {
         if (textarea) {
           autoResize({ target: textarea });
         }
       });
     }
-  }, [exerciseDataRef.current]);
+  }, [exerciseData]);
 
   const gifFront = watch('gif_link_front');
   const gifSide = watch('gif_link_side');

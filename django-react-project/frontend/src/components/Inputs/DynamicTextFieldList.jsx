@@ -34,7 +34,10 @@ const DynamicTextFieldList = ({
               render={({ field }) => (
                 <textarea
                   {...field}
-                  ref={(el) => (textAreaRefs.current[index] = el)}
+                  ref={(el) => {
+                    textAreaRefs.current[index] = el;
+                    if (el) autoResize({ target: el }); // Trigger auto-resize immediately
+                  }}
                   onInput={autoResize}
                   placeholder={`Enter ${singularize(labelPrefix)}`}
                   className='border border-gray-300 p-2 rounded w-full resize-none overflow-hidden focus:outline-none focus:ring-2 focus:ring-logoRed focus:border-logoRed'

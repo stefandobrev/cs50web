@@ -25,10 +25,12 @@ const EditForm = ({
   const [exerciseData, setExerciseData] = useState(null);
   const [hasChanges, setHasChanges] = useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const { watch } = useFormContext();
 
   useEffect(() => {
+    setIsLoading(true);
+
     const loadExerciseData = async () => {
       const data = await fetchExerciseData(exercise.id);
       setExerciseData(data);
