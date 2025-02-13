@@ -12,7 +12,7 @@ export const MuscleGroup = ({
 
   return (
     <g
-      onClick={() => onClick?.(id, name)}
+      onClick={() => onClick?.(id)}
       onMouseEnter={() => onHover?.(name)}
       onMouseLeave={() => onHover?.('')}
       id={id}

@@ -1,46 +1,36 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import FrontAnatomy from '../../components/Anatomy/FrontAnatomy';
-import BackAnatomy from '../../components/Anatomy/BackAnatomy';
+import { LargeScreenEP } from './LargeScreenEP';
+import { MobileScreenEP } from './MobileScreenEP';
 
 export const ExercisePage = () => {
   const navigate = useNavigate();
-  const [hoveredMuscle, setHoveredMuscle] = useState('');
 
-  const handleMuscleClick = (id, name) => {
+  const [isMdOrLarger, setIsMdOrLarger] = useState(false);
+
+  const handleMuscleClick = (id) => {
     if (id) navigate(`/exercises/${id}`);
   };
 
-  const handleMuscleHover = (name) => {
-    setHoveredMuscle(name);
-  };
+  useState(() => {
+    const checkScreenSize = () => {
+      setIsMdOrLarger(window.innerWidth >= 768);
+    };
+
+    window.addEventListener('resize', checkScreenSize);
+    checkScreenSize();
+
+    return () => window.removeEventListener('resize', checkScreenSize);
+  }, []);
 
   return (
-    <div className='flex items-center justify-center flex-col md:flex-row'>
-      <div className='lg:w-[35%] h-[calc(100vh-108px)] flex items-center justify-center'>
-        <FrontAnatomy
-          onMuscleClick={handleMuscleClick}
-          onMuscleHover={handleMuscleHover}
-          selectedPrimaryMuscle={null}
-          selectedSecondaryMuscles={[]}
-        />
-      </div>
-      <div className='lg:w-[35%] h-[calc(100vh-108px)] flex items-center justify-center'>
-        <BackAnatomy
-          onMuscleClick={handleMuscleClick}
-          onMuscleHover={handleMuscleHover}
-          selectedPrimaryMuscle={null}
-          selectedSecondaryMuscles={[]}
-        />
-      </div>
-      <div
-        className={`p-4 absolute text-lg font-bold top-[20%] mx-auto z-10 duration-300 hidden ${
-          hoveredMuscle ? 'md:block' : 'hidden'
-        }`}
-      >
-        {hoveredMuscle}
-      </div>
-    </div>
+    <>
+      {isMdOrLarger ? (
+        <LargeScreenEP handleMuscleClick={handleMuscleClick} />
+      ) : (
+        <MobileScreenEP handleMuscleClick={handleMuscleClick} />
+      )}
+    </>
   );
 };
