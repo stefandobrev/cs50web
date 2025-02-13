@@ -87,6 +87,7 @@ export const ManagePage = () => {
 
   return (
     <>
+      <PageTitle title='Manage' />
       <div className='sticky top-20 z-40 bg-gray-600 border-t border-gray-800 lg:hidden flex justify-around p-2 h-16'>
         <TabButton
           label='Exercises'
@@ -104,57 +105,54 @@ export const ManagePage = () => {
           onClick={() => setActiveTab('anatomy')}
         />
       </div>
-      <div className='h-full relative'>
-        <PageTitle title='Manage' />
 
-        <div className='h-full flex flex-col lg:flex-row'>
-          <div
-            className={`w-full flex flex-col items-center lg:w-1/4 p-4 ${
-              activeTab !== 'exercise' ? 'hidden lg:block' : ''
-            }`}
-          >
-            <ExerciseList
-              refreshTitlesKey={refreshTitleListKey}
-              onSelectExercise={handleSelectExercise}
-              muscleGroups={muscleGroups}
-            />
-          </div>
+      <div className='flex flex-col lg:flex-row'>
+        <div
+          className={`w-full flex flex-col items-center lg:w-1/4 p-4 ${
+            activeTab !== 'exercise' ? 'hidden lg:block' : ''
+          }`}
+        >
+          <ExerciseList
+            refreshTitlesKey={refreshTitleListKey}
+            onSelectExercise={handleSelectExercise}
+            muscleGroups={muscleGroups}
+          />
+        </div>
 
-          <div
-            className={`bg-white flex justify-center w-full lg:w-1/2 p-5 ${
-              activeTab !== 'form' ? 'hidden lg:flex' : ''
-            }`}
-          >
-            <FormProvider {...methods}>
-              {mode === 'add' ? (
-                <AddForm
-                  muscleGroups={muscleGroups}
-                  onExerciseAdded={triggerRefresh}
-                />
-              ) : (
-                <EditForm
-                  muscleGroups={muscleGroups}
-                  exercise={selectedExercise}
-                  onExerciseUpdated={triggerRefresh}
-                  mode={mode}
-                  launchAddMode={launchAddMode}
-                  handleAddButtonClick={handleAddButtonClick}
-                />
-              )}
-            </FormProvider>
-          </div>
+        <div
+          className={`bg-white flex justify-center w-full lg:w-1/2 p-5 ${
+            activeTab !== 'form' ? 'hidden lg:flex' : ''
+          }`}
+        >
+          <FormProvider {...methods}>
+            {mode === 'add' ? (
+              <AddForm
+                muscleGroups={muscleGroups}
+                onExerciseAdded={triggerRefresh}
+              />
+            ) : (
+              <EditForm
+                muscleGroups={muscleGroups}
+                exercise={selectedExercise}
+                onExerciseUpdated={triggerRefresh}
+                mode={mode}
+                launchAddMode={launchAddMode}
+                handleAddButtonClick={handleAddButtonClick}
+              />
+            )}
+          </FormProvider>
+        </div>
 
-          <div
-            className={`w-full lg:w-1/4 p-4 ${
-              activeTab !== 'anatomy' ? 'hidden lg:block' : ''
-            }`}
-          >
-            <MuscleAnatomyView
-              handleMuscleClick={handleMuscleClick}
-              selectedPrimaryMuscle={selectedPrimaryMuscleSVG}
-              selectedSecondaryMuscles={selectedSecondaryMusclesSVG}
-            />
-          </div>
+        <div
+          className={`w-full lg:w-1/4 p-4 ${
+            activeTab !== 'anatomy' ? 'hidden lg:block' : ''
+          }`}
+        >
+          <MuscleAnatomyView
+            handleMuscleClick={handleMuscleClick}
+            selectedPrimaryMuscle={selectedPrimaryMuscleSVG}
+            selectedSecondaryMuscles={selectedSecondaryMusclesSVG}
+          />
         </div>
       </div>
     </>

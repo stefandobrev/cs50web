@@ -18,7 +18,7 @@ export const ExercisePage = () => {
 
   return (
     <div className='flex items-center justify-center flex-col md:flex-row'>
-      <div className='lg:w-1/3 h-[calc(100vh-104px)]'>
+      <div className='lg:w-[35%] h-[calc(100vh-108px)] flex items-center justify-center'>
         <FrontAnatomy
           onMuscleClick={handleMuscleClick}
           onMuscleHover={handleMuscleHover}
@@ -26,7 +26,7 @@ export const ExercisePage = () => {
           selectedSecondaryMuscles={[]}
         />
       </div>
-      <div className='lg:w-1/3 h-[calc(100vh-104px)]'>
+      <div className='lg:w-[35%] h-[calc(100vh-108px)] flex items-center justify-center'>
         <BackAnatomy
           onMuscleClick={handleMuscleClick}
           onMuscleHover={handleMuscleHover}
