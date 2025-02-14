@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { LargeScreenEP } from './LargeScreenEP';
-import { MobileScreenEP } from './MobileScreenEP';
+import { FullBodyMuscleView } from '../../components/muscleviews/FullBodyMuscleView';
+import ToggleableMuscleView from '../../components/muscleviews/ToggleableMuscleView';
 
 export const ExercisePage = () => {
   const navigate = useNavigate();
@@ -27,9 +27,9 @@ export const ExercisePage = () => {
   return (
     <>
       {isMdOrLarger ? (
-        <LargeScreenEP handleMuscleClick={handleMuscleClick} />
+        <FullBodyMuscleView handleMuscleClick={handleMuscleClick} />
       ) : (
-        <MobileScreenEP handleMuscleClick={handleMuscleClick} />
+        <ToggleableMuscleView handleMuscleClick={handleMuscleClick} />
       )}
     </>
   );

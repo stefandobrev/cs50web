@@ -1,5 +1,5 @@
 import { useFormContext, Controller, useFieldArray } from 'react-hook-form';
-import { EditButton } from '../Buttons/EditButtons';
+import { EditButton } from '../buttons/EditButtons';
 
 const DynamicTextFieldList = ({
   labelPrefix = 'Item',

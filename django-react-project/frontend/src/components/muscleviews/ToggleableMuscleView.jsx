@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ToggleButton } from '../../components/Buttons/EditButtons';
-import FrontAnatomy from '../../components/Anatomy/FrontAnatomy';
-import BackAnatomy from '../../components/Anatomy/BackAnatomy';
+import { ToggleButton } from '../buttons/EditButtons';
+import FrontAnatomy from '../anatomy/FrontAnatomy';
+import BackAnatomy from '../anatomy/BackAnatomy';
 import { frontMuscleGroupNames } from '../../common/constants';
 
-const MuscleAnatomyView = ({
+const ToggleableMuscleView = ({
   handleMuscleClick,
   selectedPrimaryMuscle,
   selectedSecondaryMuscles,
@@ -24,7 +24,7 @@ const MuscleAnatomyView = ({
   };
 
   return (
-    <div className='flex flex-col items-center justify-center'>
+    <div className='flex flex-col items-center justify-center mt-4'>
       <ToggleButton onClick={toggleIsFrontView}>
         {isFrontView ? 'Show Back' : 'Show Front'}
       </ToggleButton>
@@ -66,4 +66,4 @@ const MuscleAnatomyView = ({
   );
 };
 
-export default MuscleAnatomyView;
+export default ToggleableMuscleView;

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { toast } from 'react-toastify';
 
-import { EditButton } from '../../components/Buttons/EditButtons';
+import { EditButton } from '../../components/buttons/EditButtons';
 
 import {
   saveExercise,

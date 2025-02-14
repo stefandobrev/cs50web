@@ -1,10 +1,10 @@
 import { useState, useEffect, useRef } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import InputField from '../../components/Inputs/InputField';
-import DropdownField from '../../components/Inputs/DropdownField';
-import DropdownFieldWithTags from '../../components/Inputs/DropdownWithTagsField';
-import DynamicTextFieldList from '../../components/Inputs/DynamicTextFieldList';
+import InputField from '../../components/inputs/InputField';
+import DropdownField from '../../components/inputs/DropdownField';
+import DropdownFieldWithTags from '../../components/inputs/DropdownWithTagsField';
+import DynamicTextFieldList from '../../components/inputs/DynamicTextFieldList';
 import { MdScreenButtons, SmScreenButtons } from './DefaultFormButtons';
 
 export const DefaultForm = ({
@@ -113,7 +113,12 @@ export const DefaultForm = ({
             required
           />
           <InputField label='Gif Side' id='gif_link_side' type='url' required />
-          <InputField label='Video' id='video_link' type='url' required />
+          <InputField
+            label='Video'
+            id='video_link'
+            type='url'
+            required={false}
+          />
         </div>
         <DynamicTextFieldList
           labelPrefix='Mistakes'

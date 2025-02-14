@@ -1,9 +1,9 @@
 import { useState } from 'react';
 
-import FrontAnatomy from '../../components/Anatomy/FrontAnatomy';
-import BackAnatomy from '../../components/Anatomy/BackAnatomy';
+import FrontAnatomy from '../anatomy/FrontAnatomy';
+import BackAnatomy from '../anatomy/BackAnatomy';
 
-export const LargeScreenEP = ({ handleMuscleClick }) => {
+export const FullBodyMuscleView = ({ handleMuscleClick }) => {
   const [hoveredMuscle, setHoveredMuscle] = useState('');
 
   const handleMuscleHover = (name) => {
@@ -16,16 +16,12 @@ export const LargeScreenEP = ({ handleMuscleClick }) => {
         <FrontAnatomy
           onMuscleClick={handleMuscleClick}
           onMuscleHover={handleMuscleHover}
-          selectedPrimaryMuscle={null}
-          selectedSecondaryMuscles={[]}
         />
       </div>
       <div className='w-[35%] h-[calc(100vh-108px)] flex items-center justify-center'>
         <BackAnatomy
           onMuscleClick={handleMuscleClick}
           onMuscleHover={handleMuscleHover}
-          selectedPrimaryMuscle={null}
-          selectedSecondaryMuscles={[]}
         />
       </div>
       <div

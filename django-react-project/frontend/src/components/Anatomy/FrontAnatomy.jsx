@@ -4,8 +4,8 @@ import { frontMuscleGroupNames } from '../../common/constants';
 const FrontAnatomy = ({
   onMuscleClick,
   onMuscleHover,
-  selectedPrimaryMuscle,
-  selectedSecondaryMuscles,
+  selectedPrimaryMuscle = null,
+  selectedSecondaryMuscles = [],
 }) => {
   return (
     <svg

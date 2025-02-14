@@ -2,11 +2,12 @@ import { useState, useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
 import { fetchMuscleGroups } from './helpersManage';
-import { TabButton } from './managePageComponents';
+import { TabButton } from './ManagePageComponents';
 import PageTitle from '../../components/PageTitle';
+import ToggleableMuscleView from '../../components/muscleviews/ToggleableMuscleView';
 import AddForm from './AddForm';
 import EditForm from './EditForm';
-import MuscleAnatomyView from './MuscleAnatomyView';
+
 import { ExerciseList } from './ExerciseList';
 
 export const ManagePage = () => {
@@ -144,11 +145,11 @@ export const ManagePage = () => {
         </div>
 
         <div
-          className={`w-full lg:w-1/4 p-4 ${
+          className={`w-full lg:w-1/4 ${
             activeTab !== 'anatomy' ? 'hidden lg:block' : ''
           }`}
         >
-          <MuscleAnatomyView
+          <ToggleableMuscleView
             handleMuscleClick={handleMuscleClick}
             selectedPrimaryMuscle={selectedPrimaryMuscleSVG}
             selectedSecondaryMuscles={selectedSecondaryMusclesSVG}

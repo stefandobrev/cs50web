@@ -2,7 +2,7 @@ import {
   SaveButton,
   DeleteButton,
   ViewButton,
-} from '../../components/Buttons/EditButtons';
+} from '../../components/buttons/EditButtons';
 
 export const MdScreenButtons = ({
   mode,

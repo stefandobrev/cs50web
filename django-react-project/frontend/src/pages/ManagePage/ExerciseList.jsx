@@ -1,13 +1,13 @@
 import { useState, useEffect, useRef } from 'react';
 
 import { fetchExerciseTitles } from './helpersManage';
-import { EditButton } from '../../components/Buttons/EditButtons';
+import { EditButton } from '../../components/buttons/EditButtons';
 import {
   SearchInput,
   MuscleGroupFilter,
   SortFilter,
   ExerciseListItems,
-} from './managePageComponents';
+} from './ManagePageComponents';
 
 import Spinner from '../../components/Spinner';
 
