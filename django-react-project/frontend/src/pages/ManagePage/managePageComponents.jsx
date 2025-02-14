@@ -79,7 +79,7 @@ export const ExerciseListItems = ({ exercises, onSelectExercise, sortBy }) => (
         >
           {timeAgo ? (
             <div className='flex w-full justify-between'>
-              <span className='max-w-30 truncate text-gray-800'>
+              <span className='max-w-[70%] truncate text-gray-800'>
                 {exercise.title}
               </span>
               <span className='text-end text-sm text-logoRed'>{timeAgo}</span>
