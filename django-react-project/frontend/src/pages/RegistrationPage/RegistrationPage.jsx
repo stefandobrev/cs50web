@@ -31,10 +31,10 @@ export const RegistrationPage = () => {
   };
 
   return (
-    <div className='flex items-center justify-center h-full'>
+    <div className='flex h-full items-center justify-center'>
       <PageTitle title='Create Profile' />
-      <div className='bg-white p-5 rounded shadow-md w-full max-w-sm mx-4'>
-        <h2 className='text-2xl font-semibold text-center mb-3'>
+      <div className='mx-4 w-full max-w-sm rounded bg-white p-5 shadow-md'>
+        <h2 className='mb-3 text-center text-2xl font-semibold'>
           Create Profile
         </h2>
         <FormProvider {...methods}>

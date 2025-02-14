@@ -115,8 +115,8 @@ export const ExerciseList = ({
 
   return (
     <>
-      <div className='flex flex-col w-full sm:max-w-sm bg-white px-6 rounded-lg'>
-        <div className='flex justify-between items-center px-2 mb-4'>
+      <div className='flex w-full flex-col rounded-lg bg-white px-6 sm:max-w-sm'>
+        <div className='mb-4 flex items-center justify-between px-2'>
           <h2 className='text-xl font-semibold text-gray-800'>Exercise List</h2>
           <EditButton onClick={resetFilters} variant='grayDark'>
             Reset
@@ -142,7 +142,7 @@ export const ExerciseList = ({
       </div>
       <div
         ref={listContainerRef}
-        className='flex flex-col w-full sm:max-w-sm bg-white px-6 rounded-lg overflow-y-auto max-h-[40vh] lg:max-h-[47vh]'
+        className='flex max-h-[40vh] w-full flex-col overflow-y-auto rounded-lg bg-white px-6 sm:max-w-sm lg:max-h-[47vh]'
       >
         {isLoading ? (
           <Spinner loading={true} className='min-h-[40vh] lg:min-h-[47vh]' />

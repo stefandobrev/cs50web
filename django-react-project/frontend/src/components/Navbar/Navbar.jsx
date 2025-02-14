@@ -32,16 +32,14 @@ const Navbar = () => {
   const isCurrent = (href) => (href === location.pathname ? 'page' : undefined);
 
   return (
-    <nav className='bg-gray-800 shadow-lg sticky top-0 h-20 z-50'>
+    <nav className='sticky top-0 z-50 h-20 bg-gray-800 shadow-lg'>
       <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
         <div className='relative flex h-20 items-center justify-between'>
           {/* Mobile menu button */}
           <div className='absolute inset-y-0 left-0 flex items-center sm:hidden'>
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className='group relative inline-flex items-center justify-center rounded-md p-2 
-                text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none 
-                transition duration-150'
+              className='group relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 transition duration-150 hover:bg-gray-700 hover:text-white focus:outline-none'
             >
               <span className='absolute -inset-0.5' />
               <span className='sr-only'>Open main menu</span>
@@ -77,7 +75,7 @@ const Navbar = () => {
                           ? 'bg-gray-900 text-white'
                           : 'text-gray-300 hover:bg-gray-700 hover:text-white',
                         'rounded-md px-4 py-3 text-base font-medium transition duration-150',
-                        'hover:transform hover:translate-y-[-2px]'
+                        'hover:translate-y-[-2px] hover:transform',
                       )
                     }
                   >
@@ -116,7 +114,7 @@ const Navbar = () => {
                       ? 'bg-gray-900 text-white'
                       : 'bg-gray-800 text-gray-300 hover:bg-gray-600 hover:text-white',
                     'block rounded-md px-4 py-3 text-base font-medium transition duration-150',
-                    'hover:transform hover:translate-x-2'
+                    'hover:translate-x-2 hover:transform',
                   )
                 }
               >

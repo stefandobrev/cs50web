@@ -31,34 +31,27 @@ const ProfileMenu = ({ profile, onSignOut }) => {
       {/* Profile Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className='flex items-center gap-3 rounded-lg bg-gray-700 
-          p-2 sm:px-4 sm:py-2 hover:bg-gray-600 cursor-pointer
-          transition duration-150'
+        className='flex cursor-pointer items-center gap-3 rounded-lg bg-gray-700 p-2 transition duration-150 hover:bg-gray-600 sm:px-4 sm:py-2'
       >
         <img
           alt='User Avatar'
           src='/defaultProfile.png'
-          className='h-8 w-8 rounded-full object-cover border-2 border-gray-600'
+          className='h-8 w-8 rounded-full border-2 border-gray-600 object-cover'
         />
-        <span className='hidden sm:inline text-white text-base font-medium'>
+        <span className='hidden text-base font-medium text-white sm:inline'>
           {profile.first_name} {profile.last_name}
         </span>
       </button>
 
       {/* Dropdown Menu */}
       {isOpen && (
-        <div
-          className='absolute z-10 mt-2 w-56 origin-top-right rounded-lg 
-          bg-white py-2 shadow-lg ring-1 ring-black ring-opacity-5
-          transform -translate-x-1/2 left-1/2'
-        >
+        <div className='absolute left-1/2 z-10 mt-2 w-56 origin-top-right -translate-x-1/2 transform rounded-lg bg-white py-2 shadow-lg ring-1 ring-black ring-opacity-5'>
           {profileMenuItems.map((item) => (
             <NavLink
               key={item.name}
               to={item.href}
               onClick={() => setIsOpen(false)}
-              className='flex items-center px-4 py-3 text-sm text-gray-700 
-                transition duration-150 hover:bg-gray-100 w-full'
+              className='flex w-full items-center px-4 py-3 text-sm text-gray-700 transition duration-150 hover:bg-gray-100'
             >
               {item.icon && (
                 <item.icon
@@ -74,8 +67,7 @@ const ProfileMenu = ({ profile, onSignOut }) => {
 
           <button
             onClick={handleSignOut}
-            className='flex items-center px-4 py-3 text-sm text-gray-700 
-              transition duration-150 hover:bg-gray-100 w-full text-left'
+            className='flex w-full items-center px-4 py-3 text-left text-sm text-gray-700 transition duration-150 hover:bg-gray-100'
           >
             Sign out
           </button>

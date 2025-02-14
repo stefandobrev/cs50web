@@ -93,8 +93,8 @@ export const ProfileSettingsPage = () => {
       ) : (
         <>
           <PageTitle title='Settings' />
-          <div className='max-w-md mx-auto p-6'>
-            <h1 className='text-2xl font-semibold mb-4'>Profile Settings</h1>
+          <div className='mx-auto max-w-md p-6'>
+            <h1 className='mb-4 text-2xl font-semibold'>Profile Settings</h1>
             <FormProvider {...methods}>
               {isChangingPassword ? (
                 <PasswordForm

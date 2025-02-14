@@ -6,7 +6,7 @@ const DropdownFieldWithTags = ({ label, id, options, placeholder = '--' }) => {
 
   return (
     <div>
-      <label htmlFor={id} className='block text-lg font-semibold mb-2'>
+      <label htmlFor={id} className='mb-2 block text-lg font-semibold'>
         {label}:
       </label>
       <Controller
@@ -22,7 +22,7 @@ const DropdownFieldWithTags = ({ label, id, options, placeholder = '--' }) => {
               field.onChange(selected.map((opt) => opt.value))
             }
             value={options.filter((option) =>
-              field.value?.includes(option.value)
+              field.value?.includes(option.value),
             )}
             classNamePrefix='react-select'
             className='w-full'

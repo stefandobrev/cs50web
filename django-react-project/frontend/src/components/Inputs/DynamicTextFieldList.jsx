@@ -23,9 +23,9 @@ const DynamicTextFieldList = ({
   return (
     <div className='space-y-3'>
       {fields.map((fieldValue, index) => (
-        <div key={fieldValue.id} className='block '>
+        <div key={fieldValue.id} className='block'>
           <label className='text-lg font-semibold'>{`${singularize(
-            labelPrefix
+            labelPrefix,
           )} ${index + 1}`}</label>
           <div className='flex items-center space-x-2'>
             <Controller
@@ -40,7 +40,7 @@ const DynamicTextFieldList = ({
                   }}
                   onInput={autoResize}
                   placeholder={`Enter ${singularize(labelPrefix)}`}
-                  className='border border-gray-300 p-2 rounded w-full resize-none overflow-hidden focus:outline-none focus:ring-2 focus:ring-logoRed focus:border-logoRed'
+                  className='w-full resize-none overflow-hidden rounded border border-gray-300 p-2 focus:border-logoRed focus:outline-none focus:ring-2 focus:ring-logoRed'
                   rows={1}
                 />
               )}

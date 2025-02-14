@@ -36,7 +36,7 @@ const AddForm = ({ muscleGroups, onExerciseAdded }) => {
       muscleGroups={muscleGroups}
       message={message}
       title={
-        <h2 className='text-start text-2xl font-semibold px-2 mb-3 sticky top-0 bg-white z-10'>
+        <h2 className='sticky top-0 z-10 mb-3 bg-white px-2 text-start text-2xl font-semibold'>
           Add Exercise
         </h2>
       }

@@ -31,7 +31,7 @@ export const DefaultForm = ({
   }, [primaryGroupValue, setValue]);
 
   const filteredMuscleGroups = muscleGroups.filter(
-    (group) => group.value !== primaryGroupValue
+    (group) => group.value !== primaryGroupValue,
   );
 
   useEffect(() => {
@@ -79,13 +79,13 @@ export const DefaultForm = ({
   }, []);
 
   return (
-    <div className='flex flex-col w-full max-w-sm md:max-w-md lg:max-w-lg'>
+    <div className='flex w-full max-w-sm flex-col md:max-w-md lg:max-w-lg'>
       {title}
 
       <form
         id='exercise-form'
         onSubmit={handleSubmit(submittedExerciseData)}
-        className='flex flex-col space-y-3 overflow-y-auto lg:max-h-[67vh] px-2'
+        className='flex flex-col space-y-3 overflow-y-auto px-2 lg:max-h-[67vh]'
       >
         <InputField label='Title' id='title' registration={register('title')} />
         <DropdownField
@@ -105,7 +105,7 @@ export const DefaultForm = ({
           textAreaRefs={textAreaRefs}
           autoResize={autoResize}
         />
-        <div className='grid grid-cols-1 lg:grid-cols-2 gap-4'>
+        <div className='grid grid-cols-1 gap-4 lg:grid-cols-2'>
           <InputField
             label='Gif Front'
             id='gif_link_front'

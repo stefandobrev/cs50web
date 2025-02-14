@@ -10,7 +10,7 @@ export const MdScreenButtons = ({
   areUrlsInvalid,
   handleDeleteButton,
 }) => (
-  <div className='mt-4 bg-white py-2 flex flex-col md:flex-row justify-center gap-2 sticky bottom-0'>
+  <div className='sticky bottom-0 mt-4 flex flex-col justify-center gap-2 bg-white py-2 md:flex-row'>
     <SaveButton
       disabled={
         mode === 'edit' ? !hasChanges || areUrlsInvalid : areUrlsInvalid
@@ -21,7 +21,7 @@ export const MdScreenButtons = ({
       {mode === 'add' ? 'Add Exercise' : 'Edit Exercise'}
     </SaveButton>
     {mode === 'edit' && (
-      <div className='flex justify-center gap-2 mt-2 md:mt-0 w-full md:w-auto'>
+      <div className='mt-2 flex w-full justify-center gap-2 md:mt-0 md:w-auto'>
         <DeleteButton
           onClick={handleDeleteButton}
           variant='grayDark'
@@ -42,7 +42,7 @@ export const SmScreenButtons = ({
   handleDeleteButton,
 }) => (
   <>
-    <div className='mt-4 bg-white py-2 flex justify-center sticky bottom-0'>
+    <div className='sticky bottom-0 mt-4 flex justify-center bg-white py-2'>
       <SaveButton
         disabled={
           mode === 'edit' ? !hasChanges || areUrlsInvalid : areUrlsInvalid

@@ -7,7 +7,7 @@ export const SearchInput = ({ value, onChange }) => (
     placeholder='Search exercise'
     value={value}
     onChange={(e) => onChange(e.target.value)}
-    className='mb-4 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-logoRed focus:border-logoRed transition duration-170 ease-in-out w-full'
+    className='duration-170 mb-4 w-full rounded-lg border border-gray-300 p-2 transition ease-in-out focus:border-logoRed focus:outline-none focus:ring-2 focus:ring-logoRed'
   />
 );
 
@@ -17,7 +17,7 @@ export const MuscleGroupFilter = ({
   onChange,
 }) => (
   <div className='mb-4'>
-    <label className='block font-semibold mb-2 text-gray-700 '>
+    <label className='mb-2 block font-semibold text-gray-700'>
       Filter by Muscle Group
     </label>
     <Select
@@ -27,7 +27,7 @@ export const MuscleGroupFilter = ({
         onChange(selectedOptions ? selectedOptions.map((opt) => opt.value) : [])
       }
       value={muscleGroups.filter((group) =>
-        selectedMuscleGroups.includes(group.value)
+        selectedMuscleGroups.includes(group.value),
       )}
       classNamePrefix='react-select'
       className='w-full'
@@ -37,7 +37,7 @@ export const MuscleGroupFilter = ({
 
 export const SortFilter = ({ sortBy, onChange }) => (
   <div className='mb-4'>
-    <label className='block font-semibold mb-2 text-gray-700'>Sort by</label>
+    <label className='mb-2 block font-semibold text-gray-700'>Sort by</label>
     <Select
       options={[
         { label: 'Last Created', value: 'created_at' },
@@ -74,18 +74,20 @@ export const ExerciseListItems = ({ exercises, onSelectExercise, sortBy }) => (
       return (
         <li
           key={exercise.id}
-          className='p-3 cursor-pointer rounded-lg transition duration-170 ease-in-out hover:bg-gray-170 active:bg-gray-170 flex justify-between'
+          className='duration-170 hover:bg-gray-170 active:bg-gray-170 flex cursor-pointer justify-between rounded-lg p-3 transition ease-in-out'
           onClick={() => onSelectExercise(exercise)}
         >
           {timeAgo ? (
-            <div className='flex justify-between w-full'>
-              <span className='text-gray-800 max-w-30 truncate'>
+            <div className='flex w-full justify-between'>
+              <span className='max-w-30 truncate text-gray-800'>
                 {exercise.title}
               </span>
-              <span className='text-sm text-logoRed text-end'>{timeAgo}</span>
+              <span className='text-end text-sm text-logoRed'>{timeAgo}</span>
             </div>
           ) : (
-            <span className='text-gray-800'>{exercise.title}</span>
+            <span className='max-w-[85%] truncate text-gray-800'>
+              {exercise.title}
+            </span>
           )}
         </li>
       );
@@ -96,8 +98,8 @@ export const ExerciseListItems = ({ exercises, onSelectExercise, sortBy }) => (
 export const TabButton = ({ label, isActive, onClick }) => (
   <button
     onClick={onClick}
-    className={`w-24 h-full flex flex-col items-center justify-center rounded-md hover:bg-gray-800 active:bg-gray-800 transition ${
-      isActive ? 'text-white bg-gray-800' : 'text-gray-300 active:text-white'
+    className={`flex h-full w-24 flex-col items-center justify-center rounded-md transition hover:bg-gray-800 active:bg-gray-800 ${
+      isActive ? 'bg-gray-800 text-white' : 'text-gray-300 active:text-white'
     }`}
   >
     <span>{label}</span>

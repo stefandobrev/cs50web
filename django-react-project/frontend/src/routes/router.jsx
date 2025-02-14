@@ -43,6 +43,6 @@ export const router = createBrowserRouter(
       </Route>
 
       <Route path='*' element={<NotFoundPage />} />
-    </Route>
-  )
+    </Route>,
+  ),
 );

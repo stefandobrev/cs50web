@@ -21,7 +21,7 @@ const LoginForm = ({ loginUserData }) => {
         registration={register('login_password')}
       />
 
-      <div className='flex flex-col justify-center items-center space-y-2'>
+      <div className='flex flex-col items-center justify-center space-y-2'>
         <SaveButton>Sign In</SaveButton>
         <Link to='/register' className='text-gray-900 hover:underline'>
           Don't have an account? Register

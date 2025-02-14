@@ -11,9 +11,9 @@ const MainLayout = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <div className='flex flex-col min-h-screen'>
+    <div className='flex min-h-screen flex-col'>
       <header className='bg-gray-800'>{/* Your header content */}</header>
-      <nav className='bg-gray-800 shadow-lg sticky top-0 h-20 z-50'>
+      <nav className='sticky top-0 z-50 h-20 bg-gray-800 shadow-lg'>
         <Navbar />
       </nav>
       <main className='flex-grow'>
@@ -23,8 +23,8 @@ const MainLayout = () => {
           <Outlet />
         )}
       </main>
-      <footer className='bg-gray-800 h-7'>
-        <div className='container mx-auto px-4 h-full flex items-center justify-center'>
+      <footer className='h-7 bg-gray-800'>
+        <div className='container mx-auto flex h-full items-center justify-center px-4'>
           <p className='text-gray-300'>
             © {currentYear} AlishFitness. All rights reserved.
           </p>

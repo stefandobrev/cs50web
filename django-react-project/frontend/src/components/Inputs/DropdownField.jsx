@@ -15,7 +15,7 @@ const DropdownField = ({
 
   return (
     <div>
-      <label htmlFor={id} className='block text-lg font-semibold mb-2'>
+      <label htmlFor={id} className='mb-2 block text-lg font-semibold'>
         {label}:
       </label>
       <Controller
@@ -33,7 +33,7 @@ const DropdownField = ({
               options.find((option) => option.value === field.value) || null
             }
             classNamePrefix='react-select'
-            className='font-semibold w-full '
+            className='w-full font-semibold'
           />
         )}
       />

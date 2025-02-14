@@ -1,8 +1,8 @@
 import { useFormContext } from 'react-hook-form';
 
-import InputField from '../../components/Inputs/InputField';
-import PasswordField from '../../components/Inputs/PasswordField';
-import { SaveButton } from '../../components/Buttons/EditButtons';
+import InputField from '../../components/inputs/InputField';
+import PasswordField from '../../components/inputs/PasswordField';
+import { SaveButton } from '../../components/buttons/EditButtons';
 
 const RegistrationForm = ({ registerUser, message }) => {
   const { handleSubmit, watch } = useFormContext();

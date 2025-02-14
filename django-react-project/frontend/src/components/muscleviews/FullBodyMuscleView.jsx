@@ -11,21 +11,21 @@ export const FullBodyMuscleView = ({ handleMuscleClick }) => {
   };
 
   return (
-    <div className='flex items-center justify-center flex-row'>
-      <div className='w-[35%] h-[calc(100vh-108px)] flex items-center justify-center'>
+    <div className='flex flex-row items-center justify-center'>
+      <div className='flex h-[calc(100vh-108px)] w-[35%] items-center justify-center'>
         <FrontAnatomy
           onMuscleClick={handleMuscleClick}
           onMuscleHover={handleMuscleHover}
         />
       </div>
-      <div className='w-[35%] h-[calc(100vh-108px)] flex items-center justify-center'>
+      <div className='flex h-[calc(100vh-108px)] w-[35%] items-center justify-center'>
         <BackAnatomy
           onMuscleClick={handleMuscleClick}
           onMuscleHover={handleMuscleHover}
         />
       </div>
       <div
-        className={`p-4 absolute text-lg font-bold top-[20%] mx-auto z-10 duration-300 ${
+        className={`absolute top-[20%] z-10 mx-auto p-4 text-lg font-bold duration-300 ${
           hoveredMuscle ? 'block' : 'hidden'
         }`}
       >
