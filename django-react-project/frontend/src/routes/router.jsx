@@ -13,7 +13,7 @@ import {
   HomePage,
   LoginPage,
   ManagePage,
-  MuscleGroupPage,
+  MuscleGroupExercisePage,
   NotFoundPage,
   ProfileSettingsPage,
   RegistrationPage,
@@ -36,7 +36,7 @@ export const router = createBrowserRouter(
 
       <Route element={<ProtectedRoute />}>
         <Route path='/exercises' element={<ExercisePage />} />
-        <Route path='/exercises/:id' element={<MuscleGroupPage />} />
+        <Route path='/exercises/:id' element={<MuscleGroupExercisePage />} />
         <Route path='/manage' element={<ManagePage />} />
         <Route path='/profile' element={<YourProfilePage />} />
         <Route path='/settings' element={<ProfileSettingsPage />} />

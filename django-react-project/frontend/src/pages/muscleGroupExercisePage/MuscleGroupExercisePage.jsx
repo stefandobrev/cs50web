@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
 
-export const MuscleGroupPage = () => {
+export const MuscleGroupExercisePage = () => {
   const { id } = useParams();
 
   return (
