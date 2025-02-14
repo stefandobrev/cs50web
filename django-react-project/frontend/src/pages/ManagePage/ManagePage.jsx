@@ -66,7 +66,7 @@ export const ManagePage = () => {
     } else {
       if (currentSecondaryMuscles.includes(muscle)) {
         const updatedSecondaries = currentSecondaryMuscles.filter(
-          (m) => m !== muscle
+          (m) => m !== muscle,
         );
         methods.setValue('secondary_group', updatedSecondaries);
         setSelectedSecondaryMusclesSVG(updatedSecondaries);
@@ -89,7 +89,7 @@ export const ManagePage = () => {
   return (
     <>
       <PageTitle title='Manage' />
-      <div className='sticky top-20 z-40 bg-gray-600 border-t border-gray-800 lg:hidden flex justify-around p-2 h-16'>
+      <div className='sticky top-20 z-40 flex h-16 justify-around border-t border-gray-800 bg-gray-600 p-2 lg:hidden'>
         <TabButton
           label='Exercises'
           isActive={activeTab === 'exercise'}
@@ -109,7 +109,7 @@ export const ManagePage = () => {
 
       <div className='flex flex-col lg:flex-row'>
         <div
-          className={`w-full flex flex-col items-center lg:w-1/4 p-4 ${
+          className={`flex w-full flex-col items-center p-4 lg:w-1/4 ${
             activeTab !== 'exercise' ? 'hidden lg:block' : ''
           }`}
         >
@@ -121,7 +121,7 @@ export const ManagePage = () => {
         </div>
 
         <div
-          className={`bg-white flex justify-center w-full lg:w-1/2 p-5 ${
+          className={`flex w-full justify-center bg-white p-5 lg:w-1/2 ${
             activeTab !== 'form' ? 'hidden lg:flex' : ''
           }`}
         >

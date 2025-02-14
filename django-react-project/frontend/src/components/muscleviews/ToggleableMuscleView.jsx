@@ -15,7 +15,7 @@ const ToggleableMuscleView = ({
   useEffect(() => {
     setIsFrontView(
       !selectedPrimaryMuscle ||
-        Object.values(frontMuscleGroupNames).includes(selectedPrimaryMuscle)
+        Object.values(frontMuscleGroupNames).includes(selectedPrimaryMuscle),
     );
   }, [selectedPrimaryMuscle]);
 
