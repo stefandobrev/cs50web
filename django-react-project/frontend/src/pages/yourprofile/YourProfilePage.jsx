@@ -7,7 +7,7 @@ import { updateUserProfile } from './helpersYourProfile';
 import { setLoading } from '../../store/slices/loadingSlice';
 import { fetchProfileData } from '../../store/slices/userSlice';
 import PageTitle from '../../components/PageTitle';
-import { YourProfilePageForm } from './YourProfilePageForm';
+import { YourProfileForm } from './YourProfileForm';
 
 export const YourProfilePage = () => {
   const dispatch = useDispatch();
@@ -41,10 +41,10 @@ export const YourProfilePage = () => {
   return (
     <>
       <PageTitle title='Edit Profile' />
-      <div className='max-w-md mx-auto p-6'>
-        <h1 className='text-2xl font-semibold mb-4'>Your Profile</h1>
+      <div className='mx-auto max-w-md p-6'>
+        <h1 className='mb-4 text-2xl font-semibold'>Your Profile</h1>
         <FormProvider {...methods}>
-          <YourProfilePageForm
+          <YourProfileForm
             isEditing={isEditing}
             setIsEditing={setIsEditing}
             onSubmit={handleSubmit(handleSave)}

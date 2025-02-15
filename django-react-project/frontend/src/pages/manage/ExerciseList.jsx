@@ -7,7 +7,7 @@ import {
   MuscleGroupFilter,
   SortFilter,
   ExerciseListItems,
-} from './ManagePageComponents';
+} from './manageComponents';
 
 import Spinner from '../../components/Spinner';
 

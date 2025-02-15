@@ -2,10 +2,10 @@ import {
   SaveButton,
   CancelButton,
   EditButton,
-} from '../../components/Buttons/EditButtons';
-import InputField from '../../components/Inputs/InputField';
+} from '../../components/buttons/EditButtons';
+import InputField from '../../components/inputs/InputField';
 
-export const YourProfilePageForm = ({ isEditing, setIsEditing, onSubmit }) => {
+export const YourProfileForm = ({ isEditing, setIsEditing, onSubmit }) => {
   return (
     <form onSubmit={onSubmit}>
       <div className='mb-4'>
