@@ -5,6 +5,7 @@ import {
   FullBodyMuscleView,
   ToggleableMuscleView,
 } from '../../components/muscleviews';
+import PageTitle from '../../components/PageTitle';
 
 export const ExercisePage = () => {
   const navigate = useNavigate();
@@ -28,6 +29,7 @@ export const ExercisePage = () => {
 
   return (
     <>
+      <PageTitle title='Exercises' />
       {isMdOrLarger ? (
         <FullBodyMuscleView handleMuscleClick={handleMuscleClick} />
       ) : (

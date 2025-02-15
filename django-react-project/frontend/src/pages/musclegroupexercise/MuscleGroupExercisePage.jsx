@@ -1,11 +1,15 @@
 import { useParams } from 'react-router-dom';
 
+import PageTitle from '../../components/PageTitle';
+
 export const MuscleGroupExercisePage = () => {
   const { id } = useParams();
+  const formattedIdSlug = `${id.charAt(0).toUpperCase() + id.slice(1)}`;
 
   return (
-    <div className='flex h-[calc(100vh-20px)] w-full items-center justify-center'>
-      <h1 className='text-2xl font-bold'>{id.toUpperCase()}</h1>
-    </div>
+    <>
+      <PageTitle title={formattedIdSlug} />
+      <div className='flex flex-col lg:flex-row'></div>
+    </>
   );
 };
