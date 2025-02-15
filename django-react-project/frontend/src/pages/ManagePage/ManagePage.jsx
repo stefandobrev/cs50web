@@ -4,7 +4,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { fetchMuscleGroups } from './helpersManage';
 import { TabButton } from './ManagePageComponents';
 import PageTitle from '../../components/PageTitle';
-import ToggleableMuscleView from '../../components/muscleviews/ToggleableMuscleView';
+import { ToggleableMuscleView } from '../../components/muscleviews';
 import AddForm from './AddForm';
 import EditForm from './EditForm';
 

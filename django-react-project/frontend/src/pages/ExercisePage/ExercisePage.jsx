@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { FullBodyMuscleView } from '../../components/muscleviews/FullBodyMuscleView';
-import ToggleableMuscleView from '../../components/muscleviews/ToggleableMuscleView';
+import {
+  FullBodyMuscleView,
+  ToggleableMuscleView,
+} from '../../components/muscleviews';
 
 export const ExercisePage = () => {
   const navigate = useNavigate();

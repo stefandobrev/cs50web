@@ -5,7 +5,7 @@ import FrontAnatomy from '../anatomy/FrontAnatomy';
 import BackAnatomy from '../anatomy/BackAnatomy';
 import { frontMuscleGroupNames } from '../../common/constants';
 
-const ToggleableMuscleView = ({
+export const ToggleableMuscleView = ({
   handleMuscleClick,
   selectedPrimaryMuscle,
   selectedSecondaryMuscles,
@@ -65,5 +65,3 @@ const ToggleableMuscleView = ({
     </div>
   );
 };
-
-export default ToggleableMuscleView;
