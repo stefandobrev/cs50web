@@ -16,7 +16,7 @@ const InputField = ({ label, id, type = 'text', required = true, ...rest }) => {
           id={id}
           type={type}
           {...register(id, { required })}
-          className='flex w-full rounded border border-gray-300 p-2 focus:border-logoRed focus:outline-none focus:ring-2 focus:ring-logoRed'
+          className='focus:border-logored focus:ring-logored flex w-full rounded-sm border border-gray-300 p-2 focus:ring-2 focus:outline-hidden'
           {...rest}
         />
       </div>

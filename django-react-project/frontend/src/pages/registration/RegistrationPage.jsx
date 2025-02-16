@@ -33,7 +33,7 @@ export const RegistrationPage = () => {
   return (
     <div className='flex h-full items-center justify-center'>
       <PageTitle title='Create Profile' />
-      <div className='mx-4 w-full max-w-sm rounded bg-white p-5 shadow-md'>
+      <div className='mx-4 w-full max-w-sm rounded-sm bg-white p-5 shadow-md'>
         <h2 className='mb-3 text-center text-2xl font-semibold'>
           Create Profile
         </h2>

@@ -40,7 +40,7 @@ const DynamicTextFieldList = ({
                   }}
                   onInput={autoResize}
                   placeholder={`Enter ${singularize(labelPrefix)}`}
-                  className='w-full resize-none overflow-hidden rounded border border-gray-300 p-2 focus:border-logoRed focus:outline-none focus:ring-2 focus:ring-logoRed'
+                  className='focus:border-logored focus:ring-logored w-full resize-none overflow-hidden rounded-sm border border-gray-300 p-2 focus:ring-2 focus:outline-hidden'
                   rows={1}
                 />
               )}

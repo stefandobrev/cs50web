@@ -17,11 +17,11 @@ export const ExercisePage = () => {
 
   return (
     <div>
-      <PageTitle />
+      <PageTitle title='Exercises' />
       {isMdOrLarger ? (
-        <FullBodyMuscleView onClick={handleMuscleClick} />
+        <FullBodyMuscleView handleMuscleClick={handleMuscleClick} />
       ) : (
-        <ToggleableMuscleView onClick={handleMuscleClick} />
+        <ToggleableMuscleView handleMuscleClick={handleMuscleClick} />
       )}
     </div>
   );

@@ -16,7 +16,7 @@ const MainLayout = () => {
       <nav className='sticky top-0 z-50 h-20 bg-gray-800 shadow-lg'>
         <Navbar />
       </nav>
-      <main className='flex-grow'>
+      <main className='grow'>
         {isLoading ? (
           <Spinner loading={isLoading} className={'fixed inset-0'} />
         ) : (

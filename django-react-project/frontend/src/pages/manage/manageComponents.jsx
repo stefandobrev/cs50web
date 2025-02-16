@@ -7,7 +7,7 @@ export const SearchInput = ({ value, onChange }) => (
     placeholder='Search exercise'
     value={value}
     onChange={(e) => onChange(e.target.value)}
-    className='duration-170 mb-4 w-full rounded-lg border border-gray-300 p-2 transition ease-in-out focus:border-logoRed focus:outline-none focus:ring-2 focus:ring-logoRed'
+    className='focus:border-logored focus:ring-logored mb-4 w-full rounded-lg border border-gray-300 p-2 transition duration-170 ease-in-out focus:ring-2 focus:outline-hidden'
   />
 );
 
@@ -74,7 +74,7 @@ export const ExerciseListItems = ({ exercises, onSelectExercise, sortBy }) => (
       return (
         <li
           key={exercise.id}
-          className='duration-170 hover:bg-gray-170 active:bg-gray-170 flex cursor-pointer justify-between rounded-lg p-3 transition ease-in-out'
+          className='hover:bg-gray-170 active:bg-gray-170 flex cursor-pointer justify-between rounded-lg p-3 transition duration-170 ease-in-out'
           onClick={() => onSelectExercise(exercise)}
         >
           {timeAgo ? (
@@ -82,7 +82,7 @@ export const ExerciseListItems = ({ exercises, onSelectExercise, sortBy }) => (
               <span className='max-w-[70%] truncate text-gray-800'>
                 {exercise.title}
               </span>
-              <span className='text-end text-sm text-logoRed'>{timeAgo}</span>
+              <span className='text-logored text-end text-sm'>{timeAgo}</span>
             </div>
           ) : (
             <span className='max-w-[85%] truncate text-gray-800'>

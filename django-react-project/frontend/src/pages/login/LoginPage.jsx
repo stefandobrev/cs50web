@@ -44,7 +44,7 @@ export const LoginPage = () => {
   return (
     <div className='flex h-full items-center justify-center'>
       <PageTitle title='Member Login' />
-      <div className='w-full max-w-sm rounded bg-white p-5 shadow-md'>
+      <div className='w-full max-w-sm rounded-sm bg-white p-5 shadow-md'>
         <h2 className='mb-3 text-center text-2xl font-semibold'>
           Member Login
         </h2>

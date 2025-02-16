@@ -4,7 +4,7 @@ export default {
   theme: {
     extend: {
       colors: {
-        logoRed: {
+        logored: {
           DEFAULT: '#C32A2A',
           hover: '#AA1E1E',
           disabled: 'rgba(195,42,42,0.5)',
@@ -16,7 +16,7 @@ export default {
     function ({ addBase, theme }) {
       addBase({
         ':root': {
-          '--logoRed': theme('colors.logoRed.DEFAULT'),
+          '--logored': theme('colors.logored.DEFAULT'),
         },
       });
     },
