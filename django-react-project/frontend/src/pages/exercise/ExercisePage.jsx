@@ -1,6 +1,5 @@
-import { useState } from 'react';
+import { useMedia } from 'react-use';
 import { useNavigate } from 'react-router-dom';
-
 import {
   FullBodyMuscleView,
   ToggleableMuscleView,
@@ -10,31 +9,20 @@ import PageTitle from '../../components/PageTitle';
 export const ExercisePage = () => {
   const navigate = useNavigate();
 
-  const [isMdOrLarger, setIsMdOrLarger] = useState(false);
+  const isMdOrLarger = useMedia('(min-width: 768px)');
 
   const handleMuscleClick = (id) => {
     if (id) navigate(`/exercises/${id}`);
   };
 
-  useState(() => {
-    const checkScreenSize = () => {
-      setIsMdOrLarger(window.innerWidth >= 768);
-    };
-
-    window.addEventListener('resize', checkScreenSize);
-    checkScreenSize();
-
-    return () => window.removeEventListener('resize', checkScreenSize);
-  }, []);
-
   return (
-    <>
-      <PageTitle title='Exercises' />
+    <div>
+      <PageTitle />
       {isMdOrLarger ? (
-        <FullBodyMuscleView handleMuscleClick={handleMuscleClick} />
+        <FullBodyMuscleView onClick={handleMuscleClick} />
       ) : (
-        <ToggleableMuscleView handleMuscleClick={handleMuscleClick} />
+        <ToggleableMuscleView onClick={handleMuscleClick} />
       )}
-    </>
+    </div>
   );
 };
