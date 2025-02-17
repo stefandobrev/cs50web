@@ -1,7 +1,7 @@
 import api from '../../utils/api';
 
 export const fetchMuscleGroups = async () => {
-  const response = await api('exercises/fetch-muscle-groups/', 'GET');
+  const response = await api('exercises/muscle-groups/', 'GET');
   if (!response.ok) throw new Error('Failed to fetch muscle groups.');
   return response.json();
 };
@@ -12,19 +12,19 @@ export const fetchExerciseTitles = async ({
   sort,
   muscleGroups,
 }) => {
-  const response = await api('exercises/fetch-exercise-titles/', 'POST', {
+  const response = await api('exercises/exercise-titles/', 'POST', {
     offset,
     search,
     sort,
     muscleGroups,
   });
-  if (!response.ok) throw new Error('Failed to fetch exercises.');
+  if (!response.ok) throw new Error('Failed to fetch exercise titles.');
   return response.json();
 };
 
 export const fetchExerciseData = async (id) => {
-  const response = await api(`exercises/fetch-exercise/${id}/`, 'GET');
-  if (!response.ok) throw new Error('Failed to fetch exercise.');
+  const response = await api(`exercises/exercise-detail/${id}/`, 'GET');
+  if (!response.ok) throw new Error('Failed to fetch exercise data.');
   return response.json();
 };
 
@@ -37,7 +37,7 @@ export const saveExercise = async (exerciseData, id = null) => {
       response = await api(
         `exercises/update-exercise/${id}/`,
         'PUT',
-        exerciseData
+        exerciseData,
       );
     } else {
       response = await api('exercises/create-exercise/', 'POST', exerciseData);

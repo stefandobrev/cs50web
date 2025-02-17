@@ -4,22 +4,28 @@ import { useNavigate } from 'react-router-dom';
 
 import { ToggleableMuscleView } from '../../components/muscleviews';
 import { fetchExercises } from './helpersMuscleGroupExercisePage';
+import Spinner from '../../components/Spinner';
 import PageTitle from '../../components/PageTitle';
 
 export const MuscleGroupExercisePage = () => {
   const { id } = useParams();
   const [selectedId, setSelectedId] = useState(id);
+  const [exercisesData, setExercisesData] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const formattedIdSlug = `${selectedId.charAt(0).toUpperCase() + selectedId.slice(1)}`;
 
   useEffect(() => {
-    // const loadExerciseData = (muscleId) => {
-    //   fetchExercises(muscleId);
-    // };
+    setIsLoading(true);
 
-    // loadExerciseData(selectedId);
-    console.log({ selectedId });
+    const loadExercisesData = async () => {
+      const data = await fetchExercises(selectedId);
+      setExercisesData(data);
+      setIsLoading(false);
+    };
+
+    loadExercisesData();
   }, [selectedId]);
 
   const handleMuscleClick = (svgId) => {
@@ -32,7 +38,9 @@ export const MuscleGroupExercisePage = () => {
     <>
       <PageTitle title={formattedIdSlug} />
       <div className='flex flex-col md:flex-row'>
-        <div className='w-full md:w-[75%]'></div>
+        <div className='w-full md:w-[75%]'>
+          {isLoading ? <Spinner loading={{ isLoading }} /> : <div>Stefiii</div>}
+        </div>
         <div className='w-full p-4 md:w-[25%]'>
           <ToggleableMuscleView
             handleMuscleClick={handleMuscleClick}

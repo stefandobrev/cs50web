@@ -13,10 +13,11 @@ urlpatterns = [
     path("user/settings/password/", user_views.update_password, name="update-password"),
 
     # exercise paths
-    path("exercises/fetch-muscle-groups/", exercise_views.fetch_muscle_groups, name="fetch-muscle-groups"),
-    path("exercises/fetch-exercise-titles/", exercise_views.fetch_exercise_titles, name="fetch-exercise-titles"),
-    path("exercises/fetch-exercise/<int:id>/", exercise_views.fetch_exercise, name="fetch-exercise"),
+    path("exercises/muscle-groups/", exercise_views.muscle_groups, name="muscle-groups"),
+    path("exercises/exercise-titles/", exercise_views.exercise_titles, name="exercise-titles"),
+    path("exercises/exercise-detail/<int:id>/", exercise_views.exercise_detail, name="exercise-detail"),
     path("exercises/create-exercise/", exercise_views.create_exercise, name="create-exercise"),
     path("exercises/update-exercise/<int:id>/", exercise_views.update_exercise, name="update-exercise"),
     path("exercises/delete-exercise/<int:id>/", exercise_views.delete_exercise, name="delete-exercise"),
+    path("exercises/group/<int:id>/", exercise_views.exercises_group, name="exercises-group"),
 ]

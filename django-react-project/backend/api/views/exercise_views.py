@@ -5,19 +5,19 @@ from ..controllers.exercise_controller import ExerciseController
 
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
-def fetch_muscle_groups(request):
+def muscle_groups(request):
     exercise_controller = ExerciseController()
     return exercise_controller.fetch_muscle_groups(request)
 
 @api_view(["POST"])
 @permission_classes([IsAuthenticated])
-def fetch_exercise_titles(request):
+def exercise_titles(request):
     exercise_controller = ExerciseController()
     return exercise_controller.fetch_exercise_titles(request)
 
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
-def fetch_exercise(request, id):
+def exercise_detail(request, id):
     exercise_controller = ExerciseController()
     return exercise_controller.fetch_exercise(request, id)
 
@@ -39,3 +39,8 @@ def update_exercise(request, id):
 def delete_exercise(request, id):
     exercise_controller = ExerciseController()
     return exercise_controller.delete(request, id)
+
+@api_view(["GET"])
+def exercises_group(request, id):
+    exercise_controller = ExerciseController()
+    return exercise_controller.fetch_exercise(request, id)
