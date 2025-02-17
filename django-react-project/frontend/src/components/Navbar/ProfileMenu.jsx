@@ -45,13 +45,13 @@ const ProfileMenu = ({ profile, onSignOut }) => {
 
       {/* Dropdown Menu */}
       {isOpen && (
-        <div className='absolute left-1/2 z-10 mt-2 w-56 origin-top-right -translate-x-1/2 transform rounded-lg bg-white py-2 shadow-lg ring-1 ring-black ring-opacity-5'>
+        <div className='ring-opacity-5 absolute left-1/2 z-10 mt-2 w-56 origin-top-right -translate-x-1/2 transform rounded-lg bg-white py-2 ring-1 shadow-lg ring-black'>
           {profileMenuItems.map((item) => (
             <NavLink
               key={item.name}
               to={item.href}
               onClick={() => setIsOpen(false)}
-              className='flex w-full items-center px-4 py-3 text-sm text-gray-700 transition duration-150 hover:bg-gray-100'
+              className='flex w-full items-center px-4 py-3 text-sm text-gray-700 transition duration-150 hover:bg-gray-300'
             >
               {item.icon && (
                 <item.icon
@@ -67,7 +67,7 @@ const ProfileMenu = ({ profile, onSignOut }) => {
 
           <button
             onClick={handleSignOut}
-            className='flex w-full items-center px-4 py-3 text-left text-sm text-gray-700 transition duration-150 hover:bg-gray-100'
+            className='flex w-full cursor-pointer items-center px-4 py-3 text-left text-sm text-gray-700 transition duration-150 hover:bg-gray-300'
           >
             Sign out
           </button>

@@ -102,7 +102,7 @@ const Navbar = () => {
       {/* Mobile menu */}
       {isOpen && (
         <div className='sm:hidden'>
-          <div className='space-y-2 px-3 pb-4 pt-2'>
+          <div className='space-y-2 px-3 pt-2 pb-4'>
             {navigation.map((item) => (
               <NavLink
                 key={item.name}
