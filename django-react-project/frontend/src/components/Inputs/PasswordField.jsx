@@ -1,18 +1,17 @@
-import { useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/solid';
 
-const PasswordField = ({ label, id, required = true }) => {
+const PasswordField = ({
+  label,
+  id,
+  required = true,
+  isPasswordVisible,
+  togglePasswordVisibility,
+}) => {
   const {
     register,
     formState: { errors },
   } = useFormContext();
-
-  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
-
-  const togglePasswordVisibility = () => {
-    setIsPasswordVisible(!isPasswordVisible);
-  };
 
   return (
     <div>
@@ -23,12 +22,12 @@ const PasswordField = ({ label, id, required = true }) => {
             id={id}
             type={isPasswordVisible ? 'text' : 'password'}
             {...register(id, { required })}
-            className='w-full rounded-sm border border-gray-300 p-2 focus:border-logoRed focus:outline-hidden focus:ring-2 focus:ring-logoRed'
+            className='focus:border-logoRed focus:ring-logoRed w-full rounded-sm border border-gray-300 p-2 focus:ring-2 focus:outline-hidden'
           />
           <button
             type='button'
             onClick={togglePasswordVisibility}
-            className='absolute right-3 top-1/2 -translate-y-1/2 transform text-gray-500'
+            className='absolute top-1/2 right-3 -translate-y-1/2 transform text-gray-500'
             tabIndex='-1'
           >
             {isPasswordVisible ? (
