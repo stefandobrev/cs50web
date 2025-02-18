@@ -50,7 +50,7 @@ class ExerciseController:
     def get_exercise(self, request, id):
         """Return a response containing an exercise"s data from the DB."""
         try: 
-            exercise = Exercise.objects.preget_related(
+            exercise = Exercise.objects.prefetch_related(
                 "secondary_group", "steps", "mistakes"
                 ).select_related("primary_group").get(id=id)
             
@@ -170,4 +170,12 @@ class ExerciseController:
         """
         muscle_group = MuscleGroup.objects.filter(slug=muscle_group_id).first()
 
-        return Response({"name": muscle_group.name})
+        if not muscle_group:
+            return Response({"error": "Muscle group not found"}, status=status.HTTP_404_NOT_FOUND)
+        
+        exercises = Exercise.objects.filter(primary_group=muscle_group).values("title", "gif_link_front")
+
+        return Response({
+            "name": muscle_group.name,
+            "exercises": list(exercises)
+        })
