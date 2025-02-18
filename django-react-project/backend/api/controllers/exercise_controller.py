@@ -10,13 +10,13 @@ from ..serializers.exercise_serializers import ExerciseSerializer, MuscleGroupSe
 class ExerciseController:
     """Controller handling all exercise-related operations."""
 
-    def fetch_muscle_groups(self, request):
+    def get_muscle_groups(self, request):
         """Return a response containing all muscle groups from the DB."""
         muscle_groups = MuscleGroup.objects.all().order_by("name")
         serializer = MuscleGroupSerializer(muscle_groups, many=True)
         return Response(serializer.data)
     
-    def fetch_exercise_titles(self, request):
+    def get_exercise_titles(self, request):
         """
         Creates and returns a filtered list of exercise titles.
         """
@@ -47,10 +47,10 @@ class ExerciseController:
         
         return Response(list(exercise_titles))
     
-    def fetch_exercise(self, request, id):
+    def get_exercise(self, request, id):
         """Return a response containing an exercise"s data from the DB."""
         try: 
-            exercise = Exercise.objects.prefetch_related(
+            exercise = Exercise.objects.preget_related(
                 "secondary_group", "steps", "mistakes"
                 ).select_related("primary_group").get(id=id)
             
@@ -162,3 +162,12 @@ class ExerciseController:
         exercise = get_object_or_404(Exercise, id=id)
         exercise.delete()
         return Response({"message": "Exercise deleted successfully!"})
+
+    def get_exercises_group(self, request, muscle_group_id):
+        """
+        Return a response containing all exercises related to the muscle 
+        group from the DB.
+        """
+        muscle_group = MuscleGroup.objects.filter(slug=muscle_group_id).first()
+
+        return Response({"name": muscle_group.name})

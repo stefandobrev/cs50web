@@ -22,6 +22,7 @@ export const MuscleGroupExercisePage = () => {
     const loadExercisesData = async () => {
       const data = await fetchExercises(selectedId);
       setExercisesData(data);
+      console.log({ data });
       setIsLoading(false);
     };
 
