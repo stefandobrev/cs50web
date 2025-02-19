@@ -173,7 +173,7 @@ class ExerciseController:
         if not muscle_group:
             return Response({"error": "Muscle group not found"}, status=status.HTTP_404_NOT_FOUND)
         
-        exercises = Exercise.objects.filter(primary_group=muscle_group).values("title", "gif_link_front")
+        exercises = Exercise.objects.filter(primary_group=muscle_group).values("id","title", "gif_link_front")
 
         return Response({
             "name": muscle_group.name,

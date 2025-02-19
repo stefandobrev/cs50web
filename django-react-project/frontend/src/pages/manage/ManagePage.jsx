@@ -145,7 +145,7 @@ export const ManagePage = () => {
         </div>
 
         <div
-          className={`w-full lg:w-1/4 ${
+          className={`w-full items-center lg:w-1/4 ${
             activeTab !== 'anatomy' ? 'hidden lg:block' : ''
           }`}
         >
