@@ -11,9 +11,9 @@ import {
 } from './helpersProfileSettings';
 import { setLoading } from '../../store/slices/loadingSlice';
 import { logoutWithBlacklist } from '../../store/slices/authSlice';
-import PageTitle from '../../components/PageTitle';
 import { SettingsForm } from './SettingsForm';
 import { PasswordForm } from './PasswordForm';
+import { useTitle } from '../../hooks/useTitle.hook';
 import userValidationResolver from '../../utils/userValidationResolver';
 import Spinner from '../../components/Spinner';
 
@@ -28,6 +28,7 @@ export const ProfileSettingsPage = () => {
   const { handleSubmit, reset } = methods;
   const [isEditing, setIsEditing] = useState(false);
   const [isChangingPassword, setIsChangingPassword] = useState(false);
+  useTitle('Settings');
 
   useEffect(() => {
     const getUserSettings = async () => {
@@ -91,30 +92,27 @@ export const ProfileSettingsPage = () => {
       {isLoading ? (
         <Spinner loading={isLoading} className={'fixed inset-0'} />
       ) : (
-        <>
-          <PageTitle title='Settings' />
-          <div className='mx-auto max-w-md p-6'>
-            <h1 className='mb-4 text-2xl font-semibold'>Profile Settings</h1>
-            <FormProvider {...methods}>
-              {isChangingPassword ? (
-                <PasswordForm
-                  onSubmit={handleSubmit(handlePasswordSave)}
-                  onCancel={() => {
-                    setIsChangingPassword(false);
-                    reset(settings);
-                  }}
-                />
-              ) : (
-                <SettingsForm
-                  isEditing={isEditing}
-                  setIsEditing={setIsEditing}
-                  onSubmit={handleSubmit(handleSave)}
-                  onPasswordChange={handlePasswordChange}
-                />
-              )}
-            </FormProvider>
-          </div>
-        </>
+        <div className='mx-auto max-w-md p-6'>
+          <h1 className='mb-4 text-2xl font-semibold'>Profile Settings</h1>
+          <FormProvider {...methods}>
+            {isChangingPassword ? (
+              <PasswordForm
+                onSubmit={handleSubmit(handlePasswordSave)}
+                onCancel={() => {
+                  setIsChangingPassword(false);
+                  reset(settings);
+                }}
+              />
+            ) : (
+              <SettingsForm
+                isEditing={isEditing}
+                setIsEditing={setIsEditing}
+                onSubmit={handleSubmit(handleSave)}
+                onPasswordChange={handlePasswordChange}
+              />
+            )}
+          </FormProvider>
+        </div>
       )}
     </>
   );

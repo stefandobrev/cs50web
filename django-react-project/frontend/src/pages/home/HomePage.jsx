@@ -1,9 +1,5 @@
-import PageTitle from '../../components/PageTitle';
-
+import { useTitle } from '../../hooks/useTitle.hook';
 export const HomePage = () => {
-  return (
-    <section>
-      <PageTitle />
-    </section>
-  );
+  useTitle();
+  return <></>;
 };

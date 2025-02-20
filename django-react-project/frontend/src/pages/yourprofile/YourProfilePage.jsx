@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 import { updateUserProfile } from './helpersYourProfile';
 import { setLoading } from '../../store/slices/loadingSlice';
 import { fetchProfileData } from '../../store/slices/userSlice';
-import PageTitle from '../../components/PageTitle';
+import { useTitle } from '../../hooks/useTitle.hook';
 import { YourProfileForm } from './YourProfileForm';
 
 export const YourProfilePage = () => {
@@ -15,6 +15,7 @@ export const YourProfilePage = () => {
   const methods = useForm();
   const { handleSubmit, reset } = methods;
   const [isEditing, setIsEditing] = useState(false);
+  useTitle('Edit Profile');
 
   useEffect(() => {
     dispatch(fetchProfileData());
@@ -39,18 +40,15 @@ export const YourProfilePage = () => {
   };
 
   return (
-    <>
-      <PageTitle title='Edit Profile' />
-      <div className='mx-auto max-w-md p-6'>
-        <h1 className='mb-4 text-2xl font-semibold'>Your Profile</h1>
-        <FormProvider {...methods}>
-          <YourProfileForm
-            isEditing={isEditing}
-            setIsEditing={setIsEditing}
-            onSubmit={handleSubmit(handleSave)}
-          />
-        </FormProvider>
-      </div>
-    </>
+    <div className='mx-auto max-w-md p-6'>
+      <h1 className='mb-4 text-2xl font-semibold'>Your Profile</h1>
+      <FormProvider {...methods}>
+        <YourProfileForm
+          isEditing={isEditing}
+          setIsEditing={setIsEditing}
+          onSubmit={handleSubmit(handleSave)}
+        />
+      </FormProvider>
+    </div>
   );
 };

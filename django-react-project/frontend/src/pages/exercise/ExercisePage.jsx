@@ -4,10 +4,11 @@ import {
   FullBodyMuscleView,
   ToggleableMuscleView,
 } from '../../components/muscleviews';
-import PageTitle from '../../components/PageTitle';
+import { useTitle } from '../../hooks/useTitle.hook';
 
 export const ExercisePage = () => {
   const navigate = useNavigate();
+  useTitle('Exercises');
 
   const isMdOrLarger = useMedia('(min-width: 768px)');
 
@@ -17,7 +18,6 @@ export const ExercisePage = () => {
 
   return (
     <div>
-      <PageTitle title='Exercises' />
       {isMdOrLarger ? (
         <FullBodyMuscleView handleMuscleClick={handleMuscleClick} />
       ) : (

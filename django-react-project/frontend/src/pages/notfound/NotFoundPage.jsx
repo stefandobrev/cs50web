@@ -1,12 +1,12 @@
 import { Link } from 'react-router-dom';
 import { ExclamationTriangleIcon } from '@heroicons/react/24/solid';
 
-import PageTitle from '../../components/PageTitle';
+import { useTitle } from '../../hooks/useTitle.hook';
 
 export const NotFoundPage = () => {
+  useTitle('404 - Not Found');
   return (
     <section className='flex h-96 flex-col items-center justify-center text-center'>
-      <PageTitle title='404 - Not Found' />
       <ExclamationTriangleIcon className='mb-4 h-24 w-24 text-yellow-400' />
       <h1 className='mb-4 text-6xl font-bold'>404 Not Found</h1>
       <p className='mb-5 text-xl'>This page does not exist</p>

@@ -3,10 +3,10 @@ import { FormProvider, useForm } from 'react-hook-form';
 
 import { fetchMuscleGroups } from './helpersManage';
 import { TabButton } from './manageComponents';
-import PageTitle from '../../components/PageTitle';
 import { ToggleableMuscleView } from '../../components/muscleviews';
 import AddForm from './AddForm';
 import EditForm from './EditForm';
+import { useTitle } from '../../hooks/useTitle.hook';
 
 import { ExerciseList } from './ExerciseList';
 
@@ -21,6 +21,7 @@ export const ManagePage = () => {
     useState(null);
   const [selectedSecondaryMusclesSVG, setSelectedSecondaryMusclesSVG] =
     useState([]);
+  useTitle('Manage');
 
   useEffect(() => {
     const loadMuscleGroups = async () => {
@@ -88,7 +89,6 @@ export const ManagePage = () => {
 
   return (
     <>
-      <PageTitle title='Manage' />
       <div className='sticky top-20 z-40 flex h-16 justify-around border-t border-gray-800 bg-gray-600 p-2 lg:hidden'>
         <TabButton
           label='Exercises'

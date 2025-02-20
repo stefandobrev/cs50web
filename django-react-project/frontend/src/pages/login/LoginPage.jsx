@@ -4,15 +4,16 @@ import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 
 import { loginUser } from './helpersLogin';
-import PageTitle from '../../components/PageTitle';
 import LoginForm from './LoginForm';
 import { setUser } from '../../store/slices/authSlice';
 import { setLoading } from '../../store/slices/loadingSlice';
+import { useTitle } from '../../hooks/useTitle.hook';
 
 export const LoginPage = () => {
   const methods = useForm();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  useTitle('Member Login');
 
   const onSubmit = async (userData) => {
     dispatch(setLoading(true));
@@ -42,9 +43,8 @@ export const LoginPage = () => {
   };
 
   return (
-    <div className='flex h-full items-center justify-center'>
-      <PageTitle title='Member Login' />
-      <div className='w-full max-w-sm rounded-sm bg-white p-5 shadow-md'>
+    <div className='flex h-[calc(100vh-108px)] items-center justify-center'>
+      <div className='w-full max-w-xs'>
         <h2 className='mb-3 text-center text-2xl font-semibold'>
           Member Login
         </h2>
