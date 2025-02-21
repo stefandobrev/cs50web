@@ -118,7 +118,7 @@ const EditForm = ({
   return (
     <>
       {isLoading ? (
-        <Spinner loading={isLoading} className='fixed inset-0' />
+        <Spinner loading={isLoading} className='min-h-[70vh]' />
       ) : (
         <DefaultForm
           submittedExerciseData={onSubmit}

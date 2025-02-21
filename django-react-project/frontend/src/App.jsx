@@ -9,7 +9,10 @@ import Spinner from './components/Spinner';
 const App = () => {
   return (
     <Provider store={store}>
-      <PersistGate loading={<Spinner loading={true} />} persistor={persistor}>
+      <PersistGate
+        loading={<Spinner loading={true} className='min-h-[70vh]' />}
+        persistor={persistor}
+      >
         <AuthWrapper>
           <RouterProvider router={router} />
         </AuthWrapper>

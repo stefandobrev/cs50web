@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
 import { fetchMuscleGroups } from './helpersManage';
-import { TabButton } from './ManageComponents';
+import TabButton from '../../components/buttons/TabButton';
 import { ToggleableMuscleView } from '../../components/muscleviews';
 import AddForm from './AddForm';
 import EditForm from './EditForm';

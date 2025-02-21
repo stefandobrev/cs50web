@@ -1,6 +1,6 @@
 import { useFormContext } from 'react-hook-form';
 import InputField from '../../components/inputs/InputField';
-import PasswordField from '../../components/Inputs/PasswordField';
+import PasswordField from '../../components/inputs/PasswordField';
 import Button from '../../components/buttons/Button';
 import {
   SaveButton,

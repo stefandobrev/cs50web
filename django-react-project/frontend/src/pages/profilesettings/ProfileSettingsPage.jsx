@@ -90,28 +90,30 @@ export const ProfileSettingsPage = () => {
   return (
     <>
       {isLoading ? (
-        <Spinner loading={isLoading} className={'fixed inset-0'} />
+        <Spinner loading={isLoading} className='min-h-[70vh]' />
       ) : (
-        <div className='mx-auto max-w-md p-6'>
-          <h1 className='mb-4 text-2xl font-semibold'>Profile Settings</h1>
-          <FormProvider {...methods}>
-            {isChangingPassword ? (
-              <PasswordForm
-                onSubmit={handleSubmit(handlePasswordSave)}
-                onCancel={() => {
-                  setIsChangingPassword(false);
-                  reset(settings);
-                }}
-              />
-            ) : (
-              <SettingsForm
-                isEditing={isEditing}
-                setIsEditing={setIsEditing}
-                onSubmit={handleSubmit(handleSave)}
-                onPasswordChange={handlePasswordChange}
-              />
-            )}
-          </FormProvider>
+        <div className='flex h-[calc(100vh-108px)] items-center justify-center'>
+          <div className='w-full max-w-xs'>
+            <h1 className='mb-4 text-2xl font-semibold'>Profile Settings</h1>
+            <FormProvider {...methods}>
+              {isChangingPassword ? (
+                <PasswordForm
+                  onSubmit={handleSubmit(handlePasswordSave)}
+                  onCancel={() => {
+                    setIsChangingPassword(false);
+                    reset(settings);
+                  }}
+                />
+              ) : (
+                <SettingsForm
+                  isEditing={isEditing}
+                  setIsEditing={setIsEditing}
+                  onSubmit={handleSubmit(handleSave)}
+                  onPasswordChange={handlePasswordChange}
+                />
+              )}
+            </FormProvider>
+          </div>
         </div>
       )}
     </>

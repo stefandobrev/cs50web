@@ -40,15 +40,17 @@ export const YourProfilePage = () => {
   };
 
   return (
-    <div className='mx-auto max-w-md p-6'>
-      <h1 className='mb-4 text-2xl font-semibold'>Your Profile</h1>
-      <FormProvider {...methods}>
-        <YourProfileForm
-          isEditing={isEditing}
-          setIsEditing={setIsEditing}
-          onSubmit={handleSubmit(handleSave)}
-        />
-      </FormProvider>
+    <div className='flex h-[calc(100vh-108px)] items-center justify-center'>
+      <div className='w-full max-w-xs'>
+        <h1 className='mb-4 text-2xl font-semibold'>Your Profile</h1>
+        <FormProvider {...methods}>
+          <YourProfileForm
+            isEditing={isEditing}
+            setIsEditing={setIsEditing}
+            onSubmit={handleSubmit(handleSave)}
+          />
+        </FormProvider>
+      </div>
     </div>
   );
 };

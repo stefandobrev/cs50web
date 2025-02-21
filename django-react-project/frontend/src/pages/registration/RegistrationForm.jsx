@@ -38,15 +38,12 @@ const RegistrationForm = ({ registerUser, message }) => {
         togglePasswordVisibility={togglePasswordVisibility}
       />
 
-      {/* Password feedback */}
       {isPasswordInvalid && (
         <p className='text-red-500'>Passwords don't match!</p>
       )}
 
-      {/* Show message */}
       {message && <p className={'text-red-500'}>{message.text}</p>}
 
-      {/* Submit Button */}
       <div className='flex justify-center'>
         <SaveButton disabled={isPasswordInvalid}>Add User</SaveButton>
       </div>
