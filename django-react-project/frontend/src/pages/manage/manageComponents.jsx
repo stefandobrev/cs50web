@@ -1,22 +1,12 @@
 import Select from 'react-select';
 import { formatDistanceToNow } from 'date-fns';
 
-export const SearchInput = ({ value, onChange }) => (
-  <input
-    type='text'
-    placeholder='Search exercise'
-    value={value}
-    onChange={(e) => onChange(e.target.value)}
-    className='focus:border-logored focus:ring-logored mb-4 w-full rounded-lg border border-gray-300 p-2 transition duration-170 ease-in-out focus:ring-2 focus:outline-hidden'
-  />
-);
-
 export const MuscleGroupFilter = ({
   muscleGroups,
   selectedMuscleGroups,
   onChange,
 }) => (
-  <div className='mb-4'>
+  <div>
     <label className='mb-2 block font-semibold text-gray-700'>
       Filter by Muscle Group
     </label>
@@ -30,13 +20,13 @@ export const MuscleGroupFilter = ({
         selectedMuscleGroups.includes(group.value),
       )}
       classNamePrefix='react-select'
-      className='w-full'
+      className='max-w-md'
     />
   </div>
 );
 
 export const SortFilter = ({ sortBy, onChange }) => (
-  <div className='mb-4'>
+  <div>
     <label className='mb-2 block font-semibold text-gray-700'>Sort by</label>
     <Select
       options={[
@@ -57,7 +47,7 @@ export const SortFilter = ({ sortBy, onChange }) => (
       isClearable
       placeholder='--'
       classNamePrefix='react-select'
-      className='w-full'
+      className='max-w-md'
     />
   </div>
 );

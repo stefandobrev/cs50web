@@ -58,7 +58,7 @@ export const MuscleGroupExercisePage = () => {
 
       <div className='flex flex-col lg:flex-row'>
         <div
-          className={`flex w-full flex-col lg:w-[75%] ${
+          className={`flex w-full flex-col gap-4 lg:w-[75%] ${
             activeTab !== 'exercises' ? 'hidden lg:flex' : ''
           }`}
         >
@@ -66,11 +66,17 @@ export const MuscleGroupExercisePage = () => {
             <Spinner loading={isLoading} className='min-h-[70vh]' />
           ) : (
             <>
-              <Heading
-                muscleGroupName={muscleGroupName}
-                exercisesData={exercisesData}
-              />
-              <MuscleGrid exercisesData={exercisesData} />
+              <div className='sticky top-36 z-30 bg-white pb-2 lg:static lg:pb-0 dark:bg-gray-900'>
+                <Heading
+                  muscleGroupName={muscleGroupName}
+                  exercisesData={exercisesData}
+                />
+              </div>
+              <div className='flex-1'>
+                <div className='h-auto pb-8 lg:overflow-y-auto lg:pb-4'>
+                  <MuscleGrid exercisesData={exercisesData} />
+                </div>
+              </div>
             </>
           )}
         </div>

@@ -3,11 +3,11 @@ import { useState, useEffect, useRef } from 'react';
 import { fetchExerciseTitles } from './helpersManage';
 import { EditButton } from '../../components/buttons/EditButtons';
 import {
-  SearchInput,
   MuscleGroupFilter,
   SortFilter,
   ExerciseListItems,
 } from './ManageComponents';
+import SearchInput from '../../components/inputs/SearchInput';
 
 import Spinner from '../../components/Spinner';
 
@@ -115,8 +115,8 @@ export const ExerciseList = ({
 
   return (
     <>
-      <div className='flex w-full flex-col rounded-lg bg-white px-6 sm:max-w-sm'>
-        <div className='mb-4 flex items-center justify-between px-2'>
+      <div className='flex w-full flex-col gap-4 rounded-lg bg-white px-6 sm:max-w-sm'>
+        <div className='flex items-center justify-between px-2'>
           <h2 className='text-xl font-semibold text-gray-800'>Exercise List</h2>
           <EditButton onClick={resetFilters} variant='grayDark'>
             Reset
@@ -127,6 +127,7 @@ export const ExerciseList = ({
           onChange={(value) =>
             handleExercisePropsUpdate({ searchQuery: value })
           }
+          className='max-w-md'
         />
         <MuscleGroupFilter
           muscleGroups={muscleGroups}
