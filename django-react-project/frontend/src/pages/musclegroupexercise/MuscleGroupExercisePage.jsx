@@ -17,6 +17,7 @@ export const MuscleGroupExercisePage = () => {
   const [muscleGroupName, setMuscleGroupName] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [activeTab, setActiveTab] = useState('exercises');
+  const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate();
 
   useTitle(muscleGroupName);
@@ -25,14 +26,17 @@ export const MuscleGroupExercisePage = () => {
     setIsLoading(true);
 
     const loadExercisesData = async () => {
-      const data = await fetchExercises(selectedMuscleId);
+      const data = await fetchExercises({
+        selectedMuscleId: selectedMuscleId,
+        searchQuery: searchQuery,
+      });
       setExercisesData(data.exercises);
       setMuscleGroupName(data.name);
       setIsLoading(false);
     };
 
     loadExercisesData();
-  }, [selectedMuscleId]);
+  }, [selectedMuscleId, searchQuery]);
 
   const handleMuscleClick = (svgId) => {
     if (selectedMuscleId !== svgId) {
@@ -41,6 +45,7 @@ export const MuscleGroupExercisePage = () => {
       navigate(`/exercises/${svgId}`);
     }
   };
+
   return (
     <>
       <div className='sticky top-20 z-40 flex h-16 justify-around border-t border-gray-800 bg-gray-600 p-2 lg:hidden'>
@@ -62,22 +67,22 @@ export const MuscleGroupExercisePage = () => {
             activeTab !== 'exercises' ? 'hidden lg:flex' : ''
           }`}
         >
+          <div className='sticky top-36 z-30 bg-white pb-2 lg:static lg:pb-0 dark:bg-gray-900'>
+            <Heading
+              muscleGroupName={muscleGroupName}
+              exercisesData={exercisesData}
+              valueSearch={searchQuery}
+              onSearchChange={setSearchQuery}
+            />
+          </div>
           {isLoading ? (
             <Spinner loading={isLoading} className='min-h-[70vh]' />
           ) : (
-            <>
-              <div className='sticky top-36 z-30 bg-white pb-2 lg:static lg:pb-0 dark:bg-gray-900'>
-                <Heading
-                  muscleGroupName={muscleGroupName}
-                  exercisesData={exercisesData}
-                />
+            <div className='flex-1'>
+              <div className='h-auto pb-8 lg:overflow-y-auto lg:pb-4'>
+                <MuscleGrid exercisesData={exercisesData} />
               </div>
-              <div className='flex-1'>
-                <div className='h-auto pb-8 lg:overflow-y-auto lg:pb-4'>
-                  <MuscleGrid exercisesData={exercisesData} />
-                </div>
-              </div>
-            </>
+            </div>
           )}
         </div>
 

@@ -40,7 +40,7 @@ def delete_exercise(request, id):
     exercise_controller = ExerciseController()
     return exercise_controller.delete(request, id)
 
-@api_view(["GET"])
-def exercises_group(request, id):
+@api_view(["POST"])
+def exercises_group(request):
     exercise_controller = ExerciseController()
-    return exercise_controller.get_exercises_group(request, id)
+    return exercise_controller.get_exercises_group(request)

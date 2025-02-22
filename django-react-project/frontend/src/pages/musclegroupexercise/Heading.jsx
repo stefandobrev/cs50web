@@ -1,6 +1,11 @@
 import SearchInput from '../../components/inputs/SearchInput';
 
-const Heading = ({ muscleGroupName, exercisesData, value, onChange }) => {
+const Heading = ({
+  muscleGroupName,
+  exercisesData,
+  valueSearch,
+  onSearchChange,
+}) => {
   const isPlural = exercisesData?.length !== 1;
   const exercisesCounter = `${exercisesData?.length} exercise${isPlural ? 's' : ''} available`;
 
@@ -12,8 +17,8 @@ const Heading = ({ muscleGroupName, exercisesData, value, onChange }) => {
       <div className='relative flex w-full flex-col-reverse items-center gap-y-4 lg:flex-row'>
         <div className='lg:absolute lg:left-4'>
           <SearchInput
-            value={value}
-            onChange={onChange}
+            value={valueSearch}
+            onChange={onSearchChange}
             className='w-80 max-w-md lg:w-70'
           />
         </div>

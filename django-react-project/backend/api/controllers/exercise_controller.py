@@ -163,19 +163,28 @@ class ExerciseController:
         exercise.delete()
         return Response({"message": "Exercise deleted successfully!"})
 
-    def get_exercises_group(self, request, muscle_group_id):
+    def get_exercises_group(self, request):
         """
         Return a response containing all exercises related to the muscle 
         group from the DB.
         """
-        muscle_group = MuscleGroup.objects.filter(slug=muscle_group_id).first()
+        muscle_group_id = request.data.get("selectedMuscleId")
+        search = request.data.get("searchQuery")
 
-        if not muscle_group:
-            return Response({"error": "Muscle group not found"}, status=status.HTTP_404_NOT_FOUND)
+        if not muscle_group_id:
+            return Response({"error": "Muscle group ID is required."}, status=400)
+
+        query = Exercise.objects.filter(primary_group__slug=muscle_group_id)
+
+        if search:
+            query = query.filter(Q(title__iexact=search) |  Q(title__icontains=search))
+
+        exercises = query.values("id", "title", "gif_link_front")
         
-        exercises = Exercise.objects.filter(primary_group=muscle_group).values("id","title", "gif_link_front")
+        muscle_group = MuscleGroup.objects.filter(slug=muscle_group_id).first()
+        muscle_group_name = muscle_group.name if muscle_group else ""
 
         return Response({
-            "name": muscle_group.name,
+            "name": muscle_group_name,
             "exercises": list(exercises)
         })
