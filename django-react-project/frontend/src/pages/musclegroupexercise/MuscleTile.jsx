@@ -3,34 +3,57 @@ import { useRef, useEffect } from 'react';
 export const MuscleTile = ({ exercise }) => {
   const tileRef = useRef(null);
   const videoRef = useRef(null);
+  const observerRef = useRef(null);
 
   useEffect(() => {
     const tile = tileRef.current;
     const video = videoRef.current;
+    if (!tile || !video) return;
 
-    const handleMouseEnter = () => {
-      if (video) {
-        video.play();
+    const isTouchDevice = 'ontouchstart' in window;
+    const hasHover = window.matchMedia('(hover: hover)').matches;
+
+    const cleanup = () => {
+      video.pause();
+      if (observerRef.current) {
+        observerRef.current.disconnect();
       }
     };
 
-    const handleMouseLeave = () => {
-      if (video) {
-        video.pause();
-      }
-    };
+    if (isTouchDevice) {
+      observerRef.current = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              video.play();
+            } else {
+              video.pause();
+            }
+          });
+        },
+        {
+          root: null,
+          rootMargin: '0px',
+          threshold: 0.4,
+        },
+      );
 
-    if (tile) {
+      observerRef.current.observe(tile);
+    } else if (hasHover) {
+      const handleMouseEnter = () => video.play();
+      const handleMouseLeave = () => video.pause();
+
       tile.addEventListener('mouseenter', handleMouseEnter);
       tile.addEventListener('mouseleave', handleMouseLeave);
-    }
 
-    return () => {
-      if (tile) {
+      return () => {
         tile.removeEventListener('mouseenter', handleMouseEnter);
         tile.removeEventListener('mouseleave', handleMouseLeave);
-      }
-    };
+        cleanup();
+      };
+    }
+
+    return () => cleanup();
   }, []);
 
   return (
