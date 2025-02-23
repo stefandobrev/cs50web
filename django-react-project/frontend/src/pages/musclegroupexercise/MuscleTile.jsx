@@ -1,9 +1,14 @@
 import { useRef, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 
 export const MuscleTile = ({ exercise }) => {
   const tileRef = useRef(null);
   const videoRef = useRef(null);
   const observerRef = useRef(null);
+  const navigate = useNavigate();
+  const { muscleGroupId } = useParams();
+
+  const exerciseId = exercise.id;
 
   useEffect(() => {
     const tile = tileRef.current;
@@ -56,11 +61,16 @@ export const MuscleTile = ({ exercise }) => {
     return () => cleanup();
   }, []);
 
+  const handleTileClick = () => {
+    navigate(`/exercises/${muscleGroupId}/${exerciseId}`);
+  };
+
   return (
     <div
-      key={exercise.id}
+      key={exerciseId}
       className='group relative cursor-pointer overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm transition-all hover:shadow-lg dark:border-gray-700 dark:bg-gray-800'
       ref={tileRef}
+      onClick={handleTileClick}
     >
       <div className='p-4 pb-2'>
         <h2 className='flex justify-center text-lg font-semibold text-gray-800 dark:text-white'>

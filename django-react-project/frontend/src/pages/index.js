@@ -7,3 +7,4 @@ export * from './notfound';
 export * from './profilesettings';
 export * from './registration';
 export * from './yourprofile';
+export * from './exercisedetail';

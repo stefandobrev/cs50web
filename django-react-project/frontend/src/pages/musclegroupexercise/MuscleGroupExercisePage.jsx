@@ -11,8 +11,8 @@ import MuscleGrid from './MuscleGrid';
 import { useTitle } from '../../hooks/useTitle.hook';
 
 export const MuscleGroupExercisePage = () => {
-  const { id } = useParams();
-  const [selectedMuscleId, setSelectedMuscleId] = useState(id);
+  const { muscleGroupId } = useParams();
+  const [selectedMuscleId, setSelectedMuscleId] = useState(muscleGroupId);
   const [exercisesData, setExercisesData] = useState(null);
   const [muscleGroupName, setMuscleGroupName] = useState('');
   const [isLoading, setIsLoading] = useState(false);

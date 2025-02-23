@@ -18,6 +18,7 @@ import {
   ProfileSettingsPage,
   RegistrationPage,
   YourProfilePage,
+  ExerciseDetailPage,
 } from '../pages';
 
 // Route Guards
@@ -36,7 +37,14 @@ export const router = createBrowserRouter(
 
       <Route element={<ProtectedRoute />}>
         <Route path='/exercises' element={<ExercisePage />} />
-        <Route path='/exercises/:id' element={<MuscleGroupExercisePage />} />
+        <Route
+          path='/exercises/:muscleGroupId'
+          element={<MuscleGroupExercisePage />}
+        />
+        <Route
+          path='/exercises/:muscleGroupId/:exerciseId'
+          element={<ExerciseDetailPage />}
+        />
         <Route path='/manage' element={<ManagePage />} />
         <Route path='/profile' element={<YourProfilePage />} />
         <Route path='/settings' element={<ProfileSettingsPage />} />

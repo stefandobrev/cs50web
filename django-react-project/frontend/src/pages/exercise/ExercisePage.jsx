@@ -8,6 +8,7 @@ import { useTitle } from '../../hooks/useTitle.hook';
 
 export const ExercisePage = () => {
   const navigate = useNavigate();
+
   useTitle('Exercises');
 
   const isMdOrLarger = useMedia('(min-width: 768px)');
