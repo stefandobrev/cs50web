@@ -11,8 +11,8 @@ import MuscleGrid from './MuscleGrid';
 import { useTitle } from '../../hooks/useTitle.hook';
 
 export const MuscleGroupExercisePage = () => {
-  const { muscleGroupId } = useParams();
-  const [selectedMuscleId, setSelectedMuscleId] = useState(muscleGroupId);
+  const { slugMuscleGroup } = useParams();
+  const [selectedMuscleId, setSelectedMuscleId] = useState(slugMuscleGroup);
   const [exercisesData, setExercisesData] = useState(null);
   const [muscleGroupName, setMuscleGroupName] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -30,13 +30,19 @@ export const MuscleGroupExercisePage = () => {
         selectedMuscleId: selectedMuscleId,
         searchQuery: searchQuery,
       });
+
+      // data.errors should handle 404 only. Rest is handled by helpers.
+      if (data.error) {
+        navigate('/404');
+      }
+
       setExercisesData(data.exercises);
       setMuscleGroupName(data.name);
       setIsLoading(false);
     };
 
     loadExercisesData();
-  }, [selectedMuscleId, searchQuery]);
+  }, [selectedMuscleId, searchQuery, navigate]);
 
   const handleMuscleClick = (svgId) => {
     if (selectedMuscleId !== svgId) {

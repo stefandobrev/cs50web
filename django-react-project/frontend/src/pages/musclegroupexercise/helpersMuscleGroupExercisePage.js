@@ -5,7 +5,7 @@ export const fetchExercises = async ({ selectedMuscleId, searchQuery }) => {
     selectedMuscleId,
     searchQuery,
   });
-  if (!response.ok) {
+  if (!response.ok && response.status !== 404) {
     throw new Error('Failed to fetch exercises.');
   }
   return response.json();

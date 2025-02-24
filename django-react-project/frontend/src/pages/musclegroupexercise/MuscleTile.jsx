@@ -6,9 +6,16 @@ export const MuscleTile = ({ exercise }) => {
   const videoRef = useRef(null);
   const observerRef = useRef(null);
   const navigate = useNavigate();
-  const { muscleGroupId } = useParams();
+  const { slugMuscleGroup } = useParams();
 
-  const exerciseId = exercise.id;
+  const slugify = (title) =>
+    title
+      .toLowerCase()
+      .trim()
+      .replace(/\s+/g, '-')
+      .replace(/[^\w-]+/g, '');
+
+  const slugTitle = slugify(exercise.title);
 
   useEffect(() => {
     const tile = tileRef.current;
@@ -62,12 +69,12 @@ export const MuscleTile = ({ exercise }) => {
   }, []);
 
   const handleTileClick = () => {
-    navigate(`/exercises/${muscleGroupId}/${exerciseId}`);
+    navigate(`/exercises/${slugMuscleGroup}/${slugTitle}`);
   };
 
   return (
     <div
-      key={exerciseId}
+      key={exercise.id}
       className='group relative cursor-pointer overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm transition-all hover:shadow-lg dark:border-gray-700 dark:bg-gray-800'
       ref={tileRef}
       onClick={handleTileClick}

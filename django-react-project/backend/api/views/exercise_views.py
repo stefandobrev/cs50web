@@ -41,6 +41,7 @@ def delete_exercise(request, id):
     return exercise_controller.delete(request, id)
 
 @api_view(["POST"])
+@permission_classes([IsAuthenticated])
 def exercises_group(request):
     exercise_controller = ExerciseController()
     return exercise_controller.get_exercises_group(request)

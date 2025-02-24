@@ -143,7 +143,7 @@ export const ExerciseList = ({
       </div>
       <div
         ref={listContainerRef}
-        className='flex max-h-[40vh] w-full flex-col overflow-y-auto rounded-lg bg-white px-6 sm:max-w-sm lg:max-h-[47vh]'
+        className='mt-4 flex max-h-[40vh] w-full flex-col overflow-y-auto rounded-lg bg-white px-6 sm:max-w-sm lg:max-h-[47vh]'
       >
         {isLoading ? (
           <Spinner loading={true} className='min-h-[40vh] lg:min-h-[47vh]' />

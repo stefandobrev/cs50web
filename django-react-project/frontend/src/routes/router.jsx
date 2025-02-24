@@ -38,11 +38,11 @@ export const router = createBrowserRouter(
       <Route element={<ProtectedRoute />}>
         <Route path='/exercises' element={<ExercisePage />} />
         <Route
-          path='/exercises/:muscleGroupId'
+          path='/exercises/:slugMuscleGroup'
           element={<MuscleGroupExercisePage />}
         />
         <Route
-          path='/exercises/:muscleGroupId/:exerciseId'
+          path='/exercises/:slugMuscleGroup/:slugTitle'
           element={<ExerciseDetailPage />}
         />
         <Route path='/manage' element={<ManagePage />} />

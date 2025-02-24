@@ -173,6 +173,11 @@ class ExerciseController:
 
         if not muscle_group_id:
             return Response({"error": "Muscle group ID is required."}, status=400)
+        
+        muscle_group = MuscleGroup.objects.filter(slug=muscle_group_id).first()
+
+        if not muscle_group: 
+            return Response({"error": "Invalid muscle group."}, status=status.HTTP_404_NOT_FOUND)
 
         query = Exercise.objects.filter(primary_group__slug=muscle_group_id)
 
@@ -180,11 +185,8 @@ class ExerciseController:
             query = query.filter(Q(title__iexact=search) |  Q(title__icontains=search))
 
         exercises = query.values("id", "title", "gif_link_front")
-        
-        muscle_group = MuscleGroup.objects.filter(slug=muscle_group_id).first()
-        muscle_group_name = muscle_group.name if muscle_group else ""
 
         return Response({
-            "name": muscle_group_name,
+            "name": muscle_group.name,
             "exercises": list(exercises)
         })
