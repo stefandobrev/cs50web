@@ -9,7 +9,7 @@ class User(AbstractUser):
 
 class MuscleGroup(models.Model):
     name = models.CharField(max_length=30)
-    slug = models.SlugField(unique=True, blank=True)
+    slug = models.SlugField(unique=True)
 
     def save(self):
         if not self.slug:
@@ -22,6 +22,16 @@ class MuscleGroup(models.Model):
 
 class Exercise(models.Model):
     title = models.CharField(max_length=100)
+    slug = models.SlugField(unique=True)
+
+    def save(self):
+        if not self.slug:
+            self.slug = slugify(self.title)
+        super().save()
+
+    def __str__(self):
+        return self.name
+
     primary_group = models.ForeignKey(
         MuscleGroup, related_name="primary_exercises", on_delete=models.CASCADE
     )
