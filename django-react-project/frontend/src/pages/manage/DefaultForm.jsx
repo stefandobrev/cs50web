@@ -26,7 +26,7 @@ export const DefaultForm = ({
 
   useEffect(() => {
     if (exerciseDataRef.current?.primary_group !== primaryGroupValue) {
-      setValue('secondary_group', []);
+      setValue('secondary_groups', []);
     }
   }, [primaryGroupValue, setValue]);
 
@@ -39,7 +39,7 @@ export const DefaultForm = ({
       setValue('id', exerciseData.id);
       setValue('title', exerciseData.title);
       setValue('primary_group', exerciseData.primary_group);
-      setValue('secondary_group', exerciseData.secondary_group);
+      setValue('secondary_groups', exerciseData.secondary_groups);
       setValue('steps', exerciseData.steps);
       setValue('gif_link_front', exerciseData.gif_link_front);
       setValue('gif_link_side', exerciseData.gif_link_side);
@@ -95,8 +95,8 @@ export const DefaultForm = ({
           placeholder='Select primary group'
         />
         <DropdownFieldWithTags
-          label='Secondary Group'
-          id='secondary_group'
+          label='Secondary Groups'
+          id='secondary_groups'
           options={filteredMuscleGroups}
           key={primaryGroupValue}
         />

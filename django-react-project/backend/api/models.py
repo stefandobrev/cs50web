@@ -36,7 +36,7 @@ class Exercise(models.Model):
     primary_group = models.ForeignKey(
         MuscleGroup, related_name="primary_exercises", on_delete=models.CASCADE
     )
-    secondary_group = models.ManyToManyField(
+    secondary_groups = models.ManyToManyField(
         MuscleGroup, related_name="secondary_exercises", blank=True
     )
     

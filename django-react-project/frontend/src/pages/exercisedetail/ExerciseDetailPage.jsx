@@ -3,13 +3,15 @@ import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
 import { fetchExercise } from './helpersExerciseDetail';
+import { ToggleableMuscleView } from '../../components/muscleviews';
 import { useTitle } from '../../hooks/useTitle.hook';
 
 export const ExerciseDetailPage = () => {
-  const [exerciseData, setExerciseData] = useState(null);
+  const [exerciseData, setExerciseData] = useState(41);
   const [exerciseTitle, setExerciseTitle] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const { slugMuscleGroup, slugTitle } = useParams();
+  const [selectedMuscleId, setSelectedMuscleId] = useState(slugMuscleGroup);
   const navigate = useNavigate();
 
   useTitle(exerciseTitle);
@@ -24,7 +26,6 @@ export const ExerciseDetailPage = () => {
       if (data.error) {
         navigate('/404', { replace: true });
       }
-
       setExerciseData(data);
       setExerciseTitle(data.title);
       setIsLoading(false);
@@ -33,5 +34,23 @@ export const ExerciseDetailPage = () => {
     loadExerciseData();
   }, [slugTitle]);
 
-  return <p>{slugTitle}</p>;
+  const handleMuscleClick = () => {
+    console.log(exerciseData);
+  };
+
+  return (
+    <>
+      <div className='flex flex-col lg:flex-row'>
+        <div className='flex w-full flex-col gap-4 lg:w-[75%]'>
+          <p>{exerciseData?.title}</p>
+        </div>
+        <div className='w-full items-center lg:w-[25%]'>
+          <ToggleableMuscleView
+            handleMuscleClick={handleMuscleClick}
+            selectedPrimaryMuscle={selectedMuscleId}
+          />
+        </div>
+      </div>
+    </>
+  );
 };

@@ -51,7 +51,7 @@ class ExerciseController:
         """Return a response containing an exercise"s data from the DB."""
         try: 
             exercise = Exercise.objects.prefetch_related(
-                "secondary_group", "steps", "mistakes"
+                "secondary_groups", "steps", "mistakes"
                 ).select_related("primary_group").get(id=id)
             
             return Response(self._get_exercise_data(exercise))
@@ -63,7 +63,7 @@ class ExerciseController:
             "id": exercise.id,
             "title": exercise.title,
             "primary_group": exercise.primary_group.slug,
-            "secondary_group": [group.slug for group in exercise.secondary_group.all()],
+            "secondary_groups": [group.slug for group in exercise.secondary_groups.all()],
             "gif_link_front": exercise.gif_link_front,
             "gif_link_side": exercise.gif_link_side,
             "video_link": exercise.video_link,
@@ -75,7 +75,7 @@ class ExerciseController:
 
     def create(self, request):
         """
-        Create a new exercise model(optional: add secondary_group, 
+        Create a new exercise model(optional: add secondary_groups, 
         steps and mistakes to it.)
 
         Args:
@@ -96,13 +96,13 @@ class ExerciseController:
             exercise_data["primary_group"] = primary_group.id
         
         secondary_groups = []
-        if "secondary_group" in exercise_data:
-            for group_name in exercise_data["secondary_group"]:
+        if "secondary_groups" in exercise_data:
+            for group_name in exercise_data["secondary_groups"]:
                 group = MuscleGroup.objects.filter(slug=group_name).first()
                 if group:
                     secondary_groups.append(group.id)
             
-            exercise_data["secondary_group"] = secondary_groups
+            exercise_data["secondary_groups"] = secondary_groups
 
         serializer = ExerciseSerializer(data=exercise_data)
         if not serializer.is_valid():
@@ -133,13 +133,13 @@ class ExerciseController:
                 return Response({"primary_group": "Primary group not found."}, status=status.HTTP_400_BAD_REQUEST)
             exercise_data["primary_group"] = primary_group.id
 
-        if "secondary_group" in exercise_data:
+        if "secondary_groups" in exercise_data:
             secondary_groups = []
-            for group_name in exercise_data["secondary_group"]:
+            for group_name in exercise_data["secondary_groups"]:
                 group = MuscleGroup.objects.filter(slug=group_name).first()
                 if group:
                     secondary_groups.append(group.id)
-            exercise_data["secondary_group"] = secondary_groups
+            exercise_data["secondary_groups"] = secondary_groups
 
         serializer = ExerciseSerializer(exercise, data=exercise_data, partial=True)
         if not serializer.is_valid():
@@ -205,7 +205,7 @@ class ExerciseController:
 
         try: 
             exercise = Exercise.objects.prefetch_related(
-                "secondary_group", "steps", "mistakes"
+                "secondary_groups", "steps", "mistakes"
                 ).select_related("primary_group").get(slug=exercise_slug, primary_group=muscle_group)
             
             return Response(self._get_exercise_data(exercise))

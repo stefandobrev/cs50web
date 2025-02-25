@@ -12,7 +12,7 @@ class ExerciseSerializer(serializers.ModelSerializer):
         fields = [
             "title", 
             "primary_group", 
-            "secondary_group", 
+            "secondary_groups", 
             "gif_link_front",
             "gif_link_side",
             "video_link", 

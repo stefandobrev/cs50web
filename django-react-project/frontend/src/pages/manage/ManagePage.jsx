@@ -56,7 +56,7 @@ export const ManagePage = () => {
 
   const handleMuscleClick = (muscle) => {
     const currentPrimaryMuscle = methods.getValues('primary_group');
-    const currentSecondaryMuscles = methods.getValues('secondary_group') || [];
+    const currentSecondaryMuscles = methods.getValues('secondary_groups') || [];
 
     if (!currentPrimaryMuscle) {
       methods.setValue('primary_group', muscle);
@@ -69,11 +69,11 @@ export const ManagePage = () => {
         const updatedSecondaries = currentSecondaryMuscles.filter(
           (m) => m !== muscle,
         );
-        methods.setValue('secondary_group', updatedSecondaries);
+        methods.setValue('secondary_groups', updatedSecondaries);
         setSelectedSecondaryMusclesSVG(updatedSecondaries);
       } else {
         const updatedSecondaries = [...currentSecondaryMuscles, muscle];
-        methods.setValue('secondary_group', updatedSecondaries);
+        methods.setValue('secondary_groups', updatedSecondaries);
         setSelectedSecondaryMusclesSVG(updatedSecondaries);
       }
     }
@@ -82,7 +82,7 @@ export const ManagePage = () => {
   useEffect(() => {
     const subscription = methods.watch((values) => {
       setSelectedPrimaryMuscleSVG(values.primary_group || null);
-      setSelectedSecondaryMusclesSVG(values.secondary_group || []);
+      setSelectedSecondaryMusclesSVG(values.secondary_groups || []);
     });
     return () => subscription.unsubscribe();
   }, [methods]);
