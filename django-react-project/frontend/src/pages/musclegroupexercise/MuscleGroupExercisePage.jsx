@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
 import { ToggleableMuscleView } from '../../components/muscleviews';
-import { fetchExercises } from './helpersMuscleGroupExercisePage';
+import { fetchExercises } from './helpersMuscleGroupExercise';
 import Spinner from '../../components/Spinner';
 import TabButton from '../../components/buttons/TabButton';
 import Heading from './Heading';
@@ -31,9 +31,9 @@ export const MuscleGroupExercisePage = () => {
         searchQuery: searchQuery,
       });
 
-      // data.errors should handle 404 only. Rest is handled by helpers.
+      // data.error should handle 404 only. Rest is handled by helpers.
       if (data.error) {
-        navigate('/404');
+        navigate('/404', { replace: true });
       }
 
       setExercisesData(data.exercises);

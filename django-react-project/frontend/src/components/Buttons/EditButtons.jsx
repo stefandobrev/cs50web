@@ -83,11 +83,16 @@ export const DeleteButton = ({
   </Button>
 );
 
-export const ViewButton = ({ children = 'View', onClick, className = '' }) => (
+export const ViewButton = ({
+  children = 'View',
+  variant = 'grayDark',
+  onClick,
+  className = '',
+}) => (
   <Button
     type='button'
     onClick={onClick}
-    variant='grayDark'
+    variant={variant}
     className={className}
     aria-label='View'
   >

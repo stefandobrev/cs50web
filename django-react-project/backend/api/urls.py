@@ -20,4 +20,5 @@ urlpatterns = [
     path("exercises/update-exercise/<int:id>/", exercise_views.update_exercise, name="update-exercise"),
     path("exercises/delete-exercise/<int:id>/", exercise_views.delete_exercise, name="delete-exercise"),
     path("exercises/exercises-group/", exercise_views.exercises_group, name="exercises-group"),
+    path("exercises/<str:muscle_slug>/<str:exercise_slug>/", exercise_views.exercise_detail_slug, name="exercises-detail-slug"),
 ]

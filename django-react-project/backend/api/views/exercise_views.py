@@ -45,3 +45,10 @@ def delete_exercise(request, id):
 def exercises_group(request):
     exercise_controller = ExerciseController()
     return exercise_controller.get_exercises_group(request)
+
+
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def exercise_detail_slug(request, muscle_slug, exercise_slug):
+    exercise_controller = ExerciseController()
+    return exercise_controller.get_exercise_by_slug(request, muscle_slug, exercise_slug)

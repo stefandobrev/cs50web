@@ -54,20 +54,22 @@ class ExerciseController:
                 "secondary_group", "steps", "mistakes"
                 ).select_related("primary_group").get(id=id)
             
-            exercise_data = {
-                "id": exercise.id,
-                "title": exercise.title,
-                "primary_group": exercise.primary_group.slug,
-                "secondary_group": [group.slug for group in exercise.secondary_group.all()],
-                "gif_link_front": exercise.gif_link_front,
-                "gif_link_side": exercise.gif_link_side,
-                "video_link": exercise.video_link,
-                "steps": [step.description for step in exercise.steps.all()],
-                "mistakes": [mistake.description for mistake in exercise.mistakes.all()]
-            }
-            return Response(exercise_data)
+            return Response(self._get_exercise_data(exercise))
         except Exercise.DoesNotExist:
             return Response({"error": "Exercise not found."}, status=status.HTTP_404_NOT_FOUND)
+        
+    def _get_exercise_data(self, exercise):
+        return {
+            "id": exercise.id,
+            "title": exercise.title,
+            "primary_group": exercise.primary_group.slug,
+            "secondary_group": [group.slug for group in exercise.secondary_group.all()],
+            "gif_link_front": exercise.gif_link_front,
+            "gif_link_side": exercise.gif_link_side,
+            "video_link": exercise.video_link,
+            "steps": [step.description for step in exercise.steps.all()],
+            "mistakes": [mistake.description for mistake in exercise.mistakes.all()]
+        }
 
         
 
@@ -190,3 +192,22 @@ class ExerciseController:
             "name": muscle_group.name,
             "exercises": list(exercises)
         })
+    
+    def get_exercise_by_slug(self, request, muscle_slug, exercise_slug):
+        """
+        Use existing get_exercise function to return exercise detail.
+        Check if the exercise and the muscle group exists, otherwise return 404.
+        """
+        muscle_group = MuscleGroup.objects.filter(slug=muscle_slug).first()
+
+        if not muscle_group: 
+            return Response({"error": "Invalid muscle group."}, status=status.HTTP_404_NOT_FOUND)
+
+        try: 
+            exercise = Exercise.objects.prefetch_related(
+                "secondary_group", "steps", "mistakes"
+                ).select_related("primary_group").get(slug=exercise_slug, primary_group=muscle_group)
+            
+            return Response(self._get_exercise_data(exercise))
+        except Exercise.DoesNotExist:
+            return Response({"error": "Invalid exercise."}, status=status.HTTP_404_NOT_FOUND)
