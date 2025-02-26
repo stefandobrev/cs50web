@@ -12,10 +12,8 @@ const MainLayout = () => {
 
   return (
     <div className='flex min-h-screen flex-col'>
-      <header className='bg-gray-800'>{/* Your header content */}</header>
-      <nav className='sticky top-0 z-50 h-20 bg-gray-800 shadow-lg'>
-        <Navbar />
-      </nav>
+      <Navbar />
+
       <main className='grow'>
         {isLoading ? (
           <Spinner loading={isLoading} className={'fixed inset-0'} />
