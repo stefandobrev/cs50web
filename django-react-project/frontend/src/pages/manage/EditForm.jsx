@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import {
@@ -25,6 +26,7 @@ const EditForm = ({
   const [hasChanges, setHasChanges] = useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
   const { watch } = useFormContext();
 
   useEffect(() => {
@@ -89,6 +91,10 @@ const EditForm = ({
     setIsDeleteDialogOpen(true);
   };
 
+  const handleView = () => {
+    navigate(`/exercises/${exerciseData.primary_group}/${exerciseData.slug}`);
+  };
+
   const handleDeleteConfirm = async () => {
     const response = await deleteExercise(exercise.id);
     const { type, text } = response;
@@ -129,6 +135,7 @@ const EditForm = ({
           exerciseData={exerciseData}
           hasChanges={hasChanges}
           handleDeleteButton={handleDelete}
+          handleViewButton={handleView}
         />
       )}
 

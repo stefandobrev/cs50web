@@ -16,6 +16,7 @@ export const DefaultForm = ({
   exerciseData,
   hasChanges,
   handleDeleteButton,
+  handleViewButton,
 }) => {
   const { handleSubmit, register, watch, setValue } = useFormContext();
   const textAreaRefs = useRef([]);
@@ -137,6 +138,7 @@ export const DefaultForm = ({
           hasChanges={hasChanges}
           areUrlsInvalid={areUrlsInvalid}
           handleDeleteButton={handleDeleteButton}
+          handleViewButton={handleViewButton}
         />
       ) : (
         <SmScreenButtons
@@ -144,6 +146,7 @@ export const DefaultForm = ({
           hasChanges={hasChanges}
           areUrlsInvalid={areUrlsInvalid}
           handleDeleteButton={handleDeleteButton}
+          handleViewButton={handleViewButton}
         />
       )}
     </div>

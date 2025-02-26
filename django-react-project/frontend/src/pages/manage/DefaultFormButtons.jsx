@@ -4,13 +4,15 @@ import {
   ViewButton,
 } from '../../components/buttons/EditButtons';
 
-export const MdScreenButtons = ({
+const ExerciseButtons = ({
   mode,
   hasChanges,
   areUrlsInvalid,
   handleDeleteButton,
+  handleViewButton,
+  containerClass,
 }) => (
-  <div className='sticky bottom-0 mt-4 flex flex-col justify-center gap-2 bg-white py-2 md:flex-row'>
+  <div className={containerClass}>
     <SaveButton
       disabled={
         mode === 'edit' ? !hasChanges || areUrlsInvalid : areUrlsInvalid
@@ -29,41 +31,24 @@ export const MdScreenButtons = ({
         >
           Delete Exercise
         </DeleteButton>
-        <ViewButton className='w-full md:w-auto'>View Exercise</ViewButton>
+        <ViewButton onClick={handleViewButton} className='w-full md:w-auto'>
+          View Exercise
+        </ViewButton>
       </div>
     )}
   </div>
 );
 
-export const SmScreenButtons = ({
-  mode,
-  hasChanges,
-  areUrlsInvalid,
-  handleDeleteButton,
-}) => (
-  <>
-    <div className='sticky bottom-0 mt-4 flex justify-center bg-white py-2'>
-      <SaveButton
-        disabled={
-          mode === 'edit' ? !hasChanges || areUrlsInvalid : areUrlsInvalid
-        }
-        form='exercise-form'
-        className='w-full md:w-auto'
-      >
-        {mode === 'add' ? 'Add Exercise' : 'Edit Exercise'}
-      </SaveButton>
-    </div>
-    {mode === 'edit' && (
-      <div className='mt-4 flex justify-center gap-2'>
-        <DeleteButton
-          onClick={handleDeleteButton}
-          variant='grayDark'
-          className='w-full md:w-auto'
-        >
-          Delete Exercise
-        </DeleteButton>
-        <ViewButton className='w-full md:w-auto'>View Exercise</ViewButton>
-      </div>
-    )}
-  </>
+export const MdScreenButtons = (props) => (
+  <ExerciseButtons
+    {...props}
+    containerClass='sticky bottom-0 mt-4 flex flex-col justify-center gap-2 bg-white py-2 md:flex-row'
+  />
+);
+
+export const SmScreenButtons = (props) => (
+  <ExerciseButtons
+    {...props}
+    containerClass='sticky bottom-0 mt-4 flex justify-center bg-white py-2'
+  />
 );

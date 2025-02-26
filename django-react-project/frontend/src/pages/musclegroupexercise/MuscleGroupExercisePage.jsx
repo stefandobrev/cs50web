@@ -12,7 +12,6 @@ import { useTitle } from '../../hooks/useTitle.hook';
 
 export const MuscleGroupExercisePage = () => {
   const { slugMuscleGroup } = useParams();
-  const [selectedMuscleId, setSelectedMuscleId] = useState(slugMuscleGroup);
   const [exercisesData, setExercisesData] = useState(null);
   const [muscleGroupName, setMuscleGroupName] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -27,7 +26,7 @@ export const MuscleGroupExercisePage = () => {
 
     const loadExercisesData = async () => {
       const data = await fetchExercises({
-        selectedMuscleId: selectedMuscleId,
+        selectedMuscleId: slugMuscleGroup,
         searchQuery: searchQuery,
       });
 
@@ -42,11 +41,10 @@ export const MuscleGroupExercisePage = () => {
     };
 
     loadExercisesData();
-  }, [selectedMuscleId, searchQuery, navigate]);
+  }, [slugMuscleGroup, searchQuery, navigate]);
 
   const handleMuscleClick = (svgId) => {
-    if (selectedMuscleId !== svgId) {
-      setSelectedMuscleId(svgId);
+    if (slugMuscleGroup !== svgId) {
       setActiveTab('exercises');
       navigate(`/exercises/${svgId}`);
     }
@@ -99,7 +97,7 @@ export const MuscleGroupExercisePage = () => {
         >
           <ToggleableMuscleView
             handleMuscleClick={handleMuscleClick}
-            selectedPrimaryMuscle={selectedMuscleId}
+            selectedPrimaryMuscle={slugMuscleGroup}
           />
         </div>
       </div>

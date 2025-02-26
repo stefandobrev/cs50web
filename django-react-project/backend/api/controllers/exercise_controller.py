@@ -62,6 +62,7 @@ class ExerciseController:
         return {
             "id": exercise.id,
             "title": exercise.title,
+            "slug": exercise.slug,
             "primary_group": exercise.primary_group.slug,
             "secondary_groups": [group.slug for group in exercise.secondary_groups.all()],
             "gif_link_front": exercise.gif_link_front,
