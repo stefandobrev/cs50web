@@ -18,12 +18,12 @@ export const ExercisePage = () => {
   };
 
   return (
-    <div>
+    <>
       {isMdOrLarger ? (
         <FullBodyMuscleView handleMuscleClick={handleMuscleClick} />
       ) : (
         <ToggleableMuscleView handleMuscleClick={handleMuscleClick} />
       )}
-    </div>
+    </>
   );
 };

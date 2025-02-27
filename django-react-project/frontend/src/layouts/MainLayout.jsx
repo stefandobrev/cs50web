@@ -14,7 +14,7 @@ const MainLayout = () => {
     <div className='flex min-h-screen flex-col'>
       <Navbar />
 
-      <main className='grow'>
+      <main className='flex-1'>
         {isLoading ? (
           <Spinner loading={isLoading} className={'fixed inset-0'} />
         ) : (

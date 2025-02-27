@@ -24,10 +24,12 @@ export const ToggleableMuscleView = ({
   };
 
   return (
-    <div className='flex flex-col items-center justify-center p-4'>
-      <ToggleButton onClick={toggleIsFrontView}>
-        {isFrontView ? 'Show Back' : 'Show Front'}
-      </ToggleButton>
+    <div className='flex flex-col items-center justify-center py-2 lg:px-4 lg:py-0'>
+      <div className='mt-4'>
+        <ToggleButton onClick={toggleIsFrontView}>
+          {isFrontView ? 'Show Back' : 'Show Front'}
+        </ToggleButton>
+      </div>
 
       <AnimatePresence mode='wait'>
         {isFrontView ? (
