@@ -3,7 +3,7 @@ const AnatomyLegend = () => {
     <div className='flex flex-col gap-2 text-sm'>
       <div className='flex flex-row justify-center gap-4'>
         <div className='flex items-center gap-2'>
-          <span className='h-4 w-4 rounded bg-red-500'></span>
+          <span className='bg-logored h-4 w-4 rounded'></span>
           <span>Primary</span>
         </div>
         <div className='flex items-center gap-2'>

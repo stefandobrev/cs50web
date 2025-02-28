@@ -4,6 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { fetchExercise } from './helpersExerciseDetail';
 import { ToggleableMuscleView } from '../../components/muscleviews';
 import TabButton from '../../components/buttons/TabButton';
+import ExerciseDataHeading from './ExerciseDataHeading';
 import ExerciseDataContainer from './ExerciseDataContainer';
 import AnatomyLegend from './AnatomyLegend';
 import Spinner from '../../components/Spinner';
@@ -64,9 +65,7 @@ export const ExerciseDetailPage = () => {
             <Spinner className='min-h-[70vh]' />
           ) : (
             <div className='flex flex-col items-center'>
-              <h1 className='p-4 text-2xl font-bold md:text-3xl'>
-                {exerciseData.title}
-              </h1>
+              <ExerciseDataHeading exerciseData={exerciseData} />
               <ExerciseDataContainer exerciseData={exerciseData} />
             </div>
           )}

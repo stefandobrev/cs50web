@@ -18,7 +18,7 @@ export const MuscleGroup = ({
       id={id}
       className={`cursor-pointer ${
         isPrimary
-          ? 'fill-red-500'
+          ? 'fill-logored'
           : isSecondary
             ? 'fill-amber-300'
             : 'fill-[#e6e7e8] hover:fill-red-300 active:fill-red-300'
