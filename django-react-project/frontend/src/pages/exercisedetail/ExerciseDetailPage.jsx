@@ -4,6 +4,8 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { fetchExercise } from './helpersExerciseDetail';
 import { ToggleableMuscleView } from '../../components/muscleviews';
 import TabButton from '../../components/buttons/TabButton';
+import ExerciseDataContainer from './ExerciseDataContainer';
+import AnatomyLegend from './AnatomyLegend';
 import Spinner from '../../components/Spinner';
 import { useTitle } from '../../hooks/useTitle.hook';
 
@@ -61,29 +63,11 @@ export const ExerciseDetailPage = () => {
           {isLoading ? (
             <Spinner className='min-h-[70vh]' />
           ) : (
-            <div className='flex flex-col items-center space-y-4'>
+            <div className='flex flex-col items-center'>
               <h1 className='p-4 text-2xl font-bold md:text-3xl'>
                 {exerciseData.title}
               </h1>
-
-              <div className='flex w-[90%] flex-col justify-center gap-4 rounded-xl border border-gray-200 bg-white p-4 shadow-sm lg:flex-row'>
-                <div className='h-full w-full'>
-                  <video
-                    src={exerciseData.gif_link_front}
-                    autoPlay
-                    loop
-                    className='rounded-lg object-cover'
-                  />
-                </div>
-                <div className='h-full w-full'>
-                  <video
-                    src={exerciseData.gif_link_side}
-                    autoPlay
-                    loop
-                    className='rounded-lg object-cover'
-                  />
-                </div>
-              </div>
+              <ExerciseDataContainer exerciseData={exerciseData} />
             </div>
           )}
         </div>
@@ -99,23 +83,7 @@ export const ExerciseDetailPage = () => {
               selectedSecondaryMuscles={exerciseData?.secondary_groups}
             />
           </div>
-          <div className='flex flex-col gap-2 text-sm'>
-            <div className='flex flex-row justify-center gap-4'>
-              <div className='flex items-center gap-2'>
-                <span className='h-4 w-4 rounded bg-red-500'></span>
-                <span>Primary</span>
-              </div>
-              <div className='flex items-center gap-2'>
-                <span className='h-4 w-4 rounded bg-amber-300'></span>
-                <span>Secondary</span>
-              </div>
-            </div>
-            <div className='flex justify-center p-2'>
-              <p className='text-gray-500 italic'>
-                * Click to select another group
-              </p>
-            </div>
-          </div>
+          <AnatomyLegend />
         </div>
       </div>
     </>

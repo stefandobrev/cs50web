@@ -41,7 +41,6 @@ export const MuscleGroupExercisePage = () => {
     loadExercisesData();
   }, [slugMuscleGroup, searchQuery, navigate]);
 
-  // Handle scroll events to show/hide sticky elements with throttling
   useEffect(() => {
     const handleScroll = () => {
       if (!ticking.current) {
@@ -119,10 +118,8 @@ export const MuscleGroupExercisePage = () => {
           {isLoading ? (
             <Spinner loading={isLoading} className='min-h-[70vh]' />
           ) : (
-            <div className='flex-1'>
-              <div className='h-auto rounded-xl border border-gray-100 bg-gray-50 pb-8 shadow-sm lg:max-h-[650px] lg:overflow-y-auto lg:pb-4 dark:border-gray-700 dark:bg-gray-800'>
-                <MuscleGrid exercisesData={exercisesData} />
-              </div>
+            <div className='h-auto rounded-xl border border-gray-100 bg-gray-50 pb-8 shadow-sm lg:max-h-[650px] lg:overflow-y-auto lg:pb-4'>
+              <MuscleGrid exercisesData={exercisesData} />
             </div>
           )}
         </div>
