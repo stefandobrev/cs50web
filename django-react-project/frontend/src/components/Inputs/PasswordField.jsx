@@ -22,7 +22,7 @@ const PasswordField = ({
             id={id}
             type={isPasswordVisible ? 'text' : 'password'}
             {...register(id, { required })}
-            className='focus:border-logoRed focus:ring-logoRed w-full rounded-sm border border-gray-300 p-2 focus:ring-2 focus:outline-hidden'
+            className='focus:border-logored focus:ring-logored w-full rounded-sm border border-gray-300 p-2 focus:ring-2 focus:outline-hidden'
           />
           <button
             type='button'

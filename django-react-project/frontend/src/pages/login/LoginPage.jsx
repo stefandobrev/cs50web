@@ -29,6 +29,7 @@ export const LoginPage = () => {
     dispatch(
       setUser({
         isAuthenticated: true,
+        isAdmin: data.is_admin,
         user: {
           username: data.username,
         },
@@ -38,7 +39,12 @@ export const LoginPage = () => {
     );
 
     toast.success('User logged in successfully!');
-    navigate('/exercises');
+    if (data.is_admin) {
+      navigate('/manage');
+    } else {
+      navigate('/exercises');
+    }
+
     dispatch(setLoading(false));
   };
 

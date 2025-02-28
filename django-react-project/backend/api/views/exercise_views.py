@@ -22,20 +22,20 @@ def exercise_detail(request, id):
     return exercise_controller.get_exercise(request, id)
 
 @api_view(["POST"])
-# @permission_classes([IsAdminUser])
+@permission_classes([IsAdminUser])
 def create_exercise(request):
     exercise_controller = ExerciseController()
     return exercise_controller.create(request)
 
 @api_view(["PUT"])
-# @permission_classes([IsAdminUser])
+@permission_classes([IsAdminUser])
 def update_exercise(request, id):
     exercise_controller = ExerciseController()
     return exercise_controller.update(request, id)
 
 
 @api_view(["DELETE"])
-# @permission_classes([IsAdminUser])
+@permission_classes([IsAdminUser])
 def delete_exercise(request, id):
     exercise_controller = ExerciseController()
     return exercise_controller.delete(request, id)

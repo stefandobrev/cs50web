@@ -3,6 +3,7 @@ import { blacklistToken } from './helpersAuth';
 
 const initialState = {
   isAuthenticated: false,
+  isAdmin: false,
   user: null,
   accessToken: null,
   refreshToken: null,

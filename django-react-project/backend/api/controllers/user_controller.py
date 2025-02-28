@@ -28,6 +28,7 @@ class UserController:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
         user = serializer.save()
+        # clear the Response on production
         return Response(
             {
                 "message": "User created successfully!",
@@ -37,6 +38,7 @@ class UserController:
                     "email": user.email,
                     "first_name": user.first_name,
                     "last_name": user.last_name,
+                    "is_admin": user.is_staff,
                 },
             },
             status=status.HTTP_201_CREATED,
@@ -60,7 +62,12 @@ class UserController:
         tokens = self._generate_tokens(user)
 
         return Response(
-            {"message": "Login successful", "username": user.username, **tokens},
+            {
+                "message": "Login successful", 
+                "username": user.username,
+                "is_admin": user.is_staff, 
+                **tokens
+            },
             status=status.HTTP_200_OK,
         )
 

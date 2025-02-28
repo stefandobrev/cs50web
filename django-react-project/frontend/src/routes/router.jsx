@@ -23,6 +23,7 @@ import {
 
 // Route Guards
 import ProtectedRoute from '../components/ProtectedRoute';
+import AdminRoute from '../components/AdminRoute';
 import PublicRoute from '../components/PublicRoute';
 
 export const router = createBrowserRouter(
@@ -45,9 +46,12 @@ export const router = createBrowserRouter(
           path='/exercises/:slugMuscleGroup/:slugTitle'
           element={<ExerciseDetailPage />}
         />
-        <Route path='/manage' element={<ManagePage />} />
         <Route path='/profile' element={<YourProfilePage />} />
         <Route path='/settings' element={<ProfileSettingsPage />} />
+
+        <Route element={<AdminRoute />}>
+          <Route path='/manage' element={<ManagePage />} />
+        </Route>
       </Route>
 
       <Route path='*' element={<NotFoundPage />} />

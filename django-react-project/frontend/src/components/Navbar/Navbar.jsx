@@ -14,7 +14,7 @@ const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const profile = useSelector((state) => state.user.profile);
-  const { isAuthenticated } = useSelector((state) => state.auth);
+  const { isAuthenticated, isAdmin } = useSelector((state) => state.auth);
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -22,7 +22,7 @@ const Navbar = () => {
     }
   }, [dispatch, isAuthenticated]);
 
-  const navigation = getNavigation(isAuthenticated);
+  const navigation = getNavigation(isAuthenticated, isAdmin);
 
   const handleSignOut = async () => {
     dispatch(logoutWithBlacklist());
