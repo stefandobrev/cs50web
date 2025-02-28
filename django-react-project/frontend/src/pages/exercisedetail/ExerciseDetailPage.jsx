@@ -10,7 +10,7 @@ import Spinner from '../../components/Spinner';
 import { useTitle } from '../../hooks/useTitle.hook';
 
 export const ExerciseDetailPage = () => {
-  const [exerciseData, setExerciseData] = useState(41);
+  const [exerciseData, setExerciseData] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const { slugMuscleGroup, slugTitle } = useParams();
   const [activeTab, setActiveTab] = useState('exercise');
