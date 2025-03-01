@@ -4,51 +4,78 @@ import {
   ViewButton,
 } from '../../components/buttons/EditButtons';
 
-const ExerciseButtons = ({
+// For large screens - all buttons in one row, not sticky
+export const MdScreenButtons = ({
   mode,
   hasChanges,
   areUrlsInvalid,
   handleDeleteButton,
   handleViewButton,
-  containerClass,
 }) => (
-  <div className={containerClass}>
+  <div className='mt-4 flex flex-row justify-center gap-2 bg-white py-2'>
     <SaveButton
       disabled={
         mode === 'edit' ? !hasChanges || areUrlsInvalid : areUrlsInvalid
       }
       form='exercise-form'
-      className='w-full md:w-auto'
+      className='w-auto'
     >
       {mode === 'add' ? 'Add Exercise' : 'Edit Exercise'}
     </SaveButton>
+
     {mode === 'edit' && (
-      <div className='mt-2 flex w-full justify-center gap-2 md:mt-0 md:w-auto'>
+      <>
         <DeleteButton
           onClick={handleDeleteButton}
           variant='grayDark'
-          className='w-full md:w-auto'
+          className='w-auto'
         >
           Delete Exercise
         </DeleteButton>
-        <ViewButton onClick={handleViewButton} className='w-full md:w-auto'>
+        <ViewButton onClick={handleViewButton} className='w-auto'>
           View Exercise
         </ViewButton>
-      </div>
+      </>
     )}
   </div>
 );
 
-export const MdScreenButtons = (props) => (
-  <ExerciseButtons
-    {...props}
-    containerClass='sticky bottom-0 mt-4 flex flex-col justify-center gap-2 bg-white py-2 md:flex-row'
-  />
-);
+// For small screens - Layout differs
+export const SmScreenButtons = ({
+  mode,
+  hasChanges,
+  areUrlsInvalid,
+  handleDeleteButton,
+  handleViewButton,
+}) => (
+  <>
+    {/* Sticky Save/Add button */}
+    <div className='sticky bottom-0 z-10 mt-2 flex justify-center border-t border-gray-200 bg-white py-2'>
+      <SaveButton
+        disabled={
+          mode === 'edit' ? !hasChanges || areUrlsInvalid : areUrlsInvalid
+        }
+        form='exercise-form'
+        className='w-full'
+      >
+        {mode === 'add' ? 'Add Exercise' : 'Edit Exercise'}
+      </SaveButton>
+    </div>
 
-export const SmScreenButtons = (props) => (
-  <ExerciseButtons
-    {...props}
-    containerClass='sticky bottom-0 mt-4 flex justify-center bg-white py-2'
-  />
+    {/* Non-sticky Delete and View buttons */}
+    {mode === 'edit' && (
+      <div className='flex justify-center gap-2 bg-white py-2'>
+        <DeleteButton
+          onClick={handleDeleteButton}
+          variant='grayDark'
+          className='w-full'
+        >
+          Delete Exercise
+        </DeleteButton>
+        <ViewButton onClick={handleViewButton} className='w-full'>
+          View Exercise
+        </ViewButton>
+      </div>
+    )}
+  </>
 );

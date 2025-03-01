@@ -65,7 +65,7 @@ export const ExerciseListItems = ({ exercises, onSelectExercise, sortBy }) => (
         <li
           key={exercise.id}
           className='hover:bg-gray-170 active:bg-gray-170 flex cursor-pointer justify-between rounded-lg p-3 transition duration-170 ease-in-out'
-          onClick={() => onSelectExercise(exercise)}
+          onClick={() => onSelectExercise(exercise.id)}
         >
           {timeAgo ? (
             <div className='flex w-full justify-between'>

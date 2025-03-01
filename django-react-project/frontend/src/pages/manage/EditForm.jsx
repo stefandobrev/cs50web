@@ -15,7 +15,7 @@ import Spinner from '../../components/Spinner';
 
 const EditForm = ({
   muscleGroups,
-  exercise,
+  exerciseId,
   onExerciseUpdated,
   mode,
   launchAddMode,
@@ -33,13 +33,13 @@ const EditForm = ({
     setIsLoading(true);
 
     const loadExerciseData = async () => {
-      const data = await fetchExerciseData(exercise.id);
+      const data = await fetchExerciseData(exerciseId);
       setExerciseData(data);
       setIsLoading(false);
     };
 
     loadExerciseData();
-  }, [exercise.id]);
+  }, [exerciseId]);
 
   const getChangedFields = (initData, updatedData) => {
     const changedFields = {};
@@ -68,7 +68,7 @@ const EditForm = ({
 
   const onSubmit = async (submittedExerciseData) => {
     const changedData = getChangedFields(exerciseData, submittedExerciseData);
-    const response = await saveExercise(changedData, exercise.id);
+    const response = await saveExercise(changedData, exerciseId);
     const { type, text } = response;
 
     if (type === 'error') {
@@ -82,7 +82,7 @@ const EditForm = ({
       onExerciseUpdated();
       setMessage(null);
 
-      const updatedData = await fetchExerciseData(exercise.id);
+      const updatedData = await fetchExerciseData(exerciseId);
       setExerciseData(updatedData);
     }
   };
@@ -96,7 +96,7 @@ const EditForm = ({
   };
 
   const handleDeleteConfirm = async () => {
-    const response = await deleteExercise(exercise.id);
+    const response = await deleteExercise(exerciseId);
     const { type, text } = response;
 
     if (type === 'error') {
@@ -143,7 +143,7 @@ const EditForm = ({
         <DeleteConfirmation
           onConfirm={handleDeleteConfirm}
           onClose={() => setIsDeleteDialogOpen(false)}
-          title={exercise.title}
+          title={exerciseData.title}
         />
       )}
     </>

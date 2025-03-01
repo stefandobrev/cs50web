@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { useLocation } from 'react-router-dom';
 
 import { fetchMuscleGroups } from './helpersManage';
 import TabButton from '../../components/buttons/TabButton';
@@ -12,6 +13,7 @@ import { ExerciseList } from './ExerciseList';
 
 export const ManagePage = () => {
   const methods = useForm();
+  const location = useLocation();
   const [mode, setMode] = useState('add');
   const [selectedExercise, setSelectedExercise] = useState(null);
   const [muscleGroups, setMuscleGroups] = useState([]);
@@ -36,6 +38,12 @@ export const ManagePage = () => {
     loadMuscleGroups();
   }, []);
 
+  useEffect(() => {
+    if (location.state?.exerciseId) {
+      handleSelectExercise(location.state.exerciseId);
+    }
+  }, [location.state]);
+
   const triggerRefresh = () => setRefreshTitleListKey((prev) => prev + 1);
 
   const launchAddMode = () => {
@@ -44,8 +52,8 @@ export const ManagePage = () => {
     methods.reset();
   };
 
-  const handleSelectExercise = (exercise) => {
-    setSelectedExercise(exercise);
+  const handleSelectExercise = (exerciseId) => {
+    setSelectedExercise(exerciseId);
     setMode('edit');
     setActiveTab('form');
   };
@@ -134,7 +142,7 @@ export const ManagePage = () => {
             ) : (
               <EditForm
                 muscleGroups={muscleGroups}
-                exercise={selectedExercise}
+                exerciseId={selectedExercise}
                 onExerciseUpdated={triggerRefresh}
                 mode={mode}
                 launchAddMode={launchAddMode}
